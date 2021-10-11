@@ -1,0 +1,41 @@
+part of 'IconSVG.dart';
+
+class IconsSvg {
+  static int get backEllipse => 0;
+  static int get heart => 1;
+  static int get voice => 2;
+  static int get profile => 3;
+  static int get paper => 4;
+  static int get home => 5;
+  static int get category => 6;
+  static int get menu => 7;
+  static int get more => 8;
+  static int get play => 9;
+  static int get audioArrow => 10;
+  static int get moreAudios => 11;
+  static int get changePhoto => 12;
+  static int get back => 13;
+  static int get audioRepeat => 14;
+  static int get pause => 15;
+  static int get cloudStorage => 16;
+  static int get infinity => 17;
+  static int get download => 18;
+  static int get activeSubscription => 19;
+  static int get disactiveSubscription => 20;
+  static int get next => 21;
+  static int get back15 => 22;
+  static int get next15 => 23;
+  static int get delete => 24;
+  static int get upload => 25;
+  static int get add => 26;
+  static int get photoCollection => 27;
+  static int get camera => 28;
+  static int get selectedOn => 29;
+  static int get selectedOff => 30;
+  static int get search => 31;
+  static int get edit => 32;
+  static int get wallet => 33;
+  static int get arrowBottom => 34;
+  static int get swap => 35;
+  static int get addOutline => 36;
+}
