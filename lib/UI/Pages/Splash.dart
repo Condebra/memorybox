@@ -9,12 +9,11 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
-
-  initHome()async{
+  initHome() async {
     String token = await tokenDB();
     if(token == "null" && !await futureAuth()){
       Navigator.pushNamedAndRemoveUntil(context, Routes.welcomeNew,(Route<dynamic> route) => false);
-    }else{
+    } else {
       Navigator.pushNamedAndRemoveUntil(context, Routes.welcomeOld,(Route<dynamic> route) => false);
     }
   }
@@ -25,11 +24,8 @@ class _SplashState extends State<Splash> {
     initHome();
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-
-    );
+    return Scaffold();
   }
 }

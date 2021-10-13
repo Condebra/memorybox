@@ -25,8 +25,8 @@ class _CollectionsPageState extends State<CollectionsPage> {
             .collectionsController
             .streamCollections,
         builder: (context, snapshot) {
-          print("CollectionsPage data " + snapshot.data.toString());
-          print("Collection state => ${snapshot.data.stateSelect}");
+          // print("CollectionsPage data " + snapshot.data.toString());
+          // print("Collection state => ${snapshot.data.stateSelect}");
           if (!snapshot.hasData) return StateLoadingCollection();
           switch (snapshot.data.stateSelect) {
             case CollectionsSelection.view:

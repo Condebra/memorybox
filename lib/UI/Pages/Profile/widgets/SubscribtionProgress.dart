@@ -17,7 +17,6 @@ class _SubcriptionProgressState extends State<SubcriptionProgress> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-
         SizedBox(
           height: 20,
         ),

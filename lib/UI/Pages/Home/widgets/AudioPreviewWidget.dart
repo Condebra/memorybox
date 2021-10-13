@@ -14,6 +14,7 @@ class AudioPreview extends StatefulWidget {
   bool loading;
 
   AudioPreview({@required this.items, this.loading});
+
   @override
   _AudioPreviewState createState() => _AudioPreviewState();
 }
@@ -21,70 +22,65 @@ class AudioPreview extends StatefulWidget {
 class _AudioPreviewState extends State<AudioPreview> {
   @override
   Widget build(BuildContext context) {
-    // return Align(
-    //   alignment: Alignment.bottomCenter,
-    //   child:
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-        child: Container(
-          // width: MediaQuery.of(context).size.width - 4,
-          decoration: BoxDecoration(
-              color: cBackground,
-              borderRadius: BorderRadius.circular(25),
-              boxShadow: [
-                BoxShadow(
-                    spreadRadius: 0,
-                    offset: Offset(0, 4),
-                    blurRadius: 24,
-                    color: Color.fromRGBO(0, 0, 0, 0.15))
-              ]),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 11),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 2.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        S.of(context).audios,
-                        style: TextStyle(
-                            color: cBlack,
-                            fontSize: 24,
-                            fontWeight: FontWeight.w400),
-                      ),
-                      GestureDetector(
-                        onTap: (){
-                          context.read<GeneralController>().setPage(3);
-                        },
-                        child: Text(
-                          S.of(context).open_all,
-                          style: TextStyle(
-                              color: cBlack,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
-                        ),
-                      )
-                    ],
+    return Container(
+      // width: MediaQuery.of(context).size.width - 4,
+      decoration: BoxDecoration(
+          color: cBackground,
+          borderRadius: BorderRadius.circular(25),
+          boxShadow: [
+            BoxShadow(
+                spreadRadius: 0,
+                offset: Offset(0, 4),
+                blurRadius: 24,
+                color: Color.fromRGBO(0, 0, 0, 0.15))
+          ]),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 11),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 2.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    S.of(context).audios,
+                    style: TextStyle(
+                        color: cBlack,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w400),
                   ),
-                ),
-                widget.loading??true?Center(child: CircularProgressIndicator(),):audiosPreview(context)
-              ],
+                  GestureDetector(
+                    onTap: () {
+                      context.read<GeneralController>().setPage(3);
+                    },
+                    child: Text(
+                      S.of(context).open_all,
+                      style: TextStyle(
+                          color: cBlack,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
+            widget.loading ?? true
+                ? Center(child: CircularProgressIndicator())
+                : audiosPreview(context)
+          ],
         ),
-      );
-    // );
+      ),
+    );
   }
 
   Widget audiosPreview(BuildContext context) {
-    return widget.items.length == 0
+    return widget.items.isEmpty
         ? emptyAudio()
         : Container(
-        // height: 86 * widget.items.length.toDouble(),
-      height: 400, //if i add this its working properly
-          child: Padding(
+            // height: 86 * widget.items.length.toDouble(),
+            height: 380, //if i add this its working properly
+            child: Padding(
               padding: const EdgeInsets.only(top: 14.0),
               child: Column(
                 children: [
@@ -95,10 +91,10 @@ class _AudioPreviewState extends State<AudioPreview> {
                 ],
               ),
             ),
-        );
+          );
   }
 
-  Widget emptyAudio(){
+  Widget emptyAudio() {
     return Container(
       height: 280,
       child: Column(

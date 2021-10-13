@@ -141,7 +141,6 @@ class _LoginState extends State<Login> {
                         alignLabelWithHint: false,
                         border: InputBorder.none,
                         // prefix: Text('+7 '),
-
                         filled: true,
                         hintText: "+7 (900) 000-00-00",
                         hintStyle: TextStyle(
@@ -157,7 +156,6 @@ class _LoginState extends State<Login> {
               ),
             ],
           ),
-
           Column(
             children: [
               ButtonOrange(
@@ -265,7 +263,6 @@ class _LoginState extends State<Login> {
                         alignLabelWithHint: false,
                         border: InputBorder.none,
                         // prefix: Text('+7 '),
-
                         filled: true,
                         hintText: "Код",
                         hintStyle: TextStyle(

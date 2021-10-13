@@ -67,43 +67,41 @@ class _HomePageState extends State<HomePage> {
             context.read<GeneralController>().setMenu(true);
           },
         ),
-        body:
-        // SingleChildScrollView(
-        //   physics: BouncingScrollPhysics(),
-        //   padding: EdgeInsets.symmetric(horizontal: 5),
-        //   child:
-          StreamBuilder<HomeState>(
-              stream: context.read<GeneralController>().homeController.stream,
-              builder: (context, snapshot) {
-                return SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  padding: EdgeInsets.symmetric(horizontal: 5),
-                  child: Column(
-                    children: [
-                      Collections(
-                        onAddCollection: () {
-                          context.read<GeneralController>().setPage(1);
-                          context
-                              .read<GeneralController>()
-                              .collectionsController
-                              .addCollection();
-                        },
-                        onTapCollection: (item) {
-                          context.read<GeneralController>().setPage(1);
-                          context
-                              .read<GeneralController>()
-                              .collectionsController
-                              .view(item);
-                        },
-                        loading: (snapshot.data == null
-                            ? true
-                            : snapshot.data.loading ?? false),
-                        items: (snapshot.data == null
-                            ? []
-                            : snapshot.data.collections),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 40.0),
+        body: StreamBuilder<HomeState>(
+            stream: context.read<GeneralController>().homeController.stream,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) return Center(child: CircularProgressIndicator());
+              return SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                padding: EdgeInsets.symmetric(horizontal: 5),
+                child: Column(
+                  children: [
+                    Collections(
+                      onAddCollection: () {
+                        context.read<GeneralController>().setPage(1);
+                        context
+                            .read<GeneralController>()
+                            .collectionsController
+                            .addCollection();
+                      },
+                      onTapCollection: (item) {
+                        context.read<GeneralController>().setPage(1);
+                        context
+                            .read<GeneralController>()
+                            .collectionsController
+                            .view(item);
+                      },
+                      loading: (snapshot.data == null
+                          ? true
+                          : snapshot.data.loading ?? false),
+                      items: (snapshot.data == null
+                          ? []
+                          : snapshot.data.collections),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(4, 40, 4, 0),
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 80),
                         child: AudioPreview(
                           loading: (snapshot.data == null
                               ? true
@@ -111,11 +109,12 @@ class _HomePageState extends State<HomePage> {
                           items: (snapshot.data.audios ?? []),
                         ),
                       ),
-                    ],
-                  ),
-                );
-              }),
-        ),
+                    ),
+                  ],
+                ),
+              );
+            }),
+      ),
       // ),
     );
   }
