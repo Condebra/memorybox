@@ -120,7 +120,7 @@ class DBProvider {
     final List<Map<String, dynamic>> list = await db.query(TableAudio.table,
         where: "${idS == null ? TableAudio.id : TableAudio.idS} = ?",
         whereArgs: [idS ?? id]);
-    print("=== AudioGet $idS" + list.toString());
+    // print("=== AudioGet $idS" + list.toString());
     // TODO Почему в поиске аудио по id из ДБ возвращается список?
     AudioItem item;
     list.forEach((element) {
@@ -245,7 +245,7 @@ class DBProvider {
     Database db = await this.database;
     final List<Map<String, dynamic>> list =
         await db.query(TableCollection.table);
-    print("=== collectionsGet ${list}");
+    // print("=== collectionsGet ${list}");
     List<CollectionItem> items = [];
     list.forEach((element) async {
       CollectionItem item = CollectionItem.fromDB(element);

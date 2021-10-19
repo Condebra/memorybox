@@ -58,7 +58,6 @@ class _BackgroundState extends State<Background> {
                     ),
                   ),
                 ),
-
               ],
             ),
           ),
@@ -69,7 +68,6 @@ class _BackgroundState extends State<Background> {
                     (MediaQuery.of(context).size.width * 369 / 414),
                 child: widget.body ?? SizedBox()),
           )
-
         ],
       ),
     );

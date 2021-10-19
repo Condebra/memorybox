@@ -10,10 +10,8 @@ import 'package:recorder/Utils/DialogsIntegron/DialogLoading.dart';
 import 'package:recorder/Utils/app_keys.dart';
 import 'package:recorder/models/AudioModel.dart';
 import 'package:recorder/models/CollectionModel.dart';
-import 'package:recorder/models/Put.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 class StateSearch{
   final String input;
@@ -36,7 +34,6 @@ class CollectionsController {
   bool _edit;
   String input = "";
   List<AudioItem> results =[];
-
 
   final _picker = ImagePicker();
   TextEditingController controllerHeader = TextEditingController();
@@ -105,6 +102,8 @@ class CollectionsController {
 
   addCollection() async {
     _audios = [];
+    controllerHeader.text = "";
+    controllerComment.text = "";
     _stateSelect = CollectionsSelection.add;
     setState();
   }
@@ -123,7 +122,7 @@ class CollectionsController {
   }
 
   view(CollectionItem item) async {
-    print(item.toString());
+    // print(item.toString());
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setInt("playlist", item.id);
     _stateSelect = CollectionsSelection.loading;
@@ -165,7 +164,7 @@ class CollectionsController {
     } else if(_stateSelect == CollectionsSelection.select){
       _stateSelect = CollectionsSelection.viewItem;
       setState();
-    }else {
+    } else {
       _stateSelect = CollectionsSelection.view;
       setState();
     }
@@ -227,9 +226,6 @@ class CollectionsController {
     updateData();
   }
 
-
-
-
   backAndSave() async {
     showDialogLoading(AppKeys.scaffoldKey.currentContext);
     String c;
@@ -269,6 +265,7 @@ class CollectionsController {
     results = [];
     setState();
   }
+
   search(String input){
     if(input.isEmpty){
       results = List.from(audiosAll);

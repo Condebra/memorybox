@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Rest/Playlist/PlaylistProvider.dart';
 import 'package:recorder/Style.dart';
-import 'package:recorder/UI/Pages/Home/widgets/FirstCollectionItem.dart';
+import 'package:recorder/UI/Pages/Home/widgets/CollectionItemOne.dart';
 import 'package:recorder/Utils/DialogsIntegron/DialogIntegron.dart';
 import 'package:recorder/Utils/DialogsIntegron/DialogLoading.dart';
 import 'package:recorder/Utils/app_keys.dart';

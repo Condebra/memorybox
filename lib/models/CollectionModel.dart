@@ -62,7 +62,7 @@ class CollectionItem {
         name: map[TableCollection.name] == null?"":map[TableCollection.name].toString(),
         description: map[TableCollection.desc] as String,
         playlist: [],
-        publicationDate: "${DateTime.now().day}.${DateTime.now().month}.${DateTime.now().day}",
+        publicationDate: "${DateTime.now().day}.${DateTime.now().month}.${DateTime.now().year}",
         count: 0,
         duration: Duration(milliseconds: int.parse(map[TableCollection.duration])), //map['timeOfCollection'],
       isLocalPicture: map[TableCollection.isLocalPicture] ==1?true:false,

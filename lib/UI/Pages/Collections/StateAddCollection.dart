@@ -1,7 +1,5 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Controllers/States/CollectionsState.dart';
 import 'package:recorder/Style.dart';
@@ -17,11 +15,9 @@ class StateAddCollection extends StatefulWidget {
 }
 
 class _StateAddCollectionState extends State<StateAddCollection> {
-
   bool editHeader = false;
   bool editComment = false;
   FocusNode focusNode =FocusNode();
-
 
   @override
   void initState() {
@@ -40,10 +36,8 @@ class _StateAddCollectionState extends State<StateAddCollection> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: cBlack.withOpacity(0.0),
-
       appBar: MyAppBar(
         buttonMore: false,
         buttonMenu: false,
@@ -57,7 +51,6 @@ class _StateAddCollectionState extends State<StateAddCollection> {
           context.read<GeneralController>().collectionsController.back();
         },
         tapRightButton:  (){
-          //todo save
           context.read<GeneralController>().collectionsController.createCollection();
         },
         child: Container(
@@ -83,46 +76,42 @@ class _StateAddCollectionState extends State<StateAddCollection> {
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
-        child:
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: Row(
-                  children: [
-                    Container(
-                        width: MediaQuery.of(context).size.width -42,
-                        child: _header()),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20,),
-              _photo(),
-              SizedBox(height: 20,),
-
-              _comment(),
-              SizedBox(height: 20,),
-
-              _audiosList(),
-              SizedBox(height: 100,)
-            ],
-          ),
+        padding: EdgeInsets.fromLTRB(14, 5, 14, 100),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 4, right: 4),
+              child: _header(),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Center(child: _image()),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 12, right: 12, top: 10),
+              child: _desc(),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20, bottom: 20),
+              child: _listAudio(),
+            ),
+          ],
         ),
       ),
-
     );
   }
 
-
-  Widget _header(){
-    if(editHeader){
-      FocusScope.of(context).autofocus(focusNode);
+  Widget _header() {
+    // if (editHeader) {
+    //   FocusScope.of(context).autofocus(focusNode);
       return TextField(
         focusNode: focusNode,
         maxLines: 1,
-        controller: context.read<GeneralController>().collectionsController.controllerHeader,
+        controller: context
+            .read<GeneralController>()
+            .collectionsController
+            .controllerHeader,
         decoration: InputDecoration(
           border: InputBorder.none,
           hintStyle: TextStyle(
@@ -138,24 +127,9 @@ class _StateAddCollectionState extends State<StateAddCollection> {
             fontWeight: FontWeight.w700,
             fontFamily: fontFamily),
       );
-    }else{
-      return GestureDetector(
-        behavior: HitTestBehavior.deferToChild,
-        onTap: (){
-          editHeader = true;
-          setState(() {
-
-          });
-        },
-        child: Text(context.read<GeneralController>().collectionsController.controllerHeader.text == ""?"Название":context.read<GeneralController>().collectionsController.controllerHeader.text, style: TextStyle(
-          fontSize: 24,
-          color: cBackground,
-          fontWeight: FontWeight.w700,
-        ),),
-      );
-    }
   }
-  Widget _photo(){
+
+  Widget _image() {
     return StreamBuilder<String>(
       stream: context.read<GeneralController>().collectionsController.streamPhoto,
       builder: (context, snapshot) {
@@ -164,38 +138,53 @@ class _StateAddCollectionState extends State<StateAddCollection> {
           onTap: (){
             context.read<GeneralController>().collectionsController.addImage();
           },
-          child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(15)),
-            child: Container(
-              width: MediaQuery.of(context).size.width-32,
-              height: (MediaQuery.of(context).size.width-32)*240/382,
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
+          child: Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
                     color: Color.fromRGBO(0, 0, 0, 0.25),
                     offset: Offset(0,4),
                     blurRadius: 20,
                     spreadRadius: 0
-                  )
-                ],
-                color: cBackground.withOpacity(0.9)
+                )
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+              child: Container(
+                width: MediaQuery.of(context).size.width-32,
+                height: (MediaQuery.of(context).size.width-32)*240/382,
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color.fromRGBO(0, 0, 0, 0.25),
+                      offset: Offset(0,4),
+                      blurRadius: 20,
+                      spreadRadius: 0
+                    )
+                  ],
+                  color: cBackground.withOpacity(0.9)
+                ),
+                child: !snapshot.hasData || snapshot.data == null ?
+                Center(child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(100)),
+                      border: Border.all(color: cBlack)
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: IconSvg(IconsSvg.camera, color: cBlack),
+                )),)
+                    :Image.file(File(snapshot.data), fit: BoxFit.cover,),
               ),
-              child: !snapshot.hasData || snapshot.data == null?Center(child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(100)),
-                    border: Border.all(color: cBlack)
-                  ),
-                  child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: IconSvg(IconsSvg.camera, color: cBlack),
-              )),):Image.file(File(snapshot.data), fit: BoxFit.cover,),
             ),
           ),
         );
       }
     );
   }
-  Widget _comment(){
+
+  Widget _desc(){
     return Container(
       decoration: BoxDecoration(
         border: Border(
@@ -224,7 +213,7 @@ class _StateAddCollectionState extends State<StateAddCollection> {
     );
   }
 
-  Widget _audiosList(){
+  Widget _listAudio(){
     return StreamBuilder<CollectionsState>(
         stream: context.read<GeneralController>().collectionsController.streamCollections,
         builder: (context, snapshot) {

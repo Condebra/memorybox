@@ -6,7 +6,7 @@ import 'package:recorder/UI/Pages/Collections/StateSelectSeveralCollection.dart'
 import 'package:recorder/UI/Pages/Collections/StateAddAudioCollection.dart';
 import 'package:recorder/UI/Pages/Collections/StateAddCollection.dart';
 import 'package:recorder/UI/Pages/Collections/StateEditCollection.dart';
-import 'package:recorder/UI/Pages/Collections/StateLoadingColletion.dart';
+import 'package:recorder/UI/Pages/Collections/StateLoadingCollection.dart';
 import 'package:recorder/UI/Pages/Collections/StateViewCollection.dart';
 import 'package:recorder/UI/Pages/Collections/StateViewItemCollection.dart';
 
@@ -30,7 +30,8 @@ class _CollectionsPageState extends State<CollectionsPage> {
           if (!snapshot.hasData) return StateLoadingCollection();
           switch (snapshot.data.stateSelect) {
             case CollectionsSelection.view:
-              return StateViewCollection(items: snapshot.data.items);
+              return StateViewCollection();
+              // return StateViewCollection(items: snapshot.data.items);
             case CollectionsSelection.viewItem:
               return StateViewItemCollection();
             case CollectionsSelection.editing:

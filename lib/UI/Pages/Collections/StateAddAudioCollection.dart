@@ -118,9 +118,12 @@ class _StateAddAudioCollectionState extends State<StateAddAudioCollection> {
     );
   }
 
-  Widget _audios(){
+  Widget _audios() {
     return StreamBuilder<CollectionsState>(
-      stream: context.read<GeneralController>().collectionsController.streamCollections,
+      stream: context
+          .read<GeneralController>()
+          .collectionsController
+          .streamCollections,
       builder: (context, snapshot) {
         List<AudioItem> list = [];
         if (snapshot.hasData) {

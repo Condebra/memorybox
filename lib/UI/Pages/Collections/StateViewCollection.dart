@@ -1,17 +1,18 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
-import 'package:recorder/Controllers/States/PlayerState.dart';
+import 'package:recorder/Controllers/States/CollectionsState.dart';
 import 'package:recorder/Style.dart';
-import 'package:recorder/UI/Pages/Home/widgets/FirstCollectionItem.dart';
+import 'package:recorder/UI/Pages/Home/widgets/CollectionItemOne.dart';
 import 'package:recorder/UI/widgets/Appbar.dart';
-import 'package:recorder/Utils/time/TimeParse.dart';
 import 'package:recorder/models/CollectionModel.dart';
 import 'package:provider/provider.dart';
 
 class StateViewCollection extends StatefulWidget {
   List<CollectionItem> items;
 
-  StateViewCollection({this.items});
+  StateViewCollection();
+  // StateViewCollection({this.items});
 
   @override
   _StateViewCollectionState createState() => _StateViewCollectionState();
@@ -20,20 +21,11 @@ class StateViewCollection extends StatefulWidget {
 class _StateViewCollectionState extends State<StateViewCollection> {
   List<CollectionItem> leftColumn = [];
   List<CollectionItem> rightColumn = [];
+  List<CollectionItem> playlists = [];
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    for (int i = 0; i < widget.items.length; i += 2) {
-      try {
-        leftColumn.add(widget.items[i]);
-      } catch (e) {}
-
-      try {
-        rightColumn.add(widget.items[i + 1]);
-      } catch (e) {}
-    }
   }
 
   @override
@@ -80,71 +72,45 @@ class _StateViewCollectionState extends State<StateViewCollection> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(children: [
-            SizedBox(
-              height: 56,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: List.generate(
-                      leftColumn.length,
-                      (index) => Column(
-                            children: [
-                              CollectionItemOne(
-                                onTap: () {
-                                  context
-                                      .read<GeneralController>()
-                                      .collectionsController
-                                      .view(leftColumn[index]);
-                                },
-                                item: leftColumn[index],
-                              ),
-                              SizedBox(height: 16)
-                            ],
-                          )),
+      body: StreamBuilder<CollectionsState> (
+        stream: context
+          .read<GeneralController>()
+          .collectionsController
+          .streamCollections,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) return Center(child: CircularProgressIndicator(),);
+          return GridView.count(
+            crossAxisCount: 2,
+            padding: EdgeInsets.fromLTRB(16, 50, 16, 116),
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 16,
+            physics: BouncingScrollPhysics(),
+            children: List.generate(
+              snapshot.data.items.length,
+              (index) => Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color.fromRGBO(0, 0, 0, 0.01),
+                      offset: Offset(4, 4),
+                      blurRadius: 10,
+                      spreadRadius: 3,
+                    )
+                  ],
                 ),
-                SizedBox(width: 15.5),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: List.generate(
-                      rightColumn.length,
-                      (index) => Column(
-                            children: [
-                              CollectionItemOne(
-                                onTap: () {
-                                  context
-                                      .read<GeneralController>()
-                                      .collectionsController
-                                      .view(rightColumn[index]);
-                                },
-                                item: rightColumn[index],
-                              ),
-                              // SizedBox(height: 16)
-                            ],
-                          )),
-                )
-              ],
+                child: CollectionItemOne(
+                  onTap: () {
+                    context
+                        .read<GeneralController>()
+                        .collectionsController
+                        .view(snapshot.data.items[index]);
+                  },
+                  item: snapshot.data.items[index],
+                ),
+              ),
             ),
-            StreamBuilder<PlayerState>(
-                stream: context
-                    .read<GeneralController>()
-                    .playerController
-                    .playerStream,
-                builder: (context, snapshot) {
-                  return SizedBox(
-                    height: 100,
-                  );
-                })
-          ]),
-        ),
+          );
+        }
       ),
     );
   }

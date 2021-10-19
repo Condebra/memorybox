@@ -2,96 +2,126 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:recorder/Style.dart';
+
 import 'package:recorder/generated/l10n.dart';
 import 'package:recorder/models/CollectionModel.dart';
 
-class SmallCollectionItem extends StatefulWidget {
-  String img;
-  String title;
-  int audioQuantity;
-  String timeOfCollection;
-  int length;
-  Color contColor;
+class CollectionItemOne extends StatefulWidget {
+  CollectionItem item;
   Function onTap;
-  String text;
-  final CollectionItem item;
+  String title;
 
-  SmallCollectionItem(
-      {this.img,
-      this.title,
-      this.audioQuantity,
-      this.timeOfCollection,
-      @required this.text,
-      @required this.length,
-      @required this.contColor,
-      @required this.onTap,
-      @required this.item});
+  CollectionItemOne({this.title, @required this.item, @required this.onTap});
 
-  @override
-  _SmallCollectionItemState createState() => _SmallCollectionItemState();
+  _CollectionItemOneState createState() => _CollectionItemOneState();
 }
 
-class _SmallCollectionItemState extends State<SmallCollectionItem> {
-  double height;
-  double width;
+class _CollectionItemOneState extends State<CollectionItemOne> {
+  bool longTap = false;
+
+  double width = 0;
+  double height = 0;
 
   @override
   Widget build(BuildContext context) {
     width = (MediaQuery.of(context).size.width / 2 - 43 / 2);
-    height = (MediaQuery.of(context).size.width / 2 - 43 / 2) * 113 / 183;
+    height = ((MediaQuery.of(context).size.width / 2 - 43 / 2)) * 240 / 183;
 
-    return widget.text != null
+    return widget.title != null
         ? GestureDetector(
             behavior: HitTestBehavior.deferToChild,
             onTap: () {
-              widget.onTap == null ? null : widget.onTap();
+              if (widget.onTap != null) {
+                widget.onTap();
+              }
             },
             child: Container(
               width: width,
               height: height,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: widget.contColor,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color.fromRGBO(0, 0, 0, 0.2),
-                      offset: Offset(8, 8),
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset(0, 4),
                       blurRadius: 20,
-                      spreadRadius: 2,
-                    )
-                  ],
+                      color: Color.fromRGBO(0, 0, 0, 0.15))
+                ],
+                borderRadius: BorderRadius.circular(15),
+                color: Color.fromRGBO(113, 165, 159, 0.8),
               ),
-              child: Center(
-                child: Container(
-                  padding: EdgeInsets.only(bottom: 1.5),
-                  decoration: BoxDecoration(
-                      border: widget.length == 0
-                          ? null
-                          : Border(
-                              bottom:
-                                  BorderSide(color: cBackground, width: 1))),
-                  child: Text(
-                    "${widget.text}",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w400,
-                      letterSpacing: 0.6,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      S.of(context).titleOfEmptyCollection,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w400,
+                        // letterSpacing: 1.01
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                  ),
+                    Center(
+                      child: Container(
+                        padding: EdgeInsets.only(bottom: 1.5),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom:
+                                    BorderSide(color: cBackground, width: 1))),
+                        child: Text(
+                          S.of(context).add,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            letterSpacing: 0.6,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
           )
         : GestureDetector(
-            behavior: HitTestBehavior.deferToChild,
             onTap: () {
-              widget.onTap == null ? null : widget.onTap();
+              if (widget.onTap != null) {
+                widget.onTap();
+              }
+            },
+            onLongPressStart: (i) {
+              longTap = true;
+              setState(() {});
+            },
+            onLongPressEnd: (i) {
+              longTap = false;
+              if (widget.onTap != null) {
+                widget.onTap();
+              }
+              setState(() {});
+            },
+            onTapDown: (i) {
+              longTap = true;
+              setState(() {});
+            },
+            onTapUp: (e) {
+              longTap = false;
+              setState(() {});
+            },
+            onPanStart: (i) {
+              longTap = true;
+              setState(() {});
+            },
+            onPanEnd: (e) {
+              longTap = false;
+              setState(() {});
             },
             child: Container(
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                    color: Color.fromRGBO(0, 0, 0, 0.2),
+                    color: Color.fromRGBO(0, 0, 0, 0.20),
                     offset: Offset(8, 8),
                     blurRadius: 20,
                     spreadRadius: 2,
@@ -133,7 +163,7 @@ class _SmallCollectionItemState extends State<SmallCollectionItem> {
                         ])),
                   ),
                   Padding(
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                           horizontal: 13.0, vertical: 16),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -160,7 +190,7 @@ class _SmallCollectionItemState extends State<SmallCollectionItem> {
                                     SizedBox(
                                       height: 15,
                                     ),
-                                    Text("${widget.audioQuantity} аудио",
+                                    Text("${widget.item.count} аудио",
                                         style: TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400)),
@@ -174,7 +204,19 @@ class _SmallCollectionItemState extends State<SmallCollectionItem> {
                             ],
                           ),
                         ],
-                      ))
+                      )),
+                  AnimatedOpacity(
+                    duration: Duration(milliseconds: 300),
+                    opacity: longTap ? 0.2 : 0.0,
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 240 / 896,
+                      width: MediaQuery.of(context).size.width * 183 / 414,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                  )
                 ]),
               ),
             ));
