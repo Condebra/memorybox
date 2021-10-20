@@ -12,7 +12,7 @@ TextStyle nameTextStyle = TextStyle(
 
 TextStyle phoneTextStyle({@required bool isPhone}) {
   return isPhone
-      ? TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: cBlack)
+      ? TextStyle(fontSize: 20, fontWeight: FontWeight.w400, color: cBlack.withOpacity(.4))
       : TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: cBlack);
 }
 

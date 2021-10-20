@@ -11,14 +11,14 @@ import 'package:recorder/models/AudioModel.dart';
 import 'package:recorder/models/Put.dart';
 import 'package:rxdart/rxdart.dart';
 
-import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
+import 'package:flutter_audio_recorder2/flutter_audio_recorder2.dart';
 import 'package:file/local.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RecordController {
-  FlutterAudioRecorder _recorder;
+  FlutterAudioRecorder2 _recorder;
   Recording _current;
   LocalFileSystem _localFileSystem;
   RecordingStatus _currentStatus = RecordingStatus.Unset;
@@ -151,7 +151,7 @@ class RecordController {
 
   Future<bool> _init() async {
     try {
-      if (await FlutterAudioRecorder.hasPermissions) {
+      if (await FlutterAudioRecorder2.hasPermissions) {
         String customPath = '/audios';
         io.Directory appDocDirectory = io.Platform.isIOS
             ? await getApplicationDocumentsDirectory()
@@ -163,7 +163,7 @@ class RecordController {
             DateTime.now().millisecondsSinceEpoch.toString();
         // DateTime.now().toString();
         _recorder =
-            FlutterAudioRecorder(customPath, audioFormat: AudioFormat.WAV);
+            FlutterAudioRecorder2(customPath, audioFormat: AudioFormat.WAV);
 
         await _recorder.initialized;
         // after initialization

@@ -4,7 +4,7 @@ import 'package:recorder/Controllers/States/ProfileState.dart';
 import 'package:recorder/Utils/app_keys.dart';
 import 'package:recorder/models/ProfileModel.dart';
 import 'package:recorder/Style.dart';
-import 'package:recorder/UI/Pages/Profile/widgets/Image.dart';
+import 'package:recorder/UI/Pages/Profile/widgets/ProfileImage.dart';
 import 'package:recorder/UI/Pages/Profile/widgets/Name.dart';
 import 'package:recorder/UI/Pages/Profile/widgets/PhoneNumber.dart';
 import 'package:recorder/UI/Pages/Profile/widgets/SubscribtionProgress.dart';
@@ -13,84 +13,86 @@ import 'package:recorder/generated/l10n.dart';
 import 'package:recorder/main.dart';
 import 'package:provider/provider.dart';
 
-
 class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-
   @override
   Widget build(BuildContext context) {
     return Navigator(
       key: AppKeys.navigatorKey,
-      onGenerateRoute: (route)=> MaterialPageRoute(settings: route, builder: (context)=>SafeArea(
-        child: StreamBuilder<ProfileState>(
-            stream: context.read<GeneralController>().profileController.streamProfile,
-            builder: (context, snapshot) {
-
-
-            return Scaffold(
-              backgroundColor: cBackground.withOpacity(0.0),
-              appBar: MyAppBar(
-                buttonMore: false,
-                buttonBack: snapshot.hasData && snapshot.data.edit,
-                buttonMenu: !(snapshot.hasData && snapshot.data.edit),
-                padding: 18,
-                top: 16,
-                height: 90,
-                tapLeftButton: (){
-                  if(snapshot.hasData && snapshot.data.edit){
-                    context.read<GeneralController>().profileController.closeEdit();
-                  }else{
-                    context.read<GeneralController>().setMenu(true);
-                  }
-                },
-                child: Container(
-                  child: Column(
-                    children: [
-                      Text(
-                        "Профиль",
-                        style: TextStyle(
-                            fontSize: 36,
-                            fontWeight: FontWeight.w700,
-                            fontFamily: fontFamilyMedium,
-                            letterSpacing: 2),
-                      ),
-                      SizedBox(
-                        height: 4,
-                      ),
-                      Text(
-                        "Твоя частичка",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: fontFamilyMedium,
-                            letterSpacing: 2),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              body: (!snapshot.hasData || snapshot.data.loading)?Center(child: CircularProgressIndicator(),):SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 66,
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      child: snapshot.data.edit ? profileIsEdit(snapshot.data) : profileNotEdit(snapshot.data),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }
-        ),
-      )),
+      onGenerateRoute: (route) => MaterialPageRoute(
+          settings: route,
+          builder: (context) => SafeArea(
+                child: StreamBuilder<ProfileState>(
+                    stream: context
+                        .read<GeneralController>()
+                        .profileController
+                        .streamProfile,
+                    builder: (context, snapshot) {
+                      return Scaffold(
+                        backgroundColor: cBackground.withOpacity(0.0),
+                        appBar: MyAppBar(
+                          buttonMore: false,
+                          buttonBack: snapshot.hasData && snapshot.data.edit,
+                          buttonMenu: !(snapshot.hasData && snapshot.data.edit),
+                          padding: 18,
+                          top: 16,
+                          height: 90,
+                          tapLeftButton: () {
+                            if (snapshot.hasData && snapshot.data.edit) {
+                              context
+                                  .read<GeneralController>()
+                                  .profileController
+                                  .closeEdit();
+                            } else {
+                              context.read<GeneralController>().setMenu(true);
+                            }
+                          },
+                          child: Container(
+                            child: Column(
+                              children: [
+                                Text(
+                                  "Профиль",
+                                  style: TextStyle(
+                                      fontSize: 36,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: fontFamilyMedium,
+                                      letterSpacing: 2),
+                                ),
+                                SizedBox(
+                                  height: 4,
+                                ),
+                                Text(
+                                  "Твоя частичка",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: fontFamilyMedium,
+                                      letterSpacing: 2),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        body: (!snapshot.hasData || snapshot.data.loading)
+                            ? Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : SingleChildScrollView(
+                                physics: BouncingScrollPhysics(),
+                                // width: MediaQuery.of(context).size.width,
+                                child: Center(
+                                  child: snapshot.data.edit
+                                      ? profileIsEdit(snapshot.data)
+                                      : profileNotEdit(snapshot.data),
+                                ),
+                              ),
+                      );
+                    }),
+              )),
     );
   }
 
@@ -98,46 +100,49 @@ class _ProfilePageState extends State<ProfilePage> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ProfileImage(isEdit: state.edit, person: state.profile, imagePath: state.imagePath),
-        SizedBox(
-          height: 40,
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 14),
+          child: ProfileImage(
+              isEdit: state.edit,
+              person: state.profile,
+              imagePath: state.imagePath),
         ),
-        ProfileName(isEdit: state.edit, person:state.profile),
-        SizedBox(
-          height: 80,
-        ),
-        PhoneNumber(isEdit: state.edit, person: state.profile),
-        SizedBox(
-          height: 40,
+        ProfileName(isEdit: state.edit, person: state.profile),
+        Padding(
+          padding: const EdgeInsets.only(top: 60, bottom: 40),
+          child: PhoneNumber(isEdit: state.edit, person: state.profile),
         ),
         changeButton(state),
-        SizedBox(height: 105,),
+        SizedBox(
+          height: 105,
+        ),
       ],
     );
   }
 
   Widget profileNotEdit(ProfileState state) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      // mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ProfileImage(isEdit: state.edit, person:state.profile, imagePath: null,),
-        SizedBox(
-          height: 14,
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 14),
+          child: ProfileImage(
+            isEdit: state.edit,
+            person: state.profile,
+            imagePath: null,
+          ),
         ),
         ProfileName(isEdit: state.edit, person: state.profile),
         PhoneNumber(isEdit: state.edit, person: state.profile),
         changeButton(state),
-        SizedBox(
-          height: 45,
+        Padding(
+          padding: const EdgeInsets.only(top: 40),
+          child: textSubscription(),
         ),
-        textSubscription(),
-        SubcriptionProgress(person:state.profile),
-        SizedBox(
-          height: 65,
-        ),
-        bottomButtons(context),
-        SizedBox(
-          height: 140,
+        SubcriptionProgress(person: state.profile),
+        Padding(
+          padding: const EdgeInsets.only(top: 35, bottom: 120),
+          child: bottomButtons(context),
         ),
       ],
     );
@@ -146,12 +151,13 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget changeButton(ProfileState state) {
     return GestureDetector(
         onTap: () {
-          if(state.edit){
-            context.read<GeneralController>().profileController.closeAndSaveEdit();
-
-          }else{
+          if (state.edit) {
+            context
+                .read<GeneralController>()
+                .profileController
+                .closeAndSaveEdit();
+          } else {
             context.read<GeneralController>().profileController.editProfile();
-
           }
         },
         child: state.edit
@@ -183,7 +189,10 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           GestureDetector(
             onTap: () {
-              context.read<GeneralController>().profileController.deleteAccount();
+              context
+                  .read<GeneralController>()
+                  .profileController
+                  .deleteAccount();
             },
             behavior: HitTestBehavior.deferToChild,
             child: Text(
@@ -199,7 +208,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget textSubscription() {
     return GestureDetector(
       behavior: HitTestBehavior.deferToChild,
-      onTap: (){
+      onTap: () {
         context.read<GeneralController>().openSubscribe();
       },
       child: Container(

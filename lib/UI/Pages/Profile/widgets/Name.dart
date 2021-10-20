@@ -4,8 +4,9 @@ import 'package:recorder/models/ProfileModel.dart';
 import 'package:recorder/Style.dart';
 import 'package:provider/provider.dart';
 class ProfileName extends StatefulWidget {
-  bool isEdit;
-  ProfileModel person;
+  final bool isEdit;
+  final ProfileModel person;
+
   ProfileName({@required this.isEdit, @required this.person});
   @override
   _ProfileNameState createState() => _ProfileNameState();
@@ -36,8 +37,9 @@ class _ProfileNameState extends State<ProfileName> {
         style: nameTextStyle,
         decoration: InputDecoration(
           border: InputBorder.none,
-          hintText: widget.person.name,
-          hintStyle: nameTextStyle,
+          hintText: widget.person.name ?? "Иван Иванов",
+          hintStyle: TextStyle(color: cBlack.withOpacity(.4)),
+          // hintStyle: nameTextStyle,
         ),
       ),
     );

@@ -29,18 +29,10 @@ dependencies:
   sqflite: any
   connectivity: ^0.4.2
   url_launcher: ^6.0.3
-#  flutter_launcher_icons: ^0.9.0
-#
-#flutter_icons:
-#  image_path: "assets/images/logoRecorder.png"
-#  android: true
-#  ios: true
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
+  flutter_audio_recorder2: ^0.0.2
+
   cupertino_icons: ^1.0.0
-  flutter_audio_recorder:
-    path: ../flutter_audio_recorder-master
-#  flutter_audio_recorder2: ^0.0.2
+#    path: ../flutter_audio_recorder-master
 
 
 dev_dependencies:

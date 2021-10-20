@@ -125,7 +125,8 @@ class _StateAddCollectionState extends State<StateAddCollection> {
             color: cBackground,
             fontSize: 24,
             fontWeight: FontWeight.w700,
-            fontFamily: fontFamily),
+            fontFamily: fontFamily,
+        ),
       );
   }
 
@@ -135,7 +136,7 @@ class _StateAddCollectionState extends State<StateAddCollection> {
       builder: (context, snapshot) {
         return GestureDetector(
           behavior: HitTestBehavior.deferToChild,
-          onTap: (){
+          onTap: () {
             context.read<GeneralController>().collectionsController.addImage();
           },
           child: Container(
@@ -145,8 +146,8 @@ class _StateAddCollectionState extends State<StateAddCollection> {
                     color: Color.fromRGBO(0, 0, 0, 0.25),
                     offset: Offset(0,4),
                     blurRadius: 20,
-                    spreadRadius: 0
-                )
+                    spreadRadius: 0,
+                ),
               ],
             ),
             child: ClipRRect(
@@ -160,8 +161,8 @@ class _StateAddCollectionState extends State<StateAddCollection> {
                       color: Color.fromRGBO(0, 0, 0, 0.25),
                       offset: Offset(0,4),
                       blurRadius: 20,
-                      spreadRadius: 0
-                    )
+                      spreadRadius: 0,
+                    ),
                   ],
                   color: cBackground.withOpacity(0.9)
                 ),
@@ -169,13 +170,13 @@ class _StateAddCollectionState extends State<StateAddCollection> {
                 Center(child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(100)),
-                      border: Border.all(color: cBlack)
+                      border: Border.all(color: cBlack),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: IconSvg(IconsSvg.camera, color: cBlack),
                 )),)
-                    :Image.file(File(snapshot.data), fit: BoxFit.cover,),
+                    : Image.file(File(snapshot.data), fit: BoxFit.cover,),
               ),
             ),
           ),
@@ -202,7 +203,7 @@ class _StateAddCollectionState extends State<StateAddCollection> {
             color: cBlack.withOpacity(0.7),
             fontWeight: FontWeight.w400,
           ),
-          hintText: "Введите описание...",
+          hintText: "Описание",
         ),
         style: TextStyle(
             color: cBlack,

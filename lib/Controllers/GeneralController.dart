@@ -6,7 +6,7 @@ import 'package:recorder/UI/Player.dart';
 import 'package:rxdart/rxdart.dart';
 import 'States/PlayerState.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
+import 'package:flutter_audio_recorder2/flutter_audio_recorder2.dart';
 import 'package:recorder/Controllers/HomeController.dart';
 import 'package:recorder/Controllers/PlayerController.dart';
 import 'package:recorder/Controllers/ProfileController.dart';

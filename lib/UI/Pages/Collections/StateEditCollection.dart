@@ -149,7 +149,7 @@ class _StateEditCollectionState extends State<StateEditCollection> {
                       // child: snapshot.data.currentItem.isLocalPicture?Image.file(File(snapshot.data.currentItem.picture),fit: BoxFit.cover,):Image(image: NetworkImage(snapshot.data.currentItem.picture), fit: BoxFit.cover)),
                       return snapshot1.data?.currentItem?.picture == null
                           ? Container(
-                        color: cBackground,
+                        color: cBackground.withOpacity(.9),
                             child: Center(
                                 child: Container(
                                   decoration: BoxDecoration(

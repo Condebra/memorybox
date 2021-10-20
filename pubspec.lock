@@ -111,13 +111,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_audio_recorder:
+  flutter_audio_recorder2:
     dependency: "direct main"
     description:
-      path: "../flutter_audio_recorder-master"
-      relative: true
-    source: path
-    version: "0.5.5"
+      name: flutter_audio_recorder2
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2"
   flutter_localizations:
     dependency: "direct main"
     description: flutter
