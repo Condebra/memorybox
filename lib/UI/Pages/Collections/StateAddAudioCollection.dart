@@ -10,7 +10,8 @@ import 'package:recorder/models/AudioModel.dart';
 
 class StateAddAudioCollection extends StatefulWidget {
   @override
-  _StateAddAudioCollectionState createState() => _StateAddAudioCollectionState();
+  _StateAddAudioCollectionState createState() =>
+      _StateAddAudioCollectionState();
 }
 
 class _StateAddAudioCollectionState extends State<StateAddAudioCollection> {
@@ -30,17 +31,17 @@ class _StateAddAudioCollectionState extends State<StateAddAudioCollection> {
         top: 16,
         textRightButton: "Добавить",
         height: 90,
-        tapLeftButton: (){
+        tapLeftButton: () {
           context.read<GeneralController>().collectionsController.back();
         },
-        tapRightButton:  (){
+        tapRightButton: () {
           //todo save
           context.read<GeneralController>().collectionsController.back();
         },
         child: Container(
           child: GestureDetector(
             behavior: HitTestBehavior.deferToChild,
-            onTap: (){
+            onTap: () {
               FocusScope.of(context).unfocus();
             },
             child: Column(
@@ -65,7 +66,9 @@ class _StateAddAudioCollectionState extends State<StateAddAudioCollection> {
           child: Column(
             children: [
               search(),
-              SizedBox(height: 40,),
+              SizedBox(
+                height: 40,
+              ),
               _audios()
             ],
           ),
@@ -74,9 +77,9 @@ class _StateAddAudioCollectionState extends State<StateAddAudioCollection> {
     );
   }
 
-  Widget search(){
+  Widget search() {
     return Container(
-      width: MediaQuery.of(context).size.width-32,
+      width: MediaQuery.of(context).size.width - 32,
       decoration: BoxDecoration(
         color: cBackground,
         borderRadius: BorderRadius.all(Radius.circular(50)),
@@ -85,11 +88,16 @@ class _StateAddAudioCollectionState extends State<StateAddAudioCollection> {
         padding: const EdgeInsets.symmetric(vertical: 5),
         child: Row(
           children: [
-            SizedBox(width: 30,),
+            SizedBox(
+              width: 30,
+            ),
             Container(
-                width: MediaQuery.of(context).size.width-32-30-50-10,
+                width: MediaQuery.of(context).size.width - 32 - 30 - 50 - 10,
                 child: TextField(
-                  controller: context.read<GeneralController>().collectionsController.controllerSearch,
+                  controller: context
+                      .read<GeneralController>()
+                      .collectionsController
+                      .controllerSearch,
                   maxLines: 1,
                   decoration: InputDecoration(
                     border: InputBorder.none,
@@ -106,7 +114,9 @@ class _StateAddAudioCollectionState extends State<StateAddAudioCollection> {
                       fontWeight: FontWeight.w400,
                       fontFamily: fontFamily),
                 )),
-            SizedBox(width: 10,),
+            SizedBox(
+              width: 10,
+            ),
             Container(
               width: 30,
               height: 30,
@@ -120,39 +130,44 @@ class _StateAddAudioCollectionState extends State<StateAddAudioCollection> {
 
   Widget _audios() {
     return StreamBuilder<CollectionsState>(
-      stream: context
-          .read<GeneralController>()
-          .collectionsController
-          .streamCollections,
-      builder: (context, snapshot) {
-        List<AudioItem> list = [];
-        if (snapshot.hasData) {
-          if (snapshot.data.audiosSearch != null && snapshot.data.audiosSearch.isNotEmpty) {
-            list = snapshot.data.audiosSearch;
-          } else {
-            list = snapshot.data.audiosAll;
+        stream: context
+            .read<GeneralController>()
+            .collectionsController
+            .streamCollections,
+        builder: (context, snapshot) {
+          List<AudioItem> list = [];
+          if (snapshot.hasData) {
+            if (snapshot.data.audiosSearch != null &&
+                snapshot.data.audiosSearch.isNotEmpty) {
+              list = snapshot.data.audiosSearch;
+            } else {
+              list = snapshot.data.audiosAll;
+            }
           }
-        }
-        if (list == null || list.isEmpty) return SizedBox();
-        return Column(
-          children: List.generate(list.length, (index) {
-            return Column(
-              children: [
-                AudioItemWidget(
-                  colorPlay: cSwamp,
-                  selected: true,
-                  onSelect: (){
-                    //todo select
-                    context.read<GeneralController>().collectionsController.selectAudio(list[index]);
-                  },
-                  item: list[index],
-                ),
-                SizedBox(height: 10,),
-              ],
-            );
-          }),
-        );
-      }
-    );
+          if (list == null || list.isEmpty) return SizedBox();
+          return Column(
+            children: List.generate(list.length, (index) {
+              return Column(
+                children: [
+                  AudioItemWidget(
+                    colorPlay: cSwamp,
+                    selected: true,
+                    onSelect: () {
+                      //todo select
+                      context
+                          .read<GeneralController>()
+                          .collectionsController
+                          .selectAudio(list[index]);
+                    },
+                    item: list[index],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                ],
+              );
+            }),
+          );
+        });
   }
 }

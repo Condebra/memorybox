@@ -68,7 +68,7 @@ class RecordController {
       await _start();
       _timer = Timer.periodic(Duration(milliseconds: 300), (Timer t) async {
         _current = await _recorder.current(channel: 0);
-        print(_current.status);
+        // print(_current.status);
         _powerList.removeAt(0);
         // if(maxPower != null && maxPower < _recorder.recording.metering.peakPower.toInt().abs()){
         //   maxPower = _recorder.recording.metering.peakPower.toInt().abs();
@@ -92,7 +92,6 @@ class RecordController {
   }
 
   recordStop() async {
-    ////////////////////////////////////////////////////0000000000000000000000000000000000000000000000000000000000000000000000
     print('===============================================stop initiated=====');
     _recorder.stop();
     _timer.cancel();
@@ -124,26 +123,10 @@ class RecordController {
     var now = DateTime.now();
     String out =
         "Аудиозапись ${now.day}.${now.month}.${now.year} ${now.hour}:${now.minute}:${now.second}";
-    // bool find = false;
-    // int counter = 1;
-    // do{
-    //   find = false;
-    //   for(int i = 0; i < collectionsController.audiosAll.length; i++){
-    //     print("${collectionsController.audiosAll[i].name}  ${out+counter.toString()}  " );
-    //     if(collectionsController.audiosAll[i].name.contains(out+counter.toString())){
-    //       find = true;
-    //       break;
-    //     }
-    //   }
-    //   if(find) counter++;
-    // }while(find);
-    // out+=counter.toString();
-
     nameController.text = out;
   }
 
   closeSheet() async {
-    //todo
     _open = false;
     stop();
     recordStop();
@@ -168,11 +151,11 @@ class RecordController {
         await _recorder.initialized;
         // after initialization
         var current = await _recorder.current(channel: 0);
-        print(current);
+        // print(current);
         // should be "Initialized", if all working fine
         _current = current;
         _currentStatus = current.status;
-        print(_currentStatus);
+        // print(_currentStatus);
         return true;
       } else {
         //todo no permission

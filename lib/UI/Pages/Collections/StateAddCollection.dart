@@ -17,7 +17,7 @@ class StateAddCollection extends StatefulWidget {
 class _StateAddCollectionState extends State<StateAddCollection> {
   bool editHeader = false;
   bool editComment = false;
-  FocusNode focusNode =FocusNode();
+  FocusNode focusNode = FocusNode();
 
   @override
   void initState() {
@@ -26,7 +26,7 @@ class _StateAddCollectionState extends State<StateAddCollection> {
     //   setState(() {});
     // });
     focusNode.addListener(() {
-      if(!focusNode.hasFocus){
+      if (!focusNode.hasFocus) {
         editHeader = false;
       }
       setState(() {});
@@ -47,16 +47,19 @@ class _StateAddCollectionState extends State<StateAddCollection> {
         padding: 18,
         top: 16,
         height: 90,
-        tapLeftButton: (){
+        tapLeftButton: () {
           context.read<GeneralController>().collectionsController.back();
         },
-        tapRightButton:  (){
-          context.read<GeneralController>().collectionsController.createCollection();
+        tapRightButton: () {
+          context
+              .read<GeneralController>()
+              .collectionsController
+              .createCollection();
         },
         child: Container(
           child: GestureDetector(
             behavior: HitTestBehavior.deferToChild,
-            onTap: (){
+            onTap: () {
               FocusScope.of(context).unfocus();
             },
             child: Column(
@@ -105,87 +108,93 @@ class _StateAddCollectionState extends State<StateAddCollection> {
   Widget _header() {
     // if (editHeader) {
     //   FocusScope.of(context).autofocus(focusNode);
-      return TextField(
-        focusNode: focusNode,
-        maxLines: 1,
-        controller: context
-            .read<GeneralController>()
-            .collectionsController
-            .controllerHeader,
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          hintStyle: TextStyle(
-            fontSize: 24,
-            color: cBackground.withOpacity(0.7),
-            fontWeight: FontWeight.w700,
-          ),
-          hintText: "Название",
+    return TextField(
+      focusNode: focusNode,
+      maxLines: 1,
+      controller: context
+          .read<GeneralController>()
+          .collectionsController
+          .controllerHeader,
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        hintStyle: TextStyle(
+          fontSize: 24,
+          color: cBackground.withOpacity(0.7),
+          fontWeight: FontWeight.w700,
         ),
-        style: TextStyle(
-            color: cBackground,
-            fontSize: 24,
-            fontWeight: FontWeight.w700,
-            fontFamily: fontFamily,
-        ),
-      );
+        hintText: "Название",
+      ),
+      style: TextStyle(
+        color: cBackground,
+        fontSize: 24,
+        fontWeight: FontWeight.w700,
+        fontFamily: fontFamily,
+      ),
+    );
   }
 
   Widget _image() {
     return StreamBuilder<String>(
-      stream: context.read<GeneralController>().collectionsController.streamPhoto,
-      builder: (context, snapshot) {
-        return GestureDetector(
-          behavior: HitTestBehavior.deferToChild,
-          onTap: () {
-            context.read<GeneralController>().collectionsController.addImage();
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
+        stream:
+            context.read<GeneralController>().collectionsController.streamPhoto,
+        builder: (context, snapshot) {
+          return GestureDetector(
+            behavior: HitTestBehavior.deferToChild,
+            onTap: () {
+              context
+                  .read<GeneralController>()
+                  .collectionsController
+                  .addImage();
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
                     color: Color.fromRGBO(0, 0, 0, 0.25),
-                    offset: Offset(0,4),
+                    offset: Offset(0, 4),
                     blurRadius: 20,
                     spreadRadius: 0,
-                ),
-              ],
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(15)),
-              child: Container(
-                width: MediaQuery.of(context).size.width-32,
-                height: (MediaQuery.of(context).size.width-32)*240/382,
-                decoration: BoxDecoration(
-                  boxShadow: [
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+                child: Container(
+                  width: MediaQuery.of(context).size.width - 32,
+                  height: (MediaQuery.of(context).size.width - 32) * 240 / 382,
+                  decoration: BoxDecoration(boxShadow: [
                     BoxShadow(
                       color: Color.fromRGBO(0, 0, 0, 0.25),
-                      offset: Offset(0,4),
+                      offset: Offset(0, 4),
                       blurRadius: 20,
                       spreadRadius: 0,
                     ),
-                  ],
-                  color: cBackground.withOpacity(0.9)
+                  ], color: cBackground.withOpacity(0.9)),
+                  child: !snapshot.hasData || snapshot.data == null
+                      ? Center(
+                          child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(100)),
+                                border: Border.all(color: cBlack),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: IconSvg(IconsSvg.camera, color: cBlack),
+                              )),
+                        )
+                      : Image.file(
+                          File(snapshot.data),
+                          fit: BoxFit.cover,
+                        ),
                 ),
-                child: !snapshot.hasData || snapshot.data == null ?
-                Center(child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(100)),
-                      border: Border.all(color: cBlack),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: IconSvg(IconsSvg.camera, color: cBlack),
-                )),)
-                    : Image.file(File(snapshot.data), fit: BoxFit.cover,),
               ),
             ),
-          ),
-        );
-      }
-    );
+          );
+        });
   }
 
-  Widget _desc(){
+  Widget _desc() {
     return Container(
       decoration: BoxDecoration(
         border: Border(
@@ -195,7 +204,10 @@ class _StateAddCollectionState extends State<StateAddCollection> {
       child: TextField(
         minLines: 5,
         maxLines: 100,
-        controller:  context.read<GeneralController>().collectionsController.controllerComment,
+        controller: context
+            .read<GeneralController>()
+            .collectionsController
+            .controllerComment,
         decoration: InputDecoration(
           border: InputBorder.none,
           hintStyle: TextStyle(
@@ -214,83 +226,105 @@ class _StateAddCollectionState extends State<StateAddCollection> {
     );
   }
 
-  Widget _listAudio(){
+  Widget _listAudio() {
     return StreamBuilder<CollectionsState>(
-        stream: context.read<GeneralController>().collectionsController.streamCollections,
+        stream: context
+            .read<GeneralController>()
+            .collectionsController
+            .streamCollections,
         builder: (context, snapshot) {
           List<AudioItem> list = [];
-          if(snapshot.hasData){
-            if(snapshot.data.audios != null && snapshot.data.audios.isNotEmpty){
-              list = snapshot.data.audios;
-            }
-          }
-          if(list == null || list.isEmpty){
+          if (snapshot.hasData && snapshot.data.audios != null &&
+              snapshot.data.audios.isNotEmpty)
+            list = snapshot.data.audios;
+          if (list == null || list.isEmpty) {
             return Container(
               height: 150,
               width: MediaQuery.of(context).size.width,
               child: Center(
                 child: GestureDetector(
                   behavior: HitTestBehavior.deferToChild,
-                  onTap: (){
-                    context.read<GeneralController>().collectionsController.addAudio();
+                  onTap: () {
+                    context
+                        .read<GeneralController>()
+                        .collectionsController
+                        .addAudio();
                   },
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border(
-                        bottom: BorderSide(width: 1, color: cBlack.withOpacity(0.8)),
+                        bottom: BorderSide(
+                            width: 1, color: cBlack.withOpacity(0.8)),
                       ),
                     ),
-                    child: Text("Добавить аудиофайл" , style: TextStyle(color: cBlack, fontFamily: fontFamily, fontSize: 14, fontWeight: FontWeight.w400),),
+                    child: Text(
+                      "Добавить аудиофайл",
+                      style: TextStyle(
+                        color: cBlack,
+                        fontFamily: fontFamily,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
                   ),
                 ),
               ),
             );
-          }else
-            return Column(
-              children: [
-                Column(
-                  children: List.generate(list.length, (index) {
-                    return Column(
-                      children: [
-                        AudioItemWidget(
-                          colorPlay: cSwamp,
-                          selected: false,
-                          onSelect: (){
-                            //todo select
-                          },
-                          item: list[index],
+          }
+          return Column(
+            children: [
+              Column(
+                children: List.generate(list.length, (index) {
+                  return Column(
+                    children: [
+                      AudioItemWidget(
+                        colorPlay: cSwamp,
+                        selected: false,
+                        onSelect: () {
+                          //todo select
+                        },
+                        item: list[index],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  );
+                }),
+              ),
+              Container(
+                height: 50,
+                width: MediaQuery.of(context).size.width,
+                child: Center(
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.deferToChild,
+                    onTap: () {
+                      context
+                          .read<GeneralController>()
+                          .collectionsController
+                          .addAudio();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                              width: 1, color: cBlack.withOpacity(0.8)),
                         ),
-                        SizedBox(height: 10,),
-                      ],
-                    );
-                  }),
-                ),
-                Container(
-                  height: 50,
-                  width: MediaQuery.of(context).size.width,
-                  child: Center(
-                    child: GestureDetector(
-                      behavior: HitTestBehavior.deferToChild,
-                      onTap: (){
-                        context.read<GeneralController>().collectionsController.addAudio();
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(width: 1, color: cBlack.withOpacity(0.8)),
-                          ),
-                        ),
-                        child: Text("Добавить аудиофайл" , style: TextStyle(color: cBlack, fontFamily: fontFamily, fontSize: 14, fontWeight: FontWeight.w400),),
+                      ),
+                      child: Text(
+                        "Добавить аудиофайл",
+                        style: TextStyle(
+                            color: cBlack,
+                            fontFamily: fontFamily,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400),
                       ),
                     ),
                   ),
-                )
-              ],
-            );
-        }
-    );
+                ),
+              )
+            ],
+          );
+        });
   }
-
-
-
 }

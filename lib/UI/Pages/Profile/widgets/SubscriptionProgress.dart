@@ -5,14 +5,16 @@ import 'package:recorder/UI/Pages/Profile/widgets/ProgressBar.dart';
 import 'package:recorder/generated/l10n.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
-class SubcriptionProgress extends StatefulWidget {
-  ProfileModel person;
-  SubcriptionProgress({@required this.person});
+class SubscriptionProgress extends StatefulWidget {
+  final ProfileModel person;
+  
+  SubscriptionProgress({@required this.person});
+  
   @override
-  _SubcriptionProgressState createState() => _SubcriptionProgressState();
+  _SubscriptionProgressState createState() => _SubscriptionProgressState();
 }
 
-class _SubcriptionProgressState extends State<SubcriptionProgress> {
+class _SubscriptionProgressState extends State<SubscriptionProgress> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -20,9 +22,9 @@ class _SubcriptionProgressState extends State<SubcriptionProgress> {
         SizedBox(
           height: 20,
         ),
-        MyProgressBar(
+        ProgressBar(
           usage:  widget.person.free,
-          available: widget.person.max,
+          available: widget.person.max + 7, //+7 because of overflow
           width: MediaQuery.of(context).size.width * 0.74,
           height: MediaQuery.of(context).size.height * 0.03,
         ),

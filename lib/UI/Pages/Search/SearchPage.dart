@@ -19,54 +19,57 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: cBackground.withOpacity(0.0),
-        appBar: MyAppBar(
-          buttonMore: false,
-          buttonBack: false,
-          buttonMenu: true,
-          padding: 11,
-          height: 90,
+    return WillPopScope(
+      onWillPop: () => Future.sync(context.read<GeneralController>().onWillPop),
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: cBackground.withOpacity(0.0),
+          appBar: MyAppBar(
+            buttonMore: false,
+            buttonBack: false,
+            buttonMenu: true,
+            padding: 11,
+            height: 90,
 
-          tapLeftButton: (){
-            context.read<GeneralController>().setMenu(true);
-          },
-          child: Container(
-            child: Column(
-              children: [
-                Text(
-                  "Поиск",
-                  style: TextStyle(
-                      fontSize: 36,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: fontFamilyMedium,
-                      letterSpacing: 2),
-                ),
-                SizedBox(
-                  height: 4,
-                ),
-                Text(
-                  "Найди потеряшку",
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: fontFamilyMedium,
-                      letterSpacing: 2),
-                )
-              ],
+            tapLeftButton: (){
+              context.read<GeneralController>().setMenu(true);
+            },
+            child: Container(
+              child: Column(
+                children: [
+                  Text(
+                    "Поиск",
+                    style: TextStyle(
+                        fontSize: 36,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: fontFamilyMedium,
+                        letterSpacing: 2),
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Text(
+                    "Найди потеряшку",
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: fontFamilyMedium,
+                        letterSpacing: 2),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-        body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Column(
-            children: [
-              SizedBox(height: 40,),
-              searchField(),
-              hint(),
-              listResult(),
-            ],
+          body: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                SizedBox(height: 40,),
+                searchField(),
+                hint(),
+                listResult(),
+              ],
+            ),
           ),
         ),
       ),

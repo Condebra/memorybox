@@ -55,67 +55,70 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: cBackground.withOpacity(0.0),
-        appBar: MyAppBar(
-          buttonMore: false,
-          buttonBack: false,
-          buttonMenu: true,
-          padding: 11,
-          tapLeftButton: () {
-            context.read<GeneralController>().setMenu(true);
-          },
-        ),
-        body: StreamBuilder<HomeState>(
-            stream: context.read<GeneralController>().homeController.stream,
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) return Center(child: CircularProgressIndicator());
-              return SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: 5),
-                child: Column(
-                  children: [
-                    Collections(
-                      onAddCollection: () {
-                        context.read<GeneralController>().setPage(1);
-                        context
-                            .read<GeneralController>()
-                            .collectionsController
-                            .addCollection();
-                      },
-                      onTapCollection: (item) {
-                        context.read<GeneralController>().setPage(1);
-                        context
-                            .read<GeneralController>()
-                            .collectionsController
-                            .view(item);
-                      },
-                      loading: (snapshot.data == null
-                          ? true
-                          : snapshot.data.loading ?? false),
-                      items: (snapshot.data == null
-                          ? []
-                          : snapshot.data.collections),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(4, 40, 4, 0),
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 80),
-                        child: AudioPreview(
-                          loading: (snapshot.data == null
-                              ? true
-                              : snapshot.data.loading ?? false),
-                          items: (snapshot.data.audios ?? []),
+    return WillPopScope(
+      onWillPop: () => Future.sync(context.read<GeneralController>().onWillPop),
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: cBackground.withOpacity(0.0),
+          appBar: MyAppBar(
+            buttonMore: false,
+            buttonBack: false,
+            buttonMenu: true,
+            padding: 11,
+            tapLeftButton: () {
+              context.read<GeneralController>().setMenu(true);
+            },
+          ),
+          body: StreamBuilder<HomeState>(
+              stream: context.read<GeneralController>().homeController.stream,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) return Center(child: CircularProgressIndicator());
+                return SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  child: Column(
+                    children: [
+                      Collections(
+                        onAddCollection: () {
+                          context.read<GeneralController>().setPage(1);
+                          context
+                              .read<GeneralController>()
+                              .collectionsController
+                              .addCollection();
+                        },
+                        onTapCollection: (item) {
+                          context.read<GeneralController>().setPage(1);
+                          context
+                              .read<GeneralController>()
+                              .collectionsController
+                              .view(item);
+                        },
+                        loading: (snapshot.data == null
+                            ? true
+                            : snapshot.data.loading ?? false),
+                        items: (snapshot.data == null
+                            ? []
+                            : snapshot.data.collections),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(4, 40, 4, 0),
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 80),
+                          child: AudioPreview(
+                            loading: (snapshot.data == null
+                                ? true
+                                : snapshot.data.loading ?? false),
+                            items: (snapshot.data.audios ?? []),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              );
-            }),
+                    ],
+                  ),
+                );
+              }),
+        ),
+        // ),
       ),
-      // ),
     );
   }
 }

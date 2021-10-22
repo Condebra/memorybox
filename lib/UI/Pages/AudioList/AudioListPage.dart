@@ -25,84 +25,87 @@ class _AudioListPageState extends State<AudioListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: cBackground.withOpacity(0.0),
-        appBar: MyAppBar(
-          buttonMore: true,
-          buttonBack: false,
-          buttonMenu: true,
-          tapLeftButton: (){
-            context.read<GeneralController>().setMenu(true);
-          },
-          childRight : SizedBox(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 11),
-              child: Container(
-                decoration: BoxDecoration(
+    return WillPopScope(
+      onWillPop: () => Future.sync(context.read<GeneralController>().onWillPop),
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: cBackground.withOpacity(0.0),
+          appBar: MyAppBar(
+            buttonMore: true,
+            buttonBack: false,
+            buttonMenu: true,
+            tapLeftButton: (){
+              context.read<GeneralController>().setMenu(true);
+            },
+            childRight : SizedBox(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 11),
+                child: Container(
+                  decoration: BoxDecoration(
+                  ),
+                  width: 27,
+                  height: 27,
                 ),
-                width: 27,
-                height: 27,
+              ),
+            ),
+            top: 25,
+            height: 100,
+            child: Container(
+              child: Column(
+                children: [
+                  Text(
+                    S.of(context).audio_appbar,
+                    style: TextStyle(
+                        fontSize: 36,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: fontFamilyMedium,
+                        letterSpacing: 2),
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Text(
+                    S.of(context).audio_appbar_subtitle,
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: fontFamilyMedium,
+                        letterSpacing: 2),
+                  )
+                ],
               ),
             ),
           ),
-          top: 25,
-          height: 100,
-          child: Container(
-            child: Column(
-              children: [
-                Text(
-                  S.of(context).audio_appbar,
-                  style: TextStyle(
-                      fontSize: 36,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: fontFamilyMedium,
-                      letterSpacing: 2),
-                ),
-                SizedBox(
-                  height: 4,
-                ),
-                Text(
-                  S.of(context).audio_appbar_subtitle,
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: fontFamilyMedium,
-                      letterSpacing: 2),
-                )
-              ],
-            ),
-          ),
-        ),
-        body: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            child: StreamBuilder<HomeState>(
-              stream: context.read<GeneralController>().homeController.stream,
-              builder: (context, snapshot) {
-                return (!snapshot.hasData || snapshot.data.loading)?Center(child: CircularProgressIndicator(),):Column(
-                  children: [
-                    SizedBox(
-                      height: 43,
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: 25.0, right: 19.0),
-                      width: MediaQuery.of(context).size.width,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [playlistInfo(snapshot.data), playlistButton(snapshot.data.audios)],
+          body: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: StreamBuilder<HomeState>(
+                stream: context.read<GeneralController>().homeController.stream,
+                builder: (context, snapshot) {
+                  return (!snapshot.hasData || snapshot.data.loading)?Center(child: CircularProgressIndicator(),):Column(
+                    children: [
+                      SizedBox(
+                        height: 43,
                       ),
-                    ),
-                    SizedBox(
-                      height: 33,
-                    ),
-                    playlistPreview(snapshot.data.audios),
-                    SizedBox(
-                      height: 110,
-                    ),
-                  ],
-                );
-              }
-            )),
+                      Container(
+                        padding: EdgeInsets.only(left: 25.0, right: 19.0),
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [playlistInfo(snapshot.data), playlistButton(snapshot.data.audios)],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 33,
+                      ),
+                      playlistPreview(snapshot.data.audios),
+                      SizedBox(
+                        height: 110,
+                      ),
+                    ],
+                  );
+                }
+              )),
+        ),
       ),
     );
   }

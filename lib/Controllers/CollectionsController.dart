@@ -109,6 +109,7 @@ class CollectionsController {
   }
 
   addAudio() {
+    _audios = [];
     _stateSelect = CollectionsSelection.addAudio;
     setState();
   }
@@ -140,10 +141,10 @@ class CollectionsController {
   back() async {
     if (_stateSelect == CollectionsSelection.addAudio) {
       _audios = [];
-      for (int i = 0; i < audiosAll.length; i++)
-        if (audiosAll[i].select != null && audiosAll[i].select)
-          _audios.add(audiosAll[i]);
-
+      // for (int i = 0; i < audiosAll.length; i++)
+      //   if (audiosAll[i].select != null && audiosAll[i].select)
+      //     _audios.add(audiosAll[i]);
+      _audios.addAll(audiosAll);
       // print(_audios.length);
       _stateSelect = CollectionsSelection.add;
       setState();

@@ -15,6 +15,7 @@ import 'package:recorder/UI/Pages/Record/showRecord.dart';
 import 'package:recorder/Utils/app_keys.dart';
 import 'package:recorder/models/AudioModel.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 part 'States/RecordState.dart';
 
 class GeneralController {
@@ -44,9 +45,12 @@ class GeneralController {
   get streamCurrentPage => _streamControllerPage.stream;
 
   BehaviorSubject _controllerMenu = BehaviorSubject<bool>();
+
   get streamMenu => _controllerMenu.stream;
 
   bool resume = false;
+
+  List pageHistory = [0];
 
   GeneralController() {
     _controllerMenu.sink.add(false);
@@ -62,17 +66,18 @@ class GeneralController {
     this.restoreController = RestoreController();
   }
 
-  loadCollections(){
+  loadCollections() {
     this.homeController.load();
   }
 
-  setPage(int index, {bool restore}) async {
-    if (index != 2 || restore != null ) {
+  setPage(int index, {bool restore, BuildContext context}) async {
+    if (index != 2 || restore != null) {
       pageController.animateToPage(index,
           duration: Duration(milliseconds: 300), curve: Curves.easeOut);
       _streamControllerPage.sink.add(index);
+      pageHistory.add(index);
     } else {
-      if(playerController.playing != null && playerController.playing){
+      if (playerController.playing != null && playerController.playing) {
         await recordController.save();
         playerController.pause();
         playerController.setHide(false);
@@ -84,6 +89,21 @@ class GeneralController {
           (MediaQuery.of(AppKeys.scaffoldKey.currentContext).size.width * 0.98) ~/ 3);
       showRecord(this);
     }
+  }
+
+  bool onWillPop() {
+    if (pageHistory.length == 1 && pageController.page == 0) return true;
+    if (pageHistory.isNotEmpty) {
+      if (pageHistory.length > 1)
+        pageHistory.removeAt(pageHistory.length - 1);
+      print(pageHistory);
+      pageController.animateToPage(pageHistory.last,
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+      );
+      _streamControllerPage.sink.add(pageHistory.last);
+    }
+    return false;
   }
 
   closeRecord() {
@@ -107,20 +127,18 @@ class GeneralController {
     //todo
     pageController.jumpToPage(4);
     setMenu(false);
-    Navigator.push(AppKeys.navigatorKey.currentContext, MaterialPageRoute(builder: (context)=> SubscriptionPage()));
+    Navigator.push(AppKeys.navigatorKey.currentContext,
+        MaterialPageRoute(builder: (context) => SubscriptionPage()));
   }
 
   support() async {
     final Uri _emailLaunchUri = Uri(
         scheme: 'mailto',
         path: 'love@hugsy.ru',
-        queryParameters: {
-          'subject': ''
-        }
-    );
+        queryParameters: {'subject': ''});
     launch(_emailLaunchUri.toString());
   }
-  
+
   dispose() {
     _streamControllerPage.close();
     homeController.dispose();

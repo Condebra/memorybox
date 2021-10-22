@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:recorder/Style.dart';
 
-class MyProgressBar extends StatefulWidget {
+class ProgressBar extends StatefulWidget {
   double width;
   double height;
   int usage;
   int available;
-  MyProgressBar(
+  ProgressBar(
       {@required this.width,
       @required this.height,
       @required this.usage,
       @required this.available});
   @override
-  _MyProgressBarState createState() => _MyProgressBarState();
+  _ProgressBarState createState() => _ProgressBarState();
 }
 
-class _MyProgressBarState extends State<MyProgressBar> {
+class _ProgressBarState extends State<ProgressBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,12 +33,14 @@ class _MyProgressBarState extends State<MyProgressBar> {
             child: Row(
               children: [
                 AnimatedContainer(
-                  duration:
-                  Duration(milliseconds: 200),
+                  duration: Duration(milliseconds: 200),
                   height: widget.height,
                   width: ((widget.usage / widget.available) * widget.width)
                       .toDouble(),
-                  decoration: BoxDecoration(color: cOrange),
+                  decoration: BoxDecoration(
+                      color: cOrange,
+                      borderRadius: BorderRadius.circular(20),
+                  ),
                 ),
               ],
             )),

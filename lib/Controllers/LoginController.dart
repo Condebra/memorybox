@@ -20,15 +20,15 @@ class LoginController {
   TextEditingController controllerCode = TextEditingController();
 
   stepOneTap() {
-      controllerPages.animateToPage(1,
-          duration: Duration(milliseconds: 300), curve: Curves.ease);
+    controllerPages.animateToPage(1,
+        duration: Duration(milliseconds: 300), curve: Curves.ease);
   }
 
   stepTwoTap() async {
     if (maskFormatter.getUnmaskedText().length == 10) {
-        controllerPages.animateToPage(2,
-            duration: Duration(milliseconds: 300), curve: Curves.ease);
-        getCode();
+      controllerPages.animateToPage(2,
+          duration: Duration(milliseconds: 300), curve: Curves.ease);
+      getCode();
     }
   }
 
@@ -41,7 +41,8 @@ class LoginController {
         controllerPages.animateToPage(3,
             duration: Duration(milliseconds: 300), curve: Curves.ease);
         checkCode();
-        await Future.delayed(Duration(milliseconds: 700));
+        await Future.delayed(
+            Duration(milliseconds: 700)); //wtf is that? why are we waiting?
         pushHome(AppKeys.scaffoldKeyAuth.currentContext);
       } else {
         controllerCode.text = "";
@@ -49,17 +50,15 @@ class LoginController {
     }
   }
 
-  futureAuthSet(bool state, {BuildContext restartContext})async{
+  futureAuthSet(bool state, {BuildContext restartContext}) async {
     await futureAuth(state: state);
-    if(restartContext != null){
+    if (restartContext != null) {
       Navigator.pushReplacementNamed(restartContext, Routes.initial);
     }
   }
 
-
-
   transitionToHome() async {
-    await Future.delayed(Duration(seconds: 2, milliseconds: 500));
+    await Future.delayed(Duration(milliseconds: 800));
     pushHome(AppKeys.scaffoldKeyAuthOld.currentContext);
   }
 
@@ -67,11 +66,11 @@ class LoginController {
     AuthProvider.sendCode("7${maskFormatter.getUnmaskedText()}");
   }
 
-  checkCode() async {}
-
+  checkCode() async {} //todo checking codes
 
   pushHome(BuildContext context) {
-    Navigator.pushAndRemoveUntil(context, routeHome(), (Route<dynamic> route) => false);
+    Navigator.pushAndRemoveUntil(
+        context, routeHome(), (Route<dynamic> route) => false);
   }
 
   Route routeHome() {
@@ -79,7 +78,7 @@ class LoginController {
     var curveTween = CurveTween(curve: curve);
 
     return PageRouteBuilder(
-      transitionDuration: Duration(milliseconds: 2500),
+      transitionDuration: Duration(milliseconds: 400),
       pageBuilder: (context, animation, secondaryAnimation) => General(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         var begin = Offset(0.0, 1.0);

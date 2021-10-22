@@ -218,7 +218,8 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
                       ? GestureDetector(
                           behavior: HitTestBehavior.deferToChild,
                           onTap: () {
-                            widget.onSelect == null ? null : widget.onSelect();
+                            widget.onSelect();
+                            // widget.onSelect == null ? null : widget.onSelect();
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
@@ -228,7 +229,8 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
                       : GestureDetector(
                           behavior: HitTestBehavior.deferToChild,
                           onTap: () {
-                            widget.onSelect == null ? null : widget.onSelect();
+                            widget.onSelect();
+                            // widget.onSelect == null ? null : widget.onSelect();
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
