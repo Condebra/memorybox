@@ -21,6 +21,7 @@ class DBProvider {
     if (_database != null) return _database;
 
     _database = await _initDB();
+    print("db=============>${_database.toString()}<===========");
     return _database;
   }
 
@@ -121,12 +122,11 @@ class DBProvider {
         where: "${idS == null ? TableAudio.id : TableAudio.idS} = ?",
         whereArgs: [idS ?? id]);
     // print("=== AudioGet $idS" + list.toString());
-    // TODO Почему в поиске аудио по id из ДБ возвращается список?
     AudioItem item;
     list.forEach((element) {
       item = AudioItem.fromDB(element);
     });
-    return item;
+    return AudioItem.fromDB(list.first);
     // return AudioItem.fromDB(list[0]);
   }
 
@@ -265,7 +265,7 @@ class DBProvider {
       item.duration = Duration(milliseconds: time);
       items.add(item);
     });
-    print("Db ${items.length} collections");
+    // print("Db ${items.length} collections");
     return items;
   }
 

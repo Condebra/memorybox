@@ -9,14 +9,12 @@ import 'package:recorder/Utils/DropMenu/DropMenuItem.dart';
 import 'package:recorder/Utils/DropMenu/FocusedMunu.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 
-
 class Restore extends StatefulWidget {
   @override
   _RestoreState createState() => _RestoreState();
 }
 
 class _RestoreState extends State<Restore> {
-
   @override
   void initState() {
     super.initState();
@@ -33,7 +31,7 @@ class _RestoreState extends State<Restore> {
           buttonMore: true,
           buttonBack: false,
           buttonMenu: true,
-          tapLeftButton: (){
+          tapLeftButton: () {
             context.read<GeneralController>().setMenu(true);
           },
           childRight: FocusedMenuHolder(
@@ -42,25 +40,63 @@ class _RestoreState extends State<Restore> {
               duration: Duration(milliseconds: 50),
               menuBoxDecoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(15))
-              ),
-              menuWidth: MediaQuery.of(context).size.width/2,
+                  borderRadius: BorderRadius.all(Radius.circular(15))),
+              menuWidth: MediaQuery.of(context).size.width / 2,
               menuOffset: 10,
-              menuItems:[
-                FocusedMenuItem(onPressed: (){
-                  context.read<GeneralController>().restoreController.setSelect(true);
-                }, title: Text("Выбрать несколько",style: TextStyle(color: cBlack, fontWeight: FontWeight.w400, fontSize: 14, fontFamily: fontFamily),),),
-                FocusedMenuItem(onPressed: (){
-                  context.read<GeneralController>().restoreController.deleteAll();
-                }, title: Text("Удалить все",style: TextStyle(color: cBlack, fontWeight: FontWeight.w400, fontSize: 14, fontFamily: fontFamily),),),
-                FocusedMenuItem(onPressed: (){
-                  context.read<GeneralController>().restoreController.restoreAll();
-
-                }, title: Text("Восстановить все",style: TextStyle(color: cBlack, fontWeight: FontWeight.w400, fontSize: 14, fontFamily: fontFamily),),),
+              menuItems: [
+                FocusedMenuItem(
+                  onPressed: () {
+                    context
+                        .read<GeneralController>()
+                        .restoreController
+                        .setSelect(true);
+                  },
+                  title: Text(
+                    "Выбрать несколько",
+                    style: TextStyle(
+                        color: cBlack,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        fontFamily: fontFamily),
+                  ),
+                ),
+                FocusedMenuItem(
+                  onPressed: () {
+                    context
+                        .read<GeneralController>()
+                        .restoreController
+                        .deleteAll();
+                  },
+                  title: Text(
+                    "Удалить все",
+                    style: TextStyle(
+                        color: cBlack,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        fontFamily: fontFamily),
+                  ),
+                ),
+                FocusedMenuItem(
+                  onPressed: () {
+                    context
+                        .read<GeneralController>()
+                        .restoreController
+                        .restoreAll();
+                  },
+                  title: Text(
+                    "Восстановить все",
+                    style: TextStyle(
+                        color: cBlack,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        fontFamily: fontFamily),
+                  ),
+                ),
               ],
-              onPressed: (){},
+              onPressed: () {},
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 11),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20.0, horizontal: 11),
                 child: Container(
                   width: 27,
                   height: 27,
@@ -70,14 +106,13 @@ class _RestoreState extends State<Restore> {
                   ),
                 ),
               )),
-
           top: 25,
           height: 100,
           child: Container(
             child: Column(
               children: [
                 Text(
-                 "Недавно\nудаленные",
+                  "Недавно\nудаленные",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 36,
@@ -90,30 +125,35 @@ class _RestoreState extends State<Restore> {
           ),
         ),
         body: StreamBuilder<RestoreState>(
-          stream: context.read<GeneralController>().restoreController.streamRestore,
-          builder: (context, snapshot) {
-            if(!snapshot.hasData || snapshot.data.loading){
-              return Center(child: CircularProgressIndicator(),);
-            }else if(snapshot.data.items == null || snapshot.data.items.isEmpty){
-              return _empty();
-            }else {
-              return SingleChildScrollView(
-                child: snapshot.data.select
-                    ? _contentSelected(snapshot.data)
-                    : _content(snapshot.data),
-              );
-            }
-          }
-        ),
+            stream: context
+                .read<GeneralController>()
+                .restoreController
+                .streamRestore,
+            builder: (context, snapshot) {
+              if (!snapshot.hasData || snapshot.data.loading) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snapshot.data.items == null ||
+                  snapshot.data.items.isEmpty) {
+                return _empty();
+              } else {
+                return SingleChildScrollView(
+                  child: snapshot.data.select
+                      ? _contentSelected(snapshot.data)
+                      : _content(snapshot.data),
+                );
+              }
+            }),
       ),
     );
   }
 
-  Widget _content(RestoreState state){
+  Widget _content(RestoreState state) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
-        children: List.generate(state.items.length, (index){
+        children: List.generate(state.items.length, (index) {
           return Column(
             children: [
               AudioItemWidget(
@@ -122,7 +162,9 @@ class _RestoreState extends State<Restore> {
                 delete: true,
                 item: state.items[index],
               ),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
             ],
           );
         }),
@@ -130,7 +172,7 @@ class _RestoreState extends State<Restore> {
     );
   }
 
-  _contentSelected(RestoreState state){
+  _contentSelected(RestoreState state) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -139,28 +181,45 @@ class _RestoreState extends State<Restore> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               GestureDetector(
-                behavior: HitTestBehavior.deferToChild,
-                  onTap: (){
-                  print("tap");
-                  context.read<GeneralController>().restoreController.setSelect(false);
+                  behavior: HitTestBehavior.deferToChild,
+                  onTap: () {
+                    print("tap");
+                    context
+                        .read<GeneralController>()
+                        .restoreController
+                        .setSelect(false);
                   },
-                  child: Text("Отменить", style: TextStyle(color: cBackground, fontFamily: fontFamily,fontSize: 16, fontWeight: FontWeight.w400),))
+                  child: Text(
+                    "Отменить",
+                    style: TextStyle(
+                        color: cBackground,
+                        fontFamily: fontFamily,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400),
+                  ))
             ],
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           Column(
-            children: List.generate(state.items.length, (index){
+            children: List.generate(state.items.length, (index) {
               return Column(
                 children: [
                   AudioItemWidget(
                     colorPlay: cBlue,
                     selected: true,
-                    onSelect: (){
-                      context.read<GeneralController>().restoreController.tapSelect(state.items[index]);
-                      },
+                    onSelect: () {
+                      context
+                          .read<GeneralController>()
+                          .restoreController
+                          .tapSelect(state.items[index]);
+                    },
                     item: state.items[index],
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                 ],
               );
             }),
@@ -169,9 +228,17 @@ class _RestoreState extends State<Restore> {
       ),
     );
   }
-  Widget _empty(){
+
+  Widget _empty() {
     return Center(
-      child: Text('Тут пусто', style: TextStyle(color: cBlack.withOpacity(0.7), fontWeight: FontWeight.w700, fontSize: 20, fontFamily: fontFamily),),
+      child: Text(
+        'Тут пусто',
+        style: TextStyle(
+            color: cBlack.withOpacity(0.7),
+            fontWeight: FontWeight.w700,
+            fontSize: 20,
+            fontFamily: fontFamily),
+      ),
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:recorder/Controllers/States/PlayerState.dart';
 import 'package:recorder/UI/Pages/Collections/CollectionsPage.dart';
 import 'package:recorder/UI/Pages/Search/SearchPage.dart';
 import 'package:recorder/UI/Pages/Restore/Restore.dart';
+import 'package:recorder/UI/Pages/Subscription/SubscritionPage.dart';
 import 'package:recorder/UI/widgets/MainMenu.dart';
 import 'package:recorder/models/AudioModel.dart';
 import 'package:recorder/Style.dart';
@@ -32,7 +33,6 @@ class _GeneralState extends State<General> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     controller = GeneralController();
   }
@@ -45,47 +45,45 @@ class _GeneralState extends State<General> {
         children: [
           Scaffold(
             key: AppKeys.scaffoldKey,
-            body: Stack(
-              children: [
-                StreamBuilder<PlayerState>(
-                    stream: controller.playerController.playerStream,
-                    builder: (context, snapshot) {
-                      return Container(
-                        height: MediaQuery.of(context).size.height -
-                            (snapshot.hasData && snapshot.data.playing ? 85 : 0),
-                        child: Stack(
-                          children: [
-                            Align(
-                                alignment: Alignment.topCenter,
-                                child: StreamBuilder<int>(
-                                    stream: controller.streamCurrentPage,
-                                    builder: (context, snapshot) {
-                                      return Background(
-                                          color: (snapshot.data ?? 0) == 1
-                                              ? cSwamp
-                                              : (snapshot.data ?? 0) == 3 || (snapshot.data ?? 0) == 2
+            body: StreamBuilder<PlayerState>(
+                stream: controller.playerController.playerStream,
+                builder: (context, snapshot) {
+                  return Container(
+                    height: MediaQuery.of(context).size.height -
+                        (snapshot.hasData && snapshot.data.playing ? 85 : 0),
+                    child: Stack(
+                      children: [
+                        Align(
+                            alignment: Alignment.topCenter,
+                            child: StreamBuilder<int>(
+                                stream: controller.streamCurrentPage,
+                                builder: (context, snapshot) {
+                                  return Background(
+                                      color: (snapshot.data ?? 0) == 1
+                                          ? cSwamp
+                                          : (snapshot.data ?? 0) == 3 ||
+                                                  (snapshot.data ?? 0) == 2
                                               ? cBlue
                                               : null);
-                                    })),
-                            PageView(
-                              // physics: BouncingScrollPhysics(),
-                              physics: NeverScrollableScrollPhysics(),
-                              controller: controller.pageController,
-                              children: [
-                                HomePage(),
-                                CollectionsPage(),
-                                Restore(),
-                                AudioListPage(),
-                                ProfilePage(),
-                                SearchPage(),
-                              ],
-                            ),
+                                })),
+                        PageView(
+                          // physics: BouncingScrollPhysics(),
+                          physics: NeverScrollableScrollPhysics(),
+                          controller: controller.pageController,
+                          children: [
+                            HomePage(),
+                            CollectionsPage(),
+                            Restore(),
+                            AudioListPage(),
+                            ProfilePage(),
+                            SearchPage(),
+                            SubscriptionPage(),
                           ],
                         ),
-                      );
-                    }),
-              ],
-            ),
+                      ],
+                    ),
+                  );
+                }),
           ),
           Align(
             alignment: Alignment.bottomCenter,
@@ -147,8 +145,7 @@ class _GeneralState extends State<General> {
                                 height: 100,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Container(
                                       height: 13,
@@ -213,15 +210,17 @@ class _GeneralState extends State<General> {
                     Positioned(
                       left: snapshot.hasData && snapshot.data
                           ? 0
-                          : -MediaQuery.of(context).size.width ,
+                          : -MediaQuery.of(context).size.width,
                       child: GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           controller.setMenu(false);
                         },
                         child: AnimatedContainer(
-                          decoration: BoxDecoration(
-                            color: snapshot.hasData&&snapshot.data?cBlack.withOpacity(0.4):Colors.transparent,
-                          ),
+                            decoration: BoxDecoration(
+                              color: snapshot.hasData && snapshot.data
+                                  ? cBlack.withOpacity(0.4)
+                                  : Colors.transparent,
+                            ),
                             height: MediaQuery.of(context).size.height,
                             width: MediaQuery.of(context).size.width,
                             duration: Duration(milliseconds: 200)),

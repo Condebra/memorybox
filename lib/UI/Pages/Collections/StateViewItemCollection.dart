@@ -62,6 +62,9 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
                         .read<GeneralController>()
                         .collectionsController
                         .edit();
+                    context
+                        .read<GeneralController>()
+                        .createRouteOnEdit(currentPage: 1);
                   },
                   title: Text(
                     "Редактировать",

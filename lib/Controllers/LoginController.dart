@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Routes.dart';
 import 'package:recorder/Utils/tokenDB.dart';
 import 'package:recorder/models/Put.dart';
@@ -11,6 +12,7 @@ import 'package:recorder/Utils/app_keys.dart';
 
 class LoginController {
   PageController controllerPages = PageController(initialPage: 0);
+  GeneralController generalController = GeneralController();
 
   var maskFormatter = new MaskTextInputFormatter(
       mask: '+7 (###) ###-##-##', filter: {"#": RegExp(r'[0-9]')});
@@ -69,6 +71,7 @@ class LoginController {
   checkCode() async {} //todo checking codes
 
   pushHome(BuildContext context) {
+    // generalController.setPage(0);
     Navigator.pushAndRemoveUntil(
         context, routeHome(), (Route<dynamic> route) => false);
   }

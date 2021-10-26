@@ -54,7 +54,7 @@ class CollectionItem {
   }
 
   factory CollectionItem.fromDB(Map<String, dynamic> map) {
-    print("DB UPDATE ${map[TableCollection.updateAt]} ");
+    // print("DB UPDATE ${map[TableCollection.updateAt]} ");
     return new CollectionItem(
         idS: map[TableCollection.idS] as int,
         id: map[TableCollection.id] as int,

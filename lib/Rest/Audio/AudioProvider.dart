@@ -316,9 +316,9 @@ class AudioProvider {
 
   /// Новая версия
   static Future<List<AudioItem>> getAll() async {
-    print("GET AUDIOS (getAll)");
+    // print("GET AUDIOS (getAll)");
     if (await futureAuth()) {
-      print("future auth get audio");
+      // print("future auth get audio");
       return await DBProvider.db.audiosGet();
     } else if (!await checkConnection()) {
       print("no connection get audios");

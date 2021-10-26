@@ -11,38 +11,37 @@ import 'package:recorder/models/AudioModel.dart';
 import 'package:recorder/models/Put.dart';
 import 'package:rxdart/rxdart.dart';
 
-class RestoreController{
-
+class RestoreController {
   BehaviorSubject _controllerRestore = BehaviorSubject<RestoreState>();
+
   get streamRestore => _controllerRestore.stream;
 
   List<AudioItem> _items;
   bool _loading = false;
   bool _select = false;
 
-  RestoreController(){
-    _loading = true;
-  setState();
-   load();
-  }
-
-
-
-  load()async{
+  RestoreController() {
     _loading = true;
     setState();
-    _items =  await AudioProvider.deleted();
-    _loading= false;
+    load();
+  }
+
+  load() async {
+    _loading = true;
+    setState();
+    _items = await AudioProvider.deleted();
+    _loading = false;
     setState();
   }
 
-
-  tapSelect(AudioItem item){
-    for(int i = 0; i < _items.length; i++){
-      if(item.id == null?item.idS == _items[i].idS:item.id == _items[i].id){
-        if(_items[i].select == null || !_items[i].select){
+  tapSelect(AudioItem item) {
+    for (int i = 0; i < _items.length; i++) {
+      if (item.id == null
+          ? item.idS == _items[i].idS
+          : item.id == _items[i].id) {
+        if (_items[i].select == null || !_items[i].select) {
           _items[i].select = true;
-        }else{
+        } else {
           _items[i].select = false;
         }
       }
@@ -50,20 +49,20 @@ class RestoreController{
     setState();
   }
 
-  deleteSelect()async{
+  deleteSelect() async {
     Put error;
     showDialogLoading(AppKeys.scaffoldKey.currentContext);
     List<AudioItem> out = [];
-    for(int i =0; i< _items.length; i++){
-      if(_items[i].select != null && _items[i].select)out.add(_items[i]);
+    for (int i = 0; i < _items.length; i++) {
+      if (_items[i].select != null && _items[i].select) out.add(_items[i]);
     }
 
-    if(out.length > 0){
-      for(int i =0; i< out.length; i++){
-        Put response = await AudioProvider.delete(null, ids:out[i].idS);
-        if(response.error == 200){
+    if (out.length > 0) {
+      for (int i = 0; i < out.length; i++) {
+        Put response = await AudioProvider.delete(null, ids: out[i].idS);
+        if (response.error == 200) {
           ///ok
-        }else{
+        } else {
           error = response;
         }
       }
@@ -71,27 +70,27 @@ class RestoreController{
     _select = false;
     await load();
 
-
     closeDialog(AppKeys.scaffoldKey.currentContext);
-    if(error != null){
-      showDialogIntegronError(AppKeys.scaffoldKey.currentContext, "Во время удаления были  непредвиденные ошибки, попробуйте еще раз, если ошибка повторяется - обратитесь в тех поддержку");
+    if (error != null) {
+      showDialogIntegronError(AppKeys.scaffoldKey.currentContext,
+          "Во время удаления были  непредвиденные ошибки, попробуйте еще раз, если ошибка повторяется - обратитесь в тех поддержку");
     }
   }
 
-  restoreSelect()async{
+  restoreSelect() async {
     Put error;
     showDialogLoading(AppKeys.scaffoldKey.currentContext);
     List<AudioItem> out = [];
-    for(int i =0; i< _items.length; i++){
-      if(_items[i].select != null && _items[i].select)out.add(_items[i]);
+    for (int i = 0; i < _items.length; i++) {
+      if (_items[i].select != null && _items[i].select) out.add(_items[i]);
     }
 
-    if(out.length > 0){
-      for(int i =0; i< out.length; i++){
+    if (out.length > 0) {
+      for (int i = 0; i < out.length; i++) {
         Put response = await AudioProvider.restore(out[i].idS);
-        if(response.error == 200){
+        if (response.error == 200) {
           ///ok
-        }else{
+        } else {
           error = response;
         }
       }
@@ -99,21 +98,22 @@ class RestoreController{
     _select = false;
     await load();
 
-
     closeDialog(AppKeys.scaffoldKey.currentContext);
-    if(error != null){
-      showDialogIntegronError(AppKeys.scaffoldKey.currentContext, "Во время удаления были  непредвиденные ошибки, попробуйте еще раз, если ошибка повторяется - обратитесь в тех поддержку");
+    if (error != null) {
+      showDialogIntegronError(AppKeys.scaffoldKey.currentContext,
+          "Во время удаления были  непредвиденные ошибки, попробуйте еще раз, если ошибка повторяется - обратитесь в тех поддержку");
     }
   }
-  restoreAll()async{
+
+  restoreAll() async {
     showDialogLoading(AppKeys.scaffoldKey.currentContext);
     Put error;
-    if(_items.length > 0){
-      for(int i =0; i< _items.length; i++){
+    if (_items.length > 0) {
+      for (int i = 0; i < _items.length; i++) {
         Put response = await AudioProvider.restore(_items[i].idS);
-        if(response.error == 200){
+        if (response.error == 200) {
           ///ok
-        }else{
+        } else {
           error = response;
         }
       }
@@ -122,21 +122,22 @@ class RestoreController{
     await load();
     closeDialog(AppKeys.scaffoldKey.currentContext);
 
-    if(error != null){
-      showDialogIntegronError(AppKeys.scaffoldKey.currentContext, "Во время удаления были  непредвиденные ошибки, попробуйте еще раз, если ошибка повторяется - обратитесь в тех поддержку");
+    if (error != null) {
+      showDialogIntegronError(AppKeys.scaffoldKey.currentContext,
+          "Во время удаления были  непредвиденные ошибки, попробуйте еще раз, если ошибка повторяется - обратитесь в тех поддержку");
     }
   }
 
-  deleteAll()async{
+  deleteAll() async {
     print("a");
     showDialogLoading(AppKeys.scaffoldKey.currentContext);
     Put error;
-    if(_items.length > 0){
-      for(int i =0; i< _items.length; i++){
-        Put response = await AudioProvider.delete(null, ids:_items[i].idS);
-        if(response.error == 200){
+    if (_items.length > 0) {
+      for (int i = 0; i < _items.length; i++) {
+        Put response = await AudioProvider.delete(null, ids: _items[i].idS);
+        if (response.error == 200) {
           ///ok
-        }else{
+        } else {
           error = response;
         }
       }
@@ -145,13 +146,15 @@ class RestoreController{
     await load();
     closeDialog(AppKeys.scaffoldKey.currentContext);
 
-    if(error != null){
-      showDialogIntegronError(AppKeys.scaffoldKey.currentContext, "Во время удаления были  непредвиденные ошибки, попробуйте еще раз, если ошибка повторяется - обратитесь в тех поддержку");
+    if (error != null) {
+      showDialogIntegronError(AppKeys.scaffoldKey.currentContext,
+          "Во время удаления были  непредвиденные ошибки, попробуйте еще раз, если ошибка повторяется - обратитесь в тех поддержку");
     }
   }
 
-  delete(AudioItem item)async{
-    if(item.idS == null ){
+  delete(AudioItem item) async {
+    print("delete attempt ${item.toMap()}");
+    if (item.idS == null) {
       showDialogRecorder(
           context: AppKeys.scaffoldKey.currentContext,
           title: Text(
@@ -162,38 +165,67 @@ class RestoreController{
                 fontSize: 20,
                 fontFamily: fontFamily),
           ),
-          body: Text("Запись будет безвозвратно удалена ", textAlign: TextAlign.center, style: TextStyle(color: cBlack.withOpacity(0.7), fontFamily: fontFamily, fontSize: 14),),
+          body: Text(
+            "Запись будет безвозвратно удалена ",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: cBlack.withOpacity(0.7),
+                fontFamily: fontFamily,
+                fontSize: 14),
+          ),
           buttons: [
-            DialogIntegronButton(onPressed: ()async{
-              await DBProvider.db.audioDelete(item.id);
-              closeDialog(AppKeys.scaffoldKey.currentContext);
-            }, textButton: Text("Удалить", style: TextStyle(color: cBackground, fontSize: 16, fontFamily: fontFamily, fontWeight: FontWeight.w500),), background: cRed, borderColor: cRed),
-            DialogIntegronButton(onPressed: (){
-              closeDialog(AppKeys.scaffoldKey.currentContext);
-            }, textButton: Text("Нет", style: TextStyle(color: cBlueSoso, fontSize: 16, fontFamily: fontFamily, fontWeight: FontWeight.w400),), borderColor: cBlueSoso),
-          ]
-      );
-    }else{
+            DialogIntegronButton(
+                onPressed: () async {
+                  await DBProvider.db.audioDelete(item.id);
+                  closeDialog(AppKeys.scaffoldKey.currentContext);
+                },
+                textButton: Text(
+                  "Удалить",
+                  style: TextStyle(
+                      color: cBackground,
+                      fontSize: 16,
+                      fontFamily: fontFamily,
+                      fontWeight: FontWeight.w500),
+                ),
+                background: cRed,
+                borderColor: cRed),
+            DialogIntegronButton(
+                onPressed: () {
+                  closeDialog(AppKeys.scaffoldKey.currentContext);
+                },
+                textButton: Text(
+                  "Нет",
+                  style: TextStyle(
+                      color: cBlueSoso,
+                      fontSize: 16,
+                      fontFamily: fontFamily,
+                      fontWeight: FontWeight.w400),
+                ),
+                borderColor: cBlueSoso),
+          ]);
+    } else {
       showDialogLoading(AppKeys.scaffoldKey.currentContext);
-      Put response = await AudioProvider.delete(item.id, ids:item.idS);
-      if(item.id != null){
+      Put response = await AudioProvider.delete(item.id, ids: item.idS);
+      if (item.id != null) {
         await DBProvider.db.audioDelete(item.id);
       }
       closeDialog(AppKeys.scaffoldKey.currentContext);
-      if(response.error == 200){
+      if (response.error == 200) {
         showDialogIntegronError(AppKeys.scaffoldKey.currentContext, "Удалено");
-      }else{
-        showDialogIntegronError(AppKeys.scaffoldKey.currentContext, "Во время удаления были  непредвиденные ошибки, попробуйте еще раз, если ошибка повторяется - обратитесь в тех поддержку");
+      } else {
+        showDialogIntegronError(AppKeys.scaffoldKey.currentContext,
+            "Во время удаления были  непредвиденные ошибки, попробуйте еще раз, если ошибка повторяется - обратитесь в тех поддержку");
       }
       load();
     }
   }
 
-
-  deleteSeveral(List<AudioItem> items)async{
-    if(items.isNotEmpty){
+  deleteSeveral(List<AudioItem> items) async {
+    if (items.isNotEmpty) {
       bool findLocal = false;
-      items.forEach((element) {if(element.idS == null)findLocal = true;});
+      items.forEach((element) {
+        if (element.idS == null) findLocal = true;
+      });
       showDialogRecorder(
           context: AppKeys.scaffoldKey.currentContext,
           title: Text(
@@ -204,53 +236,83 @@ class RestoreController{
                 fontSize: 20,
                 fontFamily: fontFamily),
           ),
-          body: Text("Записи будут безвозвратно удалены", textAlign: TextAlign.center, style: TextStyle(color: cBlack.withOpacity(0.7), fontFamily: fontFamily, fontSize: 14),),
+          body: Text(
+            "Записи будут безвозвратно удалены",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: cBlack.withOpacity(0.7),
+                fontFamily: fontFamily,
+                fontSize: 14),
+          ),
           buttons: [
-            DialogIntegronButton(onPressed: ()async{
-              closeDialog(AppKeys.scaffoldKey.currentContext);
-              showDialogLoading(AppKeys.scaffoldKey.currentContext);
-              //todo delete
-              for(int i = 0; i < items.length; i++){
-                if(items[i].idS != null){
-                  Put response = await AudioProvider.delete(items[i].id, ids:items[i].idS);
-                }
-                if(items[i].id != null){
-                  await DBProvider.db.audioDelete(items[i].id);
-                }
-              }
+            DialogIntegronButton(
+                onPressed: () async {
+                  closeDialog(AppKeys.scaffoldKey.currentContext);
+                  showDialogLoading(AppKeys.scaffoldKey.currentContext);
+                  //todo delete
+                  for (int i = 0; i < items.length; i++) {
+                    if (items[i].idS != null) {
+                      Put response = await AudioProvider.delete(items[i].id,
+                          ids: items[i].idS);
+                    }
+                    if (items[i].id != null) {
+                      await DBProvider.db.audioDelete(items[i].id);
+                    }
+                  }
 
-              closeDialog(AppKeys.scaffoldKey.currentContext);
-              showDialogIntegronError(AppKeys.scaffoldKey.currentContext, "Удалено");
-            }, textButton: Text("Удалить", style: TextStyle(color: cBackground, fontSize: 16, fontFamily: fontFamily, fontWeight: FontWeight.w500),), background: cRed, borderColor: cRed),
-            DialogIntegronButton(onPressed: (){
-              closeDialog(AppKeys.scaffoldKey.currentContext);
-            }, textButton: Text("Нет", style: TextStyle(color: cBlueSoso, fontSize: 16, fontFamily: fontFamily, fontWeight: FontWeight.w400),), borderColor: cBlueSoso),
-          ]
-      );
+                  closeDialog(AppKeys.scaffoldKey.currentContext);
+                  showDialogIntegronError(
+                      AppKeys.scaffoldKey.currentContext, "Удалено");
+                },
+                textButton: Text(
+                  "Удалить",
+                  style: TextStyle(
+                      color: cBackground,
+                      fontSize: 16,
+                      fontFamily: fontFamily,
+                      fontWeight: FontWeight.w500),
+                ),
+                background: cRed,
+                borderColor: cRed),
+            DialogIntegronButton(
+                onPressed: () {
+                  closeDialog(AppKeys.scaffoldKey.currentContext);
+                },
+                textButton: Text(
+                  "Нет",
+                  style: TextStyle(
+                      color: cBlueSoso,
+                      fontSize: 16,
+                      fontFamily: fontFamily,
+                      fontWeight: FontWeight.w400),
+                ),
+                borderColor: cBlueSoso),
+          ]);
     }
   }
 
-
-
-
-  setSelect(bool status){
-    if(status)for(int i = 0; i< _items.length; i++){
-      _items[i].select = false;
-      if(_items.isNotEmpty){_select = status;}
-    }else{
+  setSelect(bool status) {
+    if (status)
+      for (int i = 0; i < _items.length; i++) {
+        _items[i].select = false;
+        if (_items.isNotEmpty) {
+          _select = status;
+        }
+      }
+    else {
       _select = status;
     }
 
     setState();
   }
 
-
-  setState(){
-    RestoreState state = RestoreState(items: _items, loading: _loading, select: _select);
+  setState() {
+    RestoreState state =
+        RestoreState(items: _items, loading: _loading, select: _select);
     _controllerRestore.sink.add(state);
   }
 
-  dispose(){
+  dispose() {
     _controllerRestore.close();
   }
 }

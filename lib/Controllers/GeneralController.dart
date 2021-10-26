@@ -70,7 +70,8 @@ class GeneralController {
     this.homeController.load();
   }
 
-  setPage(int index, {bool restore, BuildContext context}) async {
+  setPage(int index, {bool restore}) async {
+    print(pageHistory);
     if (index != 2 || restore != null) {
       pageController.animateToPage(index,
           duration: Duration(milliseconds: 300), curve: Curves.easeOut);
@@ -91,12 +92,29 @@ class GeneralController {
     }
   }
 
+  ///Организовывает навигацию в приложении, позволяет перемещаться по приложению нажимая физическую кнопку назад.
+  ///Новые страницы нужно оборачивать в WillPopScope и в onWillPopUp вызывать этот метод.
   bool onWillPop() {
     if (pageHistory.length == 1 && pageController.page == 0) return true;
     if (pageHistory.isNotEmpty) {
+      // print("back $pageHistory");
+      print("${pageHistory.last}, ${pageHistory[pageHistory.length - 2]}");
+      if (pageHistory.last == pageHistory[pageHistory.length - 2]) {
+        print("equals $pageHistory");
+        if (pageHistory.last == 1) {
+          collectionsController.back();
+          pageHistory.removeLast();
+          // print("after edit $pageHistory");
+          return false;
+        }
+        if (pageHistory.last == 4) {
+          profileController.closeEdit();
+          pageHistory.removeLast();
+          return false;
+        }
+      }
       if (pageHistory.length > 1)
-        pageHistory.removeAt(pageHistory.length - 1);
-      print(pageHistory);
+        pageHistory.removeLast();
       pageController.animateToPage(pageHistory.last,
           duration: Duration(milliseconds: 300),
           curve: Curves.easeOut,
@@ -105,6 +123,19 @@ class GeneralController {
     }
     return false;
   }
+
+  ///Вспомогательный метод. Позволяет добавлять путь для навигатора.
+  ///Следует вызывать при обработке действий, которые создают новый экран на текущей странице.
+  createRouteOnEdit({int currentPage}) {
+    pageHistory.add(currentPage);
+    print("createRoute=> $pageHistory");
+  }
+
+  // deleteDuplicateRoute() {
+  //   for (int i = 0; i < pageHistory.length; i++) {
+  //
+  //   }
+  // }
 
   closeRecord() {
     if (resume) {
@@ -125,10 +156,10 @@ class GeneralController {
 
   openSubscribe() async {
     //todo
-    pageController.jumpToPage(4);
+    setPage(6);
     setMenu(false);
-    Navigator.push(AppKeys.navigatorKey.currentContext,
-        MaterialPageRoute(builder: (context) => SubscriptionPage()));
+    // Navigator.push(AppKeys.navigatorKey.currentContext,
+    //     MaterialPageRoute(builder: (context) => SubscriptionPage()));
   }
 
   support() async {

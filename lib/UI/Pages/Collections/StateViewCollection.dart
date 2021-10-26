@@ -45,6 +45,9 @@ class _StateViewCollectionState extends State<StateViewCollection> {
               .read<GeneralController>()
               .collectionsController
               .addCollection();
+          context
+              .read<GeneralController>()
+              .createRouteOnEdit(currentPage: 1);
         },
         child: Container(
           child: Column(
@@ -104,6 +107,9 @@ class _StateViewCollectionState extends State<StateViewCollection> {
                         .read<GeneralController>()
                         .collectionsController
                         .view(snapshot.data.items[index]);
+                    context
+                        .read<GeneralController>()
+                        .createRouteOnEdit(currentPage: 1);
                   },
                   item: snapshot.data.items[index],
                 ),
