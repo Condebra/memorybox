@@ -142,7 +142,7 @@ class _StateSelectSeveralCollectionState
                         context
                             .read<GeneralController>()
                             .collectionsController
-                            .selectAudio(list[index]);
+                            .selectAudio(list[index], index);
                       },
                       item: list[index],
                     ),

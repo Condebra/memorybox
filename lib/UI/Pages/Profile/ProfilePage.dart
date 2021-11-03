@@ -23,70 +23,72 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () => Future.sync(context.read<GeneralController>().onWillPop),
-      child: StreamBuilder<ProfileState>(
-          stream:
-              context.read<GeneralController>().profileController.streamProfile,
-          builder: (context, snapshot) {
-            return Scaffold(
-              backgroundColor: cBackground.withOpacity(0.0),
-              appBar: MyAppBar(
-                buttonMore: false,
-                buttonBack: snapshot.hasData && snapshot.data.edit,
-                buttonMenu: !(snapshot.hasData && snapshot.data.edit),
-                padding: 18,
-                top: 16,
-                height: 90,
-                tapLeftButton: () {
-                  if (snapshot.hasData && snapshot.data.edit) {
-                    context
-                        .read<GeneralController>()
-                        .profileController
-                        .closeEdit();
-                  } else {
-                    context.read<GeneralController>().setMenu(true);
-                  }
-                },
-                child: Container(
-                  child: Column(
-                    children: [
-                      Text(
-                        "Профиль",
-                        style: TextStyle(
-                            fontSize: 36,
-                            fontWeight: FontWeight.w700,
-                            fontFamily: fontFamilyMedium,
-                            letterSpacing: 2),
-                      ),
-                      SizedBox(
-                        height: 4,
-                      ),
-                      Text(
-                        "Твоя частичка",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: fontFamilyMedium,
-                            letterSpacing: 2),
-                      )
-                    ],
+      child: SafeArea(
+        child: StreamBuilder<ProfileState>(
+            stream:
+                context.read<GeneralController>().profileController.streamProfile,
+            builder: (context, snapshot) {
+              return Scaffold(
+                backgroundColor: cBackground.withOpacity(0.0),
+                appBar: MyAppBar(
+                  buttonMore: false,
+                  buttonBack: snapshot.hasData && snapshot.data.edit,
+                  buttonMenu: !(snapshot.hasData && snapshot.data.edit),
+                  padding: 18,
+                  top: 16,
+                  height: 90,
+                  tapLeftButton: () {
+                    if (snapshot.hasData && snapshot.data.edit) {
+                      context
+                          .read<GeneralController>()
+                          .profileController
+                          .closeEdit();
+                    } else {
+                      context.read<GeneralController>().setMenu(true);
+                    }
+                  },
+                  child: Container(
+                    child: Column(
+                      children: [
+                        Text(
+                          "Профиль",
+                          style: TextStyle(
+                              fontSize: 36,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: fontFamilyMedium,
+                              letterSpacing: 2),
+                        ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        Text(
+                          "Твоя частичка",
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: fontFamilyMedium,
+                              letterSpacing: 2),
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              body: (!snapshot.hasData || snapshot.data.loading)
-                  ? Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : SingleChildScrollView(
-                      physics: BouncingScrollPhysics(),
-                      // width: MediaQuery.of(context).size.width,
-                      child: Center(
-                        child: snapshot.data.edit
-                            ? profileIsEdit(snapshot.data)
-                            : profileNotEdit(snapshot.data),
+                body: (!snapshot.hasData || snapshot.data.loading)
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
+                        // width: MediaQuery.of(context).size.width,
+                        child: Center(
+                          child: snapshot.data.edit
+                              ? profileIsEdit(snapshot.data)
+                              : profileNotEdit(snapshot.data),
+                        ),
                       ),
-                    ),
-            );
-          }),
+              );
+            }),
+      ),
     );
   }
 

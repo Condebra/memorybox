@@ -31,18 +31,18 @@ class _CollectionsPageState extends State<CollectionsPage> {
             // print("Collection state => ${snapshot.data.stateSelect}");
             if (!snapshot.hasData) return StateLoadingCollection();
             switch (snapshot.data.stateSelect) {
-              case CollectionsSelection.view:
+              case CollectionStates.view:
                 return StateViewCollection();
                 // return StateViewCollection(items: snapshot.data.items);
-              case CollectionsSelection.viewItem:
+              case CollectionStates.viewItem:
                 return StateViewItemCollection();
-              case CollectionsSelection.editing:
+              case CollectionStates.editing:
                 return StateEditCollection();
-              case CollectionsSelection.add:
+              case CollectionStates.add:
                 return StateAddCollection();
-              case CollectionsSelection.addAudio:
+              case CollectionStates.addAudio:
                 return StateAddAudioCollection();
-              case CollectionsSelection.select:
+              case CollectionStates.select:
                 return StateSelectSeveralCollection();
               default:
                 return StateLoadingCollection();

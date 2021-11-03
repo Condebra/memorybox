@@ -30,7 +30,6 @@ class _SearchPageState extends State<SearchPage> {
             buttonMenu: true,
             padding: 11,
             height: 90,
-
             tapLeftButton: (){
               context.read<GeneralController>().setMenu(true);
             },
@@ -62,6 +61,7 @@ class _SearchPageState extends State<SearchPage> {
           ),
           body: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
+            padding: EdgeInsets.only(top: 40),
             child: Column(
               children: [
                 SizedBox(height: 40,),
@@ -82,10 +82,10 @@ class _SearchPageState extends State<SearchPage> {
       child: Container(
         decoration: BoxDecoration(
             color: cBackground,
-            borderRadius: BorderRadius.all(Radius.circular(41))
+            borderRadius: BorderRadius.all(Radius.circular(50))
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: 6.0, right: 6, bottom: 6, left: 18),
+          padding: const EdgeInsets.only(top: 6, right: 6, bottom: 6, left: 18),
           child: Focus(
             onFocusChange: (hasFocus){
               setState(() {

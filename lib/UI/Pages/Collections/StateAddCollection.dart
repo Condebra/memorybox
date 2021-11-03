@@ -55,6 +55,7 @@ class _StateAddCollectionState extends State<StateAddCollection> {
               .read<GeneralController>()
               .collectionsController
               .createCollection();
+          context.read<GeneralController>().createRouteOnEdit(currentPage: 1);
         },
         child: Container(
           child: GestureDetector(
@@ -249,21 +250,25 @@ class _StateAddCollectionState extends State<StateAddCollection> {
                         .read<GeneralController>()
                         .collectionsController
                         .addAudio();
+                    context.read<GeneralController>().createRouteOnEdit(currentPage: 1);
                   },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                            width: 1, color: cBlack.withOpacity(0.8)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                              width: 1, color: cBlack.withOpacity(0.8)),
+                        ),
                       ),
-                    ),
-                    child: Text(
-                      "Добавить аудиофайл",
-                      style: TextStyle(
-                        color: cBlack,
-                        fontFamily: fontFamily,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
+                      child: Text(
+                        "Добавить аудиофайл",
+                        style: TextStyle(
+                          color: cBlack,
+                          fontFamily: fontFamily,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
                     ),
                   ),

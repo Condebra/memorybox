@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:recorder/models/AudioModel.dart';
 import 'package:recorder/models/CollectionModel.dart';
 
-enum CollectionsSelection{
+enum CollectionStates{
   view,
   editing,
   add,
@@ -15,7 +15,7 @@ enum CollectionsSelection{
 }
 
 class CollectionsState{
-  CollectionsSelection stateSelect;
+  CollectionStates stateSelect;
   List<CollectionItem> items;
   CollectionItem currentItem;
   List<AudioItem> audios;

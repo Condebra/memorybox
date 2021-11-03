@@ -62,7 +62,7 @@ class _StateAddAudioCollectionState extends State<StateAddAudioCollection> {
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 12),
+          padding: const EdgeInsets.only(left: 12, right: 12),
           child: Column(
             children: [
               search(),
@@ -144,7 +144,7 @@ class _StateAddAudioCollectionState extends State<StateAddAudioCollection> {
               list = snapshot.data.audiosAll;
             }
           }
-          if (list == null || list.isEmpty) return SizedBox();
+          if (list == null || list.isEmpty) return Center(child: Text("Нет аудиозаписей"),);
           return Column(
             children: List.generate(list.length, (index) {
               return Column(
@@ -157,7 +157,7 @@ class _StateAddAudioCollectionState extends State<StateAddAudioCollection> {
                       context
                           .read<GeneralController>()
                           .collectionsController
-                          .selectAudio(list[index]);
+                          .selectAudio(list[index], index);
                     },
                     item: list[index],
                   ),

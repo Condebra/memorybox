@@ -82,6 +82,17 @@ class _StateViewCollectionState extends State<StateViewCollection> {
           .streamCollections,
         builder: (context, snapshot) {
           if (!snapshot.hasData) return Center(child: CircularProgressIndicator(),);
+          if (snapshot.data.items == null || snapshot.data.items.isEmpty)
+            return Center(
+              child: Text(
+                'Тут пусто',
+                style: TextStyle(
+                    color: cBlack.withOpacity(0.7),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 20,
+                    fontFamily: fontFamily),
+              ),
+            );
           return GridView.count(
             crossAxisCount: 2,
             padding: EdgeInsets.fromLTRB(16, 50, 16, 116),

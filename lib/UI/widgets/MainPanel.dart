@@ -104,7 +104,7 @@ class _MainPanelState extends State<MainPanel> {
                                 return Stack(
                                   children: [
                                     AnimatedPositioned(
-                                      left: (snapshotCollections.hasData && snapshotCollections.data.stateSelect == CollectionsSelection.select)?0.0:(!snapshot.hasData)||!(snapshot.data.select??false)|| snapshotPage.data != 2?-MediaQuery.of(context).size.width*2:-MediaQuery.of(context).size.width,
+                                      left: (snapshotCollections.hasData && snapshotCollections.data.stateSelect == CollectionStates.select)?0.0:(!snapshot.hasData)||!(snapshot.data.select??false)|| snapshotPage.data != 2?-MediaQuery.of(context).size.width*2:-MediaQuery.of(context).size.width,
                                       duration: Duration(milliseconds: 200),
                                       child: Row(
                                         children: [

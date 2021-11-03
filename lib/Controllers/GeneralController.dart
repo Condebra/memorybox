@@ -90,6 +90,7 @@ class GeneralController {
           (MediaQuery.of(AppKeys.scaffoldKey.currentContext).size.width * 0.98) ~/ 3);
       showRecord(this);
     }
+    setMenu(false);
   }
 
   ///Организовывает навигацию в приложении, позволяет перемещаться по приложению нажимая физическую кнопку назад.

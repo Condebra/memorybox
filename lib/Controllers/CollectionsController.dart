@@ -13,18 +13,16 @@ import 'package:recorder/models/CollectionModel.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class StateSearch{
+class StateSearch {
   final String input;
   final List<AudioItem> results;
 
-  StateSearch({
-    @required this.input,
-    @required this.results
-  });
+  StateSearch({@required this.input, @required this.results});
 }
 
 class CollectionsController {
-  CollectionsSelection _stateSelect;
+  CollectionStates _state;
+  CollectionStates _previousState;
   List<CollectionItem> itemsCollection;
   CollectionItem _currentItem;
   List<AudioItem> _audios;
@@ -33,7 +31,7 @@ class CollectionsController {
   Function update;
   bool _edit;
   String input = "";
-  List<AudioItem> results =[];
+  List<AudioItem> results = [];
 
   final _picker = ImagePicker();
   TextEditingController controllerHeader = TextEditingController();
@@ -46,12 +44,14 @@ class CollectionsController {
   BehaviorSubject _behaviorSubjectSearch = BehaviorSubject<StateSearch>();
 
   get streamCollections => _behaviorSubject.stream;
+
   get streamPhoto => _behaviorSubjectPhoto.stream;
+
   get streamSearch => _behaviorSubjectSearch.stream;
 
   CollectionsController(this.update) {
     _audiosSearch = [];
-    _stateSelect = CollectionsSelection.loading;
+    _state = CollectionStates.loading;
     setState();
     controllerSearch.addListener(() {
       _search();
@@ -75,23 +75,34 @@ class CollectionsController {
     setState();
   }
 
-  selectAudio(AudioItem item) {
-    for (int i = 0; i < audiosAll.length; i++) {
-      if (audiosAll[i].id == null ? audiosAll[i].idS == item.idS : audiosAll[i].id==item.id) {
-        if (audiosAll[i].select != null && audiosAll[i].select) {
-          audiosAll[i].select = false;
-        } else {
-          audiosAll[i].select = true;
-        }
-      }
-    }
+  selectAudio(AudioItem item, int index) {
+    // for (int i = 0; i < audiosAll.length; i++) {
+    //   if (audiosAll[i].id == null
+    //       ? audiosAll[i].idS == item.idS
+    //       : audiosAll[i].id == item.id) {
+    //     if (audiosAll[i].select != null && audiosAll[i].select) {
+    //       audiosAll[i].select = false;
+    //     } else {
+    //       audiosAll[i].select = true;
+    //     }
+    //   }
+    // }
+    // audiosAll.forEach((element) {
+    //   if (element.id == null ? element.idS == item.idS : element.id == item.id)
+    //   if (element.select != null)
+    //     element.select = !element.select;
+    //   else element.select = true;
+    // });
+    if (audiosAll[index].select != null)
+      audiosAll[index].select = !audiosAll[index].select;
+    else audiosAll[index].select = true;
     _search();
     setState();
   }
 
   setCollections(List<CollectionItem> items) {
     itemsCollection = items;
-    _stateSelect = CollectionsSelection.view;
+    _state = CollectionStates.view;
     setState();
   }
 
@@ -104,13 +115,14 @@ class CollectionsController {
     _audios = [];
     controllerHeader.text = "";
     controllerComment.text = "";
-    _stateSelect = CollectionsSelection.add;
+    _previousState = CollectionStates.add;
+    _state = CollectionStates.add;
     setState();
   }
 
   addAudio() {
     _audios = [];
-    _stateSelect = CollectionsSelection.addAudio;
+    _state = CollectionStates.addAudio;
     setState();
   }
 
@@ -118,7 +130,8 @@ class CollectionsController {
     if (item != null) _currentItem = item;
     controllerHeader.text = _currentItem.name;
     controllerComment.text = _currentItem.description;
-    _stateSelect = CollectionsSelection.editing;
+    _previousState = CollectionStates.editing;
+    _state = CollectionStates.editing;
     setState();
   }
 
@@ -126,93 +139,109 @@ class CollectionsController {
     // print(item.toString());
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setInt("playlist", item.id);
-    _stateSelect = CollectionsSelection.loading;
+    _state = CollectionStates.loading;
     setState();
 
     _currentItem = item;
     print("=============================================="
         "\n${_currentItem.toMap().toString()}");
     if (_currentItem.playlist == null)
-      _currentItem.playlist = await PlaylistProvider.getAudioFromId(idS: item.idS);
-    _stateSelect = CollectionsSelection.viewItem;
+      _currentItem.playlist =
+          await PlaylistProvider.getAudioFromId(idS: item.idS);
+    _state = CollectionStates.viewItem;
     setState();
   }
 
   back() async {
-    if (_stateSelect == CollectionsSelection.addAudio) {
-      _audios = [];
-      // for (int i = 0; i < audiosAll.length; i++)
-      //   if (audiosAll[i].select != null && audiosAll[i].select)
-      //     _audios.add(audiosAll[i]);
-      _audios.addAll(audiosAll);
-      // print(_audios.length);
-      _stateSelect = CollectionsSelection.add;
-      setState();
-    } else if (_stateSelect == CollectionsSelection.add) {
-      _audios = [];
-      _stateSelect = CollectionsSelection.view;
-      setState();
-    } else if (_stateSelect == CollectionsSelection.editing) {
-      _pathPhoto = null;
-      _stateSelect = CollectionsSelection.viewItem;
-      setState();
-    } else if (_stateSelect == CollectionsSelection.viewItem) {
-      _currentItem = null;
-      _stateSelect = CollectionsSelection.view;
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setInt("playlist", 0);
-      setState();
-    } else if(_stateSelect == CollectionsSelection.select){
-      _stateSelect = CollectionsSelection.viewItem;
-      setState();
-    } else {
-      _stateSelect = CollectionsSelection.view;
-      setState();
+    switch (_state) {
+      case CollectionStates.addAudio:
+        _audios.clear();
+        audiosAll.forEach((element) {
+          if (element.select != null && element.select) _audios.add(element);
+        });
+        if (_previousState == CollectionStates.editing)
+          _state = CollectionStates.editing;
+        if (_previousState == CollectionStates.add)
+          _state = CollectionStates.add;
+        _previousState = CollectionStates.addAudio;
+        // _state = CollectionStates.add;
+        setState();
+        break;
+      case CollectionStates.add:
+        _audios.clear();
+        audiosAll.forEach((element) {element.select = false;});
+        _previousState = CollectionStates.add;
+        _state = CollectionStates.view;
+        setState();
+        break;
+      case CollectionStates.editing:
+        _pathPhoto = null;
+        _previousState = CollectionStates.editing;
+        _state = CollectionStates.viewItem;
+        setState();
+        break;
+      case CollectionStates.viewItem:
+        _previousState = CollectionStates.viewItem;
+        _state = CollectionStates.view;
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setInt("playlist", 0);
+        setState();
+        break;
+      case CollectionStates.select:
+        print("CollectionState.select");
+        _previousState = CollectionStates.select;
+        _state = CollectionStates.viewItem;
+        setState();
+        break;
+      default:
+        _state = CollectionStates.view;
+        setState();
     }
   }
 
   createCollection() async {
     if (controllerHeader.text.isNotEmpty) {
       if (controllerComment.text.isNotEmpty) {
-        if (true) {
-          _stateSelect = CollectionsSelection.loading;
-          setState();
-          int response = await PlaylistProvider.create(
-              controllerHeader.text, controllerComment.text, _pathPhoto);
-          _stateSelect = CollectionsSelection.add;
-          setState();
-          for(int i = 0 ; i < _audios.length; i++) {
-            await PlaylistProvider.addAudioToPlaylist(
-                response, _audios[i].id??_audios[i].idS, isLocalPlaylist: true, isLocalAudio: _audios[i].id != null );
-          }
-          controllerComment.text = "";
-          controllerHeader.text = "";
-          _pathPhoto = null;
-          update();
-
-          back();
-
-        } else {
-          showDialogIntegronError(AppKeys.scaffoldKey.currentContext, "Выберите обложку плейлиста");
+        _state = CollectionStates.loading;
+        setState();
+        int response = await PlaylistProvider.create(
+            controllerHeader.text, controllerComment.text, _pathPhoto);
+        _state = CollectionStates.add;
+        setState();
+        for (int i = 0; i < _audios.length; i++) {
+          await PlaylistProvider.addAudioToPlaylist(
+              response, _audios[i].id ?? _audios[i].idS,
+              isLocalPlaylist: true, isLocalAudio: _audios[i].id != null);
         }
+        controllerComment.text = "";
+        controllerHeader.text = "";
+        _pathPhoto = null;
+        update();
+        back();
       } else {
-        showDialogIntegronError(AppKeys.scaffoldKey.currentContext, "Некорректное описание плейлиста");
+        showDialogIntegronError(AppKeys.scaffoldKey.currentContext,
+            "Некорректное описание плейлиста");
       }
     } else {
       //todo  no name
-      showDialogIntegronError(AppKeys.scaffoldKey.currentContext, "Некорректное название плейлиста");
+      showDialogIntegronError(AppKeys.scaffoldKey.currentContext,
+          "Некорректное название плейлиста");
     }
   }
 
-  selectSeveral(){
-    audiosAll.forEach((element) {element.select=false;});
-    _stateSelect = CollectionsSelection.select;
+  selectSeveral() {
+    audiosAll.forEach((element) {
+      element.select = false;
+    });
+    _state = CollectionStates.select;
     setState();
   }
 
   addToPlaylistSelect(GeneralController generalController) {
     List<AudioItem> selected = [];
-    audiosAll.forEach((element) {element.select ? selected.add(element) : null;});
+    audiosAll.forEach((element) {
+      if (element.select) selected.add(element);
+    });
     if (selected.isNotEmpty) {
       addToPlaylist(selected, generalController);
     }
@@ -220,20 +249,23 @@ class CollectionsController {
 
   deleteSelectAudio(RestoreController restoreController) async {
     List<AudioItem> selected = [];
-    audiosAll.forEach((element){element.select?selected.add(element):null;});
-    if(selected.isNotEmpty){
-      await restoreController.deleteSeveral(selected,);
+    audiosAll.forEach((element) {
+      element.select ? selected.add(element) : null;
+    });
+    if (selected.isNotEmpty) {
+      await restoreController.deleteSeveral(
+        selected,
+      );
     }
     updateData();
   }
 
   backAndSave() async {
     showDialogLoading(AppKeys.scaffoldKey.currentContext);
-    String c;
-    String n;
-    if(controllerComment.text !=""){c= controllerComment.text;}
-    if(controllerHeader.text != ""){n= controllerHeader.text;}
-    await PlaylistProvider.edit(_currentItem.id, imagePath: _pathPhoto, desc: c,name: n);
+    String c = controllerComment.text;
+    String n = controllerHeader.text;
+    await PlaylistProvider.edit(_currentItem.id,
+        imagePath: _pathPhoto, desc: c, name: n);
     closeDialog(AppKeys.scaffoldKey.currentContext);
     back();
     update();
@@ -249,31 +281,32 @@ class CollectionsController {
     setState();
   }
 
-  deleteCurrent()async{
-    _stateSelect = CollectionsSelection.loading;
+  deleteCurrent() async {
+    _state = CollectionStates.loading;
     setState();
-    if(_currentItem.id != null){
+    if (_currentItem.id != null) {
       await PlaylistProvider.deleteLocal(_currentItem.id);
     }
-    if(_currentItem.idS != null){
+    if (_currentItem.idS != null) {
       await PlaylistProvider.deleteS(_currentItem.idS);
     }
     update();
   }
 
-  searchClean(){
+  searchClean() {
     input = "";
     results = [];
     setState();
   }
 
-  search(String input){
-    if(input.isEmpty){
+  search(String input) {
+    if (input.isEmpty) {
       results = List.from(audiosAll);
-    }else{
+    } else {
       List<AudioItem> out = [];
       audiosAll.forEach((element) {
-        if(element.name.contains(input) || element.description.contains(input)){
+        if (element.name.toLowerCase().contains(input.toLowerCase()) ||
+            element.description.toLowerCase().contains(input.toLowerCase())) {
           out.add(element);
         }
       });
@@ -288,7 +321,7 @@ class CollectionsController {
         audios: _audios,
         currentItem: _currentItem,
         items: itemsCollection,
-        stateSelect: _stateSelect,
+        stateSelect: _state,
         audiosSearch: _audiosSearch,
         audiosAll: audiosAll);
     _behaviorSubject.sink.add(state);

@@ -76,35 +76,51 @@ class _AudioListPageState extends State<AudioListPage> {
               ),
             ),
           ),
-          body: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: StreamBuilder<HomeState>(
-                stream: context.read<GeneralController>().homeController.stream,
-                builder: (context, snapshot) {
-                  return (!snapshot.hasData || snapshot.data.loading)?Center(child: CircularProgressIndicator(),):Column(
+          body: StreamBuilder<HomeState>(
+              stream:
+              context.read<GeneralController>().homeController.stream,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData)
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: cBlack,
+                    ),
+                  );
+                if (snapshot.data.audios.isEmpty)
+                  return Center(
+                    child: Text(
+                      'Тут пусто',
+                      style: TextStyle(
+                          color: cBlack.withOpacity(0.7),
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
+                          fontFamily: fontFamily),
+                    ),
+                  );
+                return SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  padding: EdgeInsets.only(top: 44, bottom: 110),
+                  child: Column(
                     children: [
-                      SizedBox(
-                        height: 43,
-                      ),
                       Container(
                         padding: EdgeInsets.only(left: 25.0, right: 19.0),
                         width: MediaQuery.of(context).size.width,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [playlistInfo(snapshot.data), playlistButton(snapshot.data.audios)],
+                          children: [
+                            playlistInfo(snapshot.data),
+                            playlistButton(snapshot.data.audios)
+                          ],
                         ),
                       ),
                       SizedBox(
                         height: 33,
                       ),
                       playlistPreview(snapshot.data.audios),
-                      SizedBox(
-                        height: 110,
-                      ),
                     ],
-                  );
-                }
-              )),
+                  ),
+                );
+              }),
         ),
       ),
     );
