@@ -23,8 +23,8 @@ class TableAudio{
   static get uploadAudio => "uploadAudio";
   static get createAt => "createAt";
   static get updateAt => "updateAt";
+  static get deleted => "deleted";
 }
-
 
 class TableCollection{
   static get table => "collections";//

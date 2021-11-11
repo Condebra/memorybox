@@ -33,12 +33,20 @@ class HomeController{
   HomeController({this.onLoadCollections, this.onLoadAudios}) { load(); }
 
   load() async {
+    loadAudios();
+    loadCollections();
+  }
+
+  loadCollections() async {
     collections = await PlaylistProvider.getAll();
-    print("loaded ${collections.length} collections");
-    audios = await AudioProvider.getAll();
     onLoadCollections(collections);
+    _streamController.sink.add(HomeState(collections: collections, audios: audios, loading: false, errors: false));
+  }
+
+  loadAudios() async {
+    audios = await AudioProvider.getAll();
     onLoadAudios(audios);
-    _streamController.sink.add(HomeState(collections: collections,audios: audios,errors: false,loading: false));
+    _streamController.sink.add(HomeState(collections: collections, audios: audios, loading: false, errors: false));
   }
 
   dispose(){

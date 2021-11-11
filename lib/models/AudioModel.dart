@@ -23,6 +23,7 @@ class AudioItem extends Select {
   bool uploadAudio;
   DateTime createAt;
   DateTime updateAt;
+  bool deleted;
 
   AudioItem({
     @required this.name,
@@ -39,7 +40,8 @@ class AudioItem extends Select {
     this.createAt,
     this.uploadPicture,
     this.isLocalPicture,
-    this.idS
+    this.idS,
+    this.deleted = false,
   });
 
   factory AudioItem.fromMap(Map<String, dynamic> map) {
@@ -58,6 +60,7 @@ class AudioItem extends Select {
       isLocalPicture: false,
       isLocalAudio: false,
       uploadAudio: true,
+      deleted: map['deleted'] == 1,
     );
   }
 
@@ -78,6 +81,7 @@ class AudioItem extends Select {
       idS: map[TableAudio.idS],
       createAt: DateFormat("yyyy-MM-dd HH:mm:ss").parse(map[TableAudio.createAt]),
       updateAt: DateFormat("yyyy-MM-dd HH:mm:ss").parse(map[TableAudio.updateAt]),
+      deleted: map[TableAudio.deleted] == 1,
     );
   }
 
@@ -96,6 +100,7 @@ class AudioItem extends Select {
       TableAudio.isLocalAudio:  this.isLocalAudio == null?1:this.isLocalAudio?1:0,
       TableAudio.createAt: this.createAt.toString(),
       TableAudio.updateAt:this.updateAt.toString(),
+      TableAudio.deleted: this.deleted ? 1 : 0,
     };
   }
 }

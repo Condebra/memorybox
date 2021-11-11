@@ -34,6 +34,7 @@ class _OpenCollectionState extends State<OpenCollection> {
           buttonMore: true,
           buttonBack: true,
           buttonMenu: true,
+          padding: 10,
           top: 25,
           height: 100,
         ),

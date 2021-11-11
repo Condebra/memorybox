@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:recorder/Controllers/States/RestoreState.dart';
 import 'package:recorder/DB/DB.dart';
 import 'package:recorder/Rest/Audio/AudioProvider.dart';
@@ -29,7 +32,8 @@ class RestoreController {
   load() async {
     _loading = true;
     setState();
-    _items = await AudioProvider.deleted();
+    // _items = await AudioProvider.deleted();
+    _items = await DBProvider.db.getAudios(removed: true);
     _loading = false;
     setState();
   }
@@ -56,17 +60,9 @@ class RestoreController {
     for (int i = 0; i < _items.length; i++) {
       if (_items[i].select != null && _items[i].select) out.add(_items[i]);
     }
-
-    if (out.length > 0) {
-      for (int i = 0; i < out.length; i++) {
-        Put response = await AudioProvider.delete(null, ids: out[i].idS);
-        if (response.error == 200) {
-          ///ok
-        } else {
-          error = response;
-        }
-      }
-    }
+    out.forEach((element) {
+      deleteFinal(element);
+    });
     _select = false;
     await load();
 
@@ -84,17 +80,9 @@ class RestoreController {
     for (int i = 0; i < _items.length; i++) {
       if (_items[i].select != null && _items[i].select) out.add(_items[i]);
     }
-
-    if (out.length > 0) {
-      for (int i = 0; i < out.length; i++) {
-        Put response = await AudioProvider.restore(out[i].idS);
-        if (response.error == 200) {
-          ///ok
-        } else {
-          error = response;
-        }
-      }
-    }
+    out.forEach((element) async {
+      await DBProvider.db.restoreAudio(element.id);
+    });
     _select = false;
     await load();
 
@@ -108,16 +96,9 @@ class RestoreController {
   restoreAll() async {
     showDialogLoading(AppKeys.scaffoldKey.currentContext);
     Put error;
-    if (_items.length > 0) {
-      for (int i = 0; i < _items.length; i++) {
-        Put response = await AudioProvider.restore(_items[i].idS);
-        if (response.error == 200) {
-          ///ok
-        } else {
-          error = response;
-        }
-      }
-    }
+    _items.forEach((element) async {
+      await DBProvider.db.restoreAudio(element.id);
+    });
     _select = false;
     await load();
     closeDialog(AppKeys.scaffoldKey.currentContext);
@@ -132,16 +113,9 @@ class RestoreController {
     print("a");
     showDialogLoading(AppKeys.scaffoldKey.currentContext);
     Put error;
-    if (_items.length > 0) {
-      for (int i = 0; i < _items.length; i++) {
-        Put response = await AudioProvider.delete(null, ids: _items[i].idS);
-        if (response.error == 200) {
-          ///ok
-        } else {
-          error = response;
-        }
-      }
-    }
+    _items.forEach((element) async {
+      deleteFinal(element);
+    });
     _select = false;
     await load();
     closeDialog(AppKeys.scaffoldKey.currentContext);
@@ -152,72 +126,74 @@ class RestoreController {
     }
   }
 
+  deleteFinal(AudioItem item) async {
+    try {
+      var file = File(item.pathAudio);
+      file.delete();
+      DBProvider.db.audioDelete(item.id);
+      print("delete file ${item.pathAudio}");
+    } catch (e) {
+      print(e);
+    }
+    await load();
+  }
+
   delete(AudioItem item) async {
     print("delete attempt ${item.toMap()}");
-    if (item.idS == null) {
-      showDialogRecorder(
-          context: AppKeys.scaffoldKey.currentContext,
-          title: Text(
-            "Точно удалить?",
+    showDialogRecorder(
+      context: AppKeys.scaffoldKey.currentContext,
+      title: Text(
+        "Точно удалить?",
+        style: TextStyle(
+          color: cBlack,
+          fontWeight: FontWeight.w400,
+          fontSize: 20,
+          fontFamily: fontFamily,
+        ),
+      ),
+      body: Text(
+        "Запись будет помещена в корзину, \n чтобы вы смогли её восстановить",
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: cBlack.withOpacity(0.7),
+          fontFamily: fontFamily,
+          fontSize: 14,
+        ),
+      ),
+      buttons: [
+        DialogIntegronButton(
+          onPressed: () async {
+            // await DBProvider.db.audioDelete(item.id);
+            await DBProvider.db.removeAudio(item.id);
+            closeDialog(AppKeys.scaffoldKey.currentContext);
+          },
+          textButton: Text(
+            "Да",
             style: TextStyle(
-                color: cBlack,
-                fontWeight: FontWeight.w400,
-                fontSize: 20,
-                fontFamily: fontFamily),
-          ),
-          body: Text(
-            "Запись будет безвозвратно удалена ",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: cBlack.withOpacity(0.7),
+                color: cBackground,
+                fontSize: 16,
                 fontFamily: fontFamily,
-                fontSize: 14),
+                fontWeight: FontWeight.w500),
           ),
-          buttons: [
-            DialogIntegronButton(
-                onPressed: () async {
-                  await DBProvider.db.audioDelete(item.id);
-                  closeDialog(AppKeys.scaffoldKey.currentContext);
-                },
-                textButton: Text(
-                  "Удалить",
-                  style: TextStyle(
-                      color: cBackground,
-                      fontSize: 16,
-                      fontFamily: fontFamily,
-                      fontWeight: FontWeight.w500),
-                ),
-                background: cRed,
-                borderColor: cRed),
-            DialogIntegronButton(
-                onPressed: () {
-                  closeDialog(AppKeys.scaffoldKey.currentContext);
-                },
-                textButton: Text(
-                  "Нет",
-                  style: TextStyle(
-                      color: cBlueSoso,
-                      fontSize: 16,
-                      fontFamily: fontFamily,
-                      fontWeight: FontWeight.w400),
-                ),
-                borderColor: cBlueSoso),
-          ]);
-    } else {
-      showDialogLoading(AppKeys.scaffoldKey.currentContext);
-      Put response = await AudioProvider.delete(item.id, ids: item.idS);
-      if (item.id != null) {
-        await DBProvider.db.audioDelete(item.id);
-      }
-      closeDialog(AppKeys.scaffoldKey.currentContext);
-      if (response.error == 200) {
-        showDialogIntegronError(AppKeys.scaffoldKey.currentContext, "Удалено");
-      } else {
-        showDialogIntegronError(AppKeys.scaffoldKey.currentContext,
-            "Во время удаления были  непредвиденные ошибки, попробуйте еще раз, если ошибка повторяется - обратитесь в тех поддержку");
-      }
-      load();
-    }
+          background: cRed,
+          borderColor: cRed,
+        ),
+        DialogIntegronButton(
+          onPressed: () {
+            closeDialog(AppKeys.scaffoldKey.currentContext);
+          },
+          textButton: Text(
+            "Нет",
+            style: TextStyle(
+                color: cBlueSoso,
+                fontSize: 16,
+                fontFamily: fontFamily,
+                fontWeight: FontWeight.w400),
+          ),
+          borderColor: cBlueSoso,
+        ),
+      ],
+    );
   }
 
   deleteSeveral(List<AudioItem> items) async {
@@ -227,67 +203,74 @@ class RestoreController {
         if (element.idS == null) findLocal = true;
       });
       showDialogRecorder(
-          context: AppKeys.scaffoldKey.currentContext,
-          title: Text(
-            "Точно удалить?",
-            style: TextStyle(
-                color: cBlack,
-                fontWeight: FontWeight.w400,
-                fontSize: 20,
-                fontFamily: fontFamily),
+        context: AppKeys.scaffoldKey.currentContext,
+        title: Text(
+          "Точно удалить?",
+          style: TextStyle(
+            color: cBlack,
+            fontWeight: FontWeight.w400,
+            fontSize: 20,
+            fontFamily: fontFamily,
           ),
-          body: Text(
-            "Записи будут безвозвратно удалены",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: cBlack.withOpacity(0.7),
+        ),
+        body: Text(
+          "Записи будут помещены в корзину",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: cBlack.withOpacity(0.7),
+            fontFamily: fontFamily,
+            fontSize: 14,
+          ),
+        ),
+        buttons: [
+          DialogIntegronButton(
+            onPressed: () async {
+              closeDialog(AppKeys.scaffoldKey.currentContext);
+              showDialogLoading(AppKeys.scaffoldKey.currentContext);
+              // for (int i = 0; i < items.length; i++) {
+              //   if (items[i].idS != null) {
+              //     Put response = await AudioProvider.delete(items[i].id,
+              //         ids: items[i].idS);
+              //   }
+              //   if (items[i].id != null) {
+              //     await DBProvider.db.audioDelete(items[i].id);
+              //   }
+              // }
+              items.forEach((element) async {
+                await DBProvider.db.removeAudio(element.id);
+              });
+              closeDialog(AppKeys.scaffoldKey.currentContext);
+              showDialogIntegronError(
+                  AppKeys.scaffoldKey.currentContext, "Удалено");
+            },
+            textButton: Text(
+              "Удалить",
+              style: TextStyle(
+                color: cBackground,
+                fontSize: 16,
                 fontFamily: fontFamily,
-                fontSize: 14),
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            background: cRed,
+            borderColor: cRed,
           ),
-          buttons: [
-            DialogIntegronButton(
-                onPressed: () async {
-                  closeDialog(AppKeys.scaffoldKey.currentContext);
-                  showDialogLoading(AppKeys.scaffoldKey.currentContext);
-                  //todo delete
-                  for (int i = 0; i < items.length; i++) {
-                    if (items[i].idS != null) {
-                      Put response = await AudioProvider.delete(items[i].id,
-                          ids: items[i].idS);
-                    }
-                    if (items[i].id != null) {
-                      await DBProvider.db.audioDelete(items[i].id);
-                    }
-                  }
-
-                  closeDialog(AppKeys.scaffoldKey.currentContext);
-                  showDialogIntegronError(
-                      AppKeys.scaffoldKey.currentContext, "Удалено");
-                },
-                textButton: Text(
-                  "Удалить",
-                  style: TextStyle(
-                      color: cBackground,
-                      fontSize: 16,
-                      fontFamily: fontFamily,
-                      fontWeight: FontWeight.w500),
+          DialogIntegronButton(
+              onPressed: () {
+                closeDialog(AppKeys.scaffoldKey.currentContext);
+              },
+              textButton: Text(
+                "Нет",
+                style: TextStyle(
+                  color: cBlueSoso,
+                  fontSize: 16,
+                  fontFamily: fontFamily,
+                  fontWeight: FontWeight.w400,
                 ),
-                background: cRed,
-                borderColor: cRed),
-            DialogIntegronButton(
-                onPressed: () {
-                  closeDialog(AppKeys.scaffoldKey.currentContext);
-                },
-                textButton: Text(
-                  "Нет",
-                  style: TextStyle(
-                      color: cBlueSoso,
-                      fontSize: 16,
-                      fontFamily: fontFamily,
-                      fontWeight: FontWeight.w400),
-                ),
-                borderColor: cBlueSoso),
-          ]);
+              ),
+              borderColor: cBlueSoso),
+        ],
+      );
     }
   }
 
@@ -302,7 +285,6 @@ class RestoreController {
     else {
       _select = status;
     }
-
     setState();
   }
 

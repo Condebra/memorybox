@@ -9,18 +9,21 @@ import 'package:recorder/UI/widgets/AudioPreviewGenerate.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:recorder/generated/l10n.dart';
 import 'package:provider/provider.dart';
-class AudioListPage extends StatefulWidget {
 
+class AudioListPage extends StatefulWidget {
   @override
   _AudioListPageState createState() => _AudioListPageState();
 }
 
 class _AudioListPageState extends State<AudioListPage> {
+  var repeatColorActive = Color.fromRGBO(255, 255, 255, 1);
+  var repeatColorInActive = Color.fromRGBO(0, 0, 0, 1.0);
+  bool repeatActive = false;
 
   @override
   void initState() {
     super.initState();
-    context.read<GeneralController>().homeController.load();
+    context.read<GeneralController>().homeController.loadAudios();
   }
 
   @override
@@ -34,22 +37,21 @@ class _AudioListPageState extends State<AudioListPage> {
             buttonMore: true,
             buttonBack: false,
             buttonMenu: true,
-            tapLeftButton: (){
-              context.read<GeneralController>().setMenu(true);
-            },
-            childRight : SizedBox(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 11),
-                child: Container(
-                  decoration: BoxDecoration(
-                  ),
-                  width: 27,
-                  height: 27,
-                ),
-              ),
-            ),
+            padding: 10,
             top: 25,
             height: 100,
+            tapLeftButton: () {
+              context.read<GeneralController>().setMenu(true);
+            },
+            childRight: Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: IconButton(
+                onPressed: () {
+                  context.read<GeneralController>().setPage(2, restore: true);
+                },
+                icon: IconSvg(IconsSvg.delete, color: cBackground),
+              ),
+            ),
             child: Container(
               child: Column(
                 children: [
@@ -77,8 +79,7 @@ class _AudioListPageState extends State<AudioListPage> {
             ),
           ),
           body: StreamBuilder<HomeState>(
-              stream:
-              context.read<GeneralController>().homeController.stream,
+              stream: context.read<GeneralController>().homeController.stream,
               builder: (context, snapshot) {
                 if (!snapshot.hasData)
                   return Center(
@@ -130,13 +131,13 @@ class _AudioListPageState extends State<AudioListPage> {
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
-          color: cBackground.withOpacity(0.5)),
+          color: cBackground.withOpacity(0.1)),
       child: Row(
         children: [
           GestureDetector(
-            onTap: (){
+            onTap: () {
               // List<AudioItem> list = context.read<GeneralController>().homeController.audios;
-              context.read<GeneralController>().playerController.play(list);
+              context.read<GeneralController>().playerController.play(list, repeat: repeatActive);
             },
             child: Container(
               decoration: BoxDecoration(
@@ -147,7 +148,6 @@ class _AudioListPageState extends State<AudioListPage> {
                       padding: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
                       child: IconSvg(IconsSvg.play,
                           width: 38, color: Color.fromRGBO(140, 132, 226, 1))),
-
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 7),
                     child: Text(
@@ -159,17 +159,23 @@ class _AudioListPageState extends State<AudioListPage> {
                           fontFamily: fontFamilyMedium),
                     ),
                   ),
-                  SizedBox(width: 10,),
+                  SizedBox(
+                    width: 10,
+                  ),
                 ],
               ),
             ),
           ),
-
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: GestureDetector(
+              onTap: () {
+                repeatActive = !repeatActive;
+                setState(() {});
+              },
               child: IconSvg(
                 IconsSvg.audioRepeat,
+                color: repeatActive ? repeatColorActive : repeatColorInActive,
                 width: 30,
               ),
             ),
@@ -180,14 +186,14 @@ class _AudioListPageState extends State<AudioListPage> {
   }
 
   Widget playlistInfo(HomeState state) {
-
-    String timeInfo(){
+    String timeInfo() {
       Duration all = Duration(seconds: 0);
-      for(int i = 0; i < state.audios.length; i++){
-        all = Duration(seconds: all.inSeconds+state.audios[i].duration.inSeconds);
+      for (int i = 0; i < state.audios.length; i++) {
+        all = Duration(
+            seconds: all.inSeconds + state.audios[i].duration.inSeconds);
       }
-      return "${all.inHours < 10?"0"+all.inHours.toString():all.inHours.toString()}:${all.inMinutes%60 < 10?"0"+(all.inMinutes%60).toString():(all.inMinutes%60).toString()}";
-
+      return "${all.toString().split(".").first.padLeft(8, "0")}";
+      // return "${all.inHours < 10 ? "0" + all.inHours.toString() : all.inHours.toString()}:${all.inMinutes % 60 < 10 ? "0" + (all.inMinutes % 60).toString() : (all.inMinutes % 60).toString()}";
     }
 
     return Column(
@@ -214,12 +220,13 @@ class _AudioListPageState extends State<AudioListPage> {
   }
 
   Widget playlistPreview(List<AudioItem> list, {Color colorPlay}) {
+    context.read<GeneralController>().homeController.loadAudios();
     return Padding(
       padding: const EdgeInsets.only(left: 20.0, right: 12),
       child: AudioPreviewGenerate(
-          items: list,
-          colorPlay: cBlue,
-         ),
+        items: list,
+        colorPlay: cBlue,
+      ),
     );
   }
 }

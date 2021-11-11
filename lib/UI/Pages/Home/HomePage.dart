@@ -8,6 +8,7 @@ import 'package:recorder/UI/Pages/Home/widgets/AudioPreviewWidget.dart';
 import 'package:recorder/UI/Pages/Home/widgets/CollectionsWidget.dart';
 import 'package:recorder/UI/widgets/Appbar.dart';
 import 'package:provider/provider.dart';
+import 'package:recorder/Utils/Svg/IconSVG.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -64,15 +65,27 @@ class _HomePageState extends State<HomePage> {
             buttonMore: false,
             buttonBack: false,
             buttonMenu: true,
-            padding: 11,
+            padding: 10,
+            top: 25,
+            height: 90,
             tapLeftButton: () {
               context.read<GeneralController>().setMenu(true);
             },
+            childRight: Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: IconButton(
+                onPressed: () {
+                  context.read<GeneralController>().setPage(5, restore: true);
+                },
+                icon: IconSvg(IconsSvg.search, color: cBackground),
+              ),
+            ),
           ),
           body: StreamBuilder<HomeState>(
               stream: context.read<GeneralController>().homeController.stream,
               builder: (context, snapshot) {
-                if (!snapshot.hasData) return Center(child: CircularProgressIndicator());
+                if (!snapshot.hasData)
+                  return Center(child: CircularProgressIndicator());
                 return SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   padding: EdgeInsets.symmetric(horizontal: 5),

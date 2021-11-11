@@ -41,7 +41,6 @@ class _AddAudioContentState extends State<AddAudioContent> {
 
   @override
   void initState() {
-    // TODO: implement initState
     List<CollectionItem> items =
         widget.controller.collectionsController.itemsCollection;
     super.initState();
@@ -142,7 +141,6 @@ class _AddAudioContentState extends State<AddAudioContent> {
                           children: [
                             CollectionItemOne(
                               onTap: () {
-                                //todo
                                 add(rightColumn[index]);
                               },
                               item: rightColumn[index],

@@ -141,7 +141,7 @@ class PlaylistProvider {
       var response;
       String au = "";
       for (int i = 0; i < audio.length; i++) {
-        AudioItem item = await DBProvider.db.audioGet(audio[i]);
+        AudioItem item = await DBProvider.db.getAudio(audio[i]);
 
         if (i > 0) {
           au += item.idS.toString();
@@ -263,9 +263,9 @@ class PlaylistProvider {
     }
   }
 
-  static Future<Put> deleteFromPlaylist() async {
-    //todo
-  }
+  // static Future<Put> deleteFromPlaylist() async {
+  //   //to do
+  // }
 
   static Future<Put> deleteS(int idsPlaylist) async {
     String token = await tokenDB();
@@ -380,7 +380,7 @@ class PlaylistProvider {
                   }
                   if (!find1) {
                     AudioItem itemAudio = await DBProvider.db
-                        .audioGet(0, idS: S[i].playlist[i1].idS);
+                        .getAudio(0, idS: S[i].playlist[i1].idS);
                     DBProvider.db.collectionAddAudio(L[j].id, itemAudio.id);
                   }
                 }
@@ -421,7 +421,7 @@ class PlaylistProvider {
                   if (!find1) {
                     try {
                       AudioItem itemAudio = await DBProvider.db
-                          .audioGet(0, idS: S[i].playlist[i1].idS);
+                          .getAudio(0, idS: S[i].playlist[i1].idS);
                       // print(itemAudio.toMap());
                       DBProvider.db.collectionAddAudio(L[j].id, itemAudio.id);
                     } catch (e) {

@@ -1,5 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Controllers/States/CollectionsState.dart';
 import 'package:recorder/Controllers/States/PlayerState.dart';
@@ -62,7 +63,7 @@ class _MainPanelState extends State<MainPanel> {
           double editHeight = 0;
           if(snapshot.hasData){
             if(snapshot.data.playing && !snapshot.data.playerBig){
-              editHeight = 85;
+              editHeight = 75;
             }
           }
           return AnimatedContainer(
@@ -341,7 +342,7 @@ class _MainPanelState extends State<MainPanel> {
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
-        height: 80,
+        height: 70,
         decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
@@ -351,33 +352,30 @@ class _MainPanelState extends State<MainPanel> {
               begin: Alignment.centerRight,
               end: Alignment.centerLeft,
             ),
-            borderRadius: BorderRadius.all(Radius.circular(80))),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 12,
-            ),
-            Container(
-              width: 50,
-              height: 50,
-              child: ButtonPlay(state, onTap: () {
-                if (state.state == AudioPlayerState.PLAYING) {
-                  context.read<GeneralController>().playerController.pause();
-                } else if (state.state == AudioPlayerState.PAUSED) {
-                  context.read<GeneralController>().playerController.resume();
-                }
-              }),
-            ),
-            SizedBox(
-              width: 24,
-            ),
-            Expanded(
-              child: Container(
-                width: MediaQuery.of(context).size.width - 168,
+            borderRadius: BorderRadius.all(Radius.circular(50)),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                width: 50,
+                height: 50,
+                child: ButtonPlay(state, onTap: () {
+                  if (state.state == AudioPlayerState.PLAYING) {
+                    context.read<GeneralController>().playerController.pause();
+                  } else if (state.state == AudioPlayerState.PAUSED) {
+                    context.read<GeneralController>().playerController.resume();
+                  }
+                }),
+              ),
+              Container(
+                width: 250,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
                       state == null || state.item == null
@@ -389,102 +387,115 @@ class _MainPanelState extends State<MainPanel> {
                           fontFamily: fontFamily,
                           fontSize: 14),
                     ),
-                    Container(
-                      height: 20,
-                      child: SliderTheme(
-                        data: SliderTheme.of(context).copyWith(
-                          activeTrackColor: cBackground,
-                          inactiveTrackColor: cBackground,
-                          trackShape: RoundedRectSliderTrackShape(),
-                          trackHeight: 2.0,
-                          thumbColor: cBackground,
-                          thumbShape:
-                              RoundSliderThumbShape(enabledThumbRadius: 6.0),
-                          overlayColor: cBackground.withOpacity(0.32),
-                          overlayShape:
-                              RoundSliderOverlayShape(overlayRadius: 28.0),
+                    Row(
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: 30,
+                          child: Text(
+                            "${time(state == null ? Duration(seconds: 0) : state.current)}",
+                            style: TextStyle(
+                              color: cBackground.withOpacity(0.7),
+                              fontSize: 10,
+                              fontFamily: fontFamily,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
                         ),
-                        child: Slider(
-                          min: 0,
-                          max: (state == null || state.max == null
-                              ? 1.toDouble()
-                              : state.max.inMilliseconds.toDouble()),
-                          value: (state == null || state.current == null
+                        Container(
+                          height: 13,
+                          width: 190,
+                          child: SliderTheme(
+                            data: SliderTheme.of(context).copyWith(
+                              activeTrackColor: cBackground,
+                              inactiveTrackColor: cBackground,
+                              trackShape: RoundedRectSliderTrackShape(),
+                              trackHeight: 1.5,
+                              thumbColor: cBackground,
+                              thumbShape:
+                              RoundSliderThumbShape(enabledThumbRadius: 6.0),
+                              overlayColor: cBackground.withOpacity(0.32),
+                              overlayShape:
+                              RoundSliderOverlayShape(overlayRadius: 10.0),
+                            ),
+                            child: Slider(
+                              min: 0,
+                              max: (state == null || state.max == null
+                                  ? 1.toDouble()
+                                  : state.max.inMilliseconds.toDouble()),
+                              value: (state == null || state.current == null
                                   ? 0.toDouble()
                                   : state.current.inMilliseconds.toDouble())
-                              .clamp(
+                                  .clamp(
                                   0,
                                   (state == null || state.max == null
                                       ? 1.toDouble()
                                       : state.max.inMilliseconds.toDouble())),
-                          onChangeStart: (info) {
-                            //context.read<GeneralController>().playerController.pause();
-                          },
-                          onChanged: (value) {
-                            print("CHANGE ${value.toInt()}");
-                            context
-                                .read<GeneralController>()
-                                .playerController
-                                .setDuration(
+                              onChangeStart: (info) {
+                                //context.read<GeneralController>().playerController.pause();
+                              },
+                              onChanged: (value) {
+                                print("CHANGE ${value.toInt()}");
+                                context
+                                    .read<GeneralController>()
+                                    .playerController
+                                    .setDuration(
                                     Duration(milliseconds: value.toInt()));
-                          },
-                          onChangeEnd: (info) {
-                            print("end");
-                            context
-                                .read<GeneralController>()
-                                .playerController
-                                .seek(Duration(milliseconds: info.toInt()));
-                          },
-                        ),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "${time(state == null ? Duration(seconds: 0) : state.current)}",
-                          style: TextStyle(
-                            color: cBackground.withOpacity(0.7),
-                            fontSize: 10,
-                            fontFamily: fontFamily,
-                            fontWeight: FontWeight.w400,
+                              },
+                              onChangeEnd: (info) {
+                                print("end");
+                                context
+                                    .read<GeneralController>()
+                                    .playerController
+                                    .seek(Duration(milliseconds: info.toInt()));
+                              },
+                            ),
                           ),
                         ),
-                        Text(
-                          "${time(state == null ? Duration(seconds: 0) : state.max)}",
-                          style: TextStyle(
-                            color: cBackground.withOpacity(0.7),
-                            fontSize: 10,
-                            fontFamily: fontFamily,
-                            fontWeight: FontWeight.w400,
+                        SizedBox(
+                          width: 30,
+                          child: Text(
+                            "${time(state == null ? Duration(seconds: 0) : state.max)}",
+                            style: TextStyle(
+                              color: cBackground.withOpacity(0.7),
+                              fontSize: 10,
+                              fontFamily: fontFamily,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ),
                       ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              width: 82,
-              child: InkWell(
-                onTap: () {
-                  context.read<GeneralController>().playerController.next();
-                },
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconSvg(IconsSvg.next),
-                    SizedBox(
-                      width: 32,
                     ),
                   ],
                 ),
               ),
-            )
-          ],
+              IconButton(
+                onPressed: () {
+                  context.read<GeneralController>().playerController.next();
+                },
+                icon: IconSvg(IconsSvg.next),
+              ),
+              // Container(
+              //   width: 82,
+              //   child: InkWell(
+              //     onTap: () {
+              //       context.read<GeneralController>().playerController.next();
+              //     },
+              //     child: Row(
+              //       crossAxisAlignment: CrossAxisAlignment.center,
+              //       mainAxisAlignment: MainAxisAlignment.end,
+              //       children: [
+              //         IconSvg(IconsSvg.next),
+              //         SizedBox(
+              //           width: 20,
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // )
+            ],
+          ),
         ),
       ),
     );

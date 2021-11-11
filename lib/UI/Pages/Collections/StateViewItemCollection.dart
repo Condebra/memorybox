@@ -10,7 +10,7 @@ import 'package:recorder/UI/widgets/Appbar.dart';
 import 'package:provider/provider.dart';
 import 'package:recorder/UI/widgets/AudioItem.dart';
 import 'package:recorder/Utils/DropMenu/DropMenuItem.dart';
-import 'package:recorder/Utils/DropMenu/FocusedMunu.dart';
+import 'package:recorder/Utils/DropMenu/FocusedMenuHolder.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:recorder/Utils/time/TimeParse.dart';
 import 'package:recorder/models/AudioModel.dart';
@@ -34,15 +34,12 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
           buttonBack: true,
           buttonAdd: false,
           buttonDone: false,
-          padding: 18,
-          top: 16,
+          padding: 10,
+          top: 25,
           textRightButton: "Добавить",
           height: 90,
           tapLeftButton: () {
             context.read<GeneralController>().collectionsController.back();
-          },
-          tapRightButton: () {
-            //todo open menu
           },
           childRight: FocusedMenuHolder(
               blurSize: 0,
@@ -440,9 +437,6 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
                             child: AudioItemWidget(
                               colorPlay: cSwamp,
                               selected: false,
-                              onSelect: () {
-                                //todo select
-                              },
                               item: list[index],
                             ),
                           ),

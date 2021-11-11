@@ -37,8 +37,8 @@ class _StateViewCollectionState extends State<StateViewCollection> {
         buttonMenu: false,
         buttonBack: false,
         buttonAdd: true,
-        padding: 18,
-        top: 16,
+        padding: 10,
+        top: 25,
         height: 90,
         tapLeftButton: () {
           context

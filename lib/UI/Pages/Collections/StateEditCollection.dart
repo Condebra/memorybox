@@ -40,8 +40,8 @@ class _StateEditCollectionState extends State<StateEditCollection> {
         buttonBack: true,
         buttonAdd: false,
         buttonDone: true,
-        padding: 18,
-        top: 16,
+        padding: 10,
+        top: 25,
         textRightButton: "Сохранить",
         height: 90,
         tapLeftButton: (){
@@ -283,9 +283,6 @@ class _StateEditCollectionState extends State<StateEditCollection> {
                           colorPlay: cSwamp,
                           selected: false,
                           delete: true,
-                          onSelect: () {
-                            //todo select
-                          },
                           item: list[index],
                         ),
                         SizedBox(height: 10,),

@@ -27,15 +27,14 @@ class _StateAddAudioCollectionState extends State<StateAddAudioCollection> {
         buttonBack: true,
         buttonAdd: false,
         buttonDone: true,
-        padding: 18,
-        top: 16,
+        padding: 10,
+        top: 25,
         textRightButton: "Добавить",
         height: 90,
         tapLeftButton: () {
           context.read<GeneralController>().collectionsController.back();
         },
         tapRightButton: () {
-          //todo save
           context.read<GeneralController>().collectionsController.back();
         },
         child: Container(
@@ -153,7 +152,6 @@ class _StateAddAudioCollectionState extends State<StateAddAudioCollection> {
                     colorPlay: cSwamp,
                     selected: true,
                     onSelect: () {
-                      //todo select
                       context
                           .read<GeneralController>()
                           .collectionsController

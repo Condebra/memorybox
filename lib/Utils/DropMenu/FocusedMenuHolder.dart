@@ -232,7 +232,7 @@ class FocusedMenuDetails extends StatelessWidget {
                                 );
                               },
                               tween: Tween(begin: 1.0, end: 0.0),
-                              duration: Duration(milliseconds: index * 200),
+                              duration: Duration(milliseconds: index * 100),
                               child: listItem);
                         } else {
                           return listItem;

@@ -44,8 +44,8 @@ class _StateAddCollectionState extends State<StateAddCollection> {
         buttonBack: true,
         buttonAdd: false,
         buttonDone: true,
-        padding: 18,
-        top: 16,
+        padding: 10,
+        top: 25,
         height: 90,
         tapLeftButton: () {
           context.read<GeneralController>().collectionsController.back();
@@ -285,9 +285,6 @@ class _StateAddCollectionState extends State<StateAddCollection> {
                       AudioItemWidget(
                         colorPlay: cSwamp,
                         selected: false,
-                        onSelect: () {
-                          //todo select
-                        },
                         item: list[index],
                       ),
                       SizedBox(

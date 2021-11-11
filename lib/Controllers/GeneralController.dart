@@ -156,7 +156,6 @@ class GeneralController {
   }
 
   openSubscribe() async {
-    //todo
     setPage(6);
     setMenu(false);
     // Navigator.push(AppKeys.navigatorKey.currentContext,

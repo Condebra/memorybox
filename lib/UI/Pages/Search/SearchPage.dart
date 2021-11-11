@@ -28,7 +28,8 @@ class _SearchPageState extends State<SearchPage> {
             buttonMore: false,
             buttonBack: false,
             buttonMenu: true,
-            padding: 11,
+            // padding: 11,
+            top: 25,
             height: 90,
             tapLeftButton: (){
               context.read<GeneralController>().setMenu(true);

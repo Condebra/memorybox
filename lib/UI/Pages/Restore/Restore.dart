@@ -6,7 +6,7 @@ import 'package:recorder/UI/widgets/Appbar.dart';
 import 'package:provider/provider.dart';
 import 'package:recorder/UI/widgets/AudioItem.dart';
 import 'package:recorder/Utils/DropMenu/DropMenuItem.dart';
-import 'package:recorder/Utils/DropMenu/FocusedMunu.dart';
+import 'package:recorder/Utils/DropMenu/FocusedMenuHolder.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 
 class Restore extends StatefulWidget {
@@ -36,77 +36,78 @@ class _RestoreState extends State<Restore> {
               context.read<GeneralController>().setMenu(true);
             },
             childRight: FocusedMenuHolder(
-                blurSize: 0,
-                blurBackgroundColor: Colors.transparent,
-                duration: Duration(milliseconds: 50),
-                menuBoxDecoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(15))),
-                menuWidth: MediaQuery.of(context).size.width / 2,
-                menuOffset: 10,
-                menuItems: [
-                  FocusedMenuItem(
-                    onPressed: () {
-                      context
-                          .read<GeneralController>()
-                          .restoreController
-                          .setSelect(true);
-                    },
-                    title: Text(
-                      "Выбрать несколько",
-                      style: TextStyle(
-                          color: cBlack,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14,
-                          fontFamily: fontFamily),
-                    ),
+              blurSize: 0,
+              blurBackgroundColor: Colors.transparent,
+              duration: Duration(milliseconds: 50),
+              menuBoxDecoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(15))),
+              menuWidth: MediaQuery.of(context).size.width / 2,
+              menuOffset: 10,
+              menuItems: [
+                FocusedMenuItem(
+                  onPressed: () {
+                    context
+                        .read<GeneralController>()
+                        .restoreController
+                        .setSelect(true);
+                  },
+                  title: Text(
+                    "Выбрать несколько",
+                    style: TextStyle(
+                        color: cBlack,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        fontFamily: fontFamily),
                   ),
-                  FocusedMenuItem(
-                    onPressed: () {
-                      context
-                          .read<GeneralController>()
-                          .restoreController
-                          .deleteAll();
-                    },
-                    title: Text(
-                      "Удалить все",
-                      style: TextStyle(
-                          color: cBlack,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14,
-                          fontFamily: fontFamily),
-                    ),
+                ),
+                FocusedMenuItem(
+                  onPressed: () {
+                    context
+                        .read<GeneralController>()
+                        .restoreController
+                        .deleteAll();
+                  },
+                  title: Text(
+                    "Удалить все",
+                    style: TextStyle(
+                        color: cBlack,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        fontFamily: fontFamily),
                   ),
-                  FocusedMenuItem(
-                    onPressed: () {
-                      context
-                          .read<GeneralController>()
-                          .restoreController
-                          .restoreAll();
-                    },
-                    title: Text(
-                      "Восстановить все",
-                      style: TextStyle(
-                          color: cBlack,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14,
-                          fontFamily: fontFamily),
-                    ),
+                ),
+                FocusedMenuItem(
+                  onPressed: () {
+                    context
+                        .read<GeneralController>()
+                        .restoreController
+                        .restoreAll();
+                  },
+                  title: Text(
+                    "Восстановить все",
+                    style: TextStyle(
+                        color: cBlack,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        fontFamily: fontFamily),
                   ),
-                ],
-                onPressed: () {},
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20.0, horizontal: 11),
-                  child: Container(
-                    width: 27,
-                    height: 27,
-                    child: Center(
-                      child: IconSvg(IconsSvg.more,
-                          width: 41, height: 8, color: cBackground),
-                    ),
+                ),
+              ],
+              onPressed: () {},
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20.0, horizontal: 11),
+                child: Container(
+                  width: 27,
+                  height: 27,
+                  child: Center(
+                    child: IconSvg(IconsSvg.more,
+                        width: 41, height: 8, color: cBackground),
                   ),
-                )),
+                ),
+              ),
+            ),
             top: 25,
             height: 110,
             child: Container(
@@ -158,14 +159,14 @@ class _RestoreState extends State<Restore> {
         children: List.generate(state.items.length, (index) {
           return Column(
             children: [
-              AudioItemWidget(
-                colorPlay: cBlue,
-                selected: false,
-                delete: true,
-                item: state.items[index],
-              ),
-              SizedBox(
-                height: 10,
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: AudioItemWidget(
+                  colorPlay: cBlue,
+                  selected: false,
+                  delete: true,
+                  item: state.items[index],
+                ),
               ),
             ],
           );

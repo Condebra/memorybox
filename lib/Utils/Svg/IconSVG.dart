@@ -82,11 +82,9 @@ Widget IconSvg(int id,
     case 21:
       iconName = icon('next');
       break;
-
     case 22:
       iconName = icon('back15');
       break;
-
     case 23:
       iconName = icon('to15');
       break;

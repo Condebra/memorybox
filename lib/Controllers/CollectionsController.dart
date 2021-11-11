@@ -223,7 +223,6 @@ class CollectionsController {
             "Некорректное описание плейлиста");
       }
     } else {
-      //todo  no name
       showDialogIntegronError(AppKeys.scaffoldKey.currentContext,
           "Некорректное название плейлиста");
     }

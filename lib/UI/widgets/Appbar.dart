@@ -47,7 +47,8 @@ class _MyAppBarState extends State<MyAppBar> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-          left: widget.padding, right: widget.padding, top: widget.top),
+          left: 10, right: 10, top: 10),
+          // left: widget.padding, right: widget.padding, top: widget.top),
       child: Container(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,

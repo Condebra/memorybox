@@ -34,8 +34,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   buttonMore: false,
                   buttonBack: snapshot.hasData && snapshot.data.edit,
                   buttonMenu: !(snapshot.hasData && snapshot.data.edit),
-                  padding: 18,
-                  top: 16,
+                  // padding: 18,
+                  top: 25,
                   height: 90,
                   tapLeftButton: () {
                     if (snapshot.hasData && snapshot.data.edit) {

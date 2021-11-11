@@ -54,7 +54,8 @@ class DBProvider {
       '${TableAudio.uploadPicture} INTEGER,'
       '${TableAudio.uploadAudio} INTEGER,'
       '${TableAudio.isLocalAudio} INTEGER,'
-      '${TableAudio.idS} INTEGER '
+      '${TableAudio.idS} INTEGER, '
+      '${TableAudio.deleted} INTEGER'
       ')',
     );
     await db.execute(
@@ -105,9 +106,11 @@ class DBProvider {
     }
   }
 
-  Future<List<AudioItem>> audiosGet() async {
+  Future<List<AudioItem>> getAudios({bool removed = false}) async {
     Database db = await this.database;
-    final List<Map<String, dynamic>> list = await db.query(TableAudio.table);
+    int deleted = removed ? 1 : 0;
+    final List<Map<String, dynamic>> list = await db.query(TableAudio.table,
+    where: "${TableAudio.deleted} = ?", whereArgs: [deleted]);
     // print("=== AudiosGet "+list.toString());
     List<AudioItem> listAudio = [];
     list.forEach((element) {
@@ -116,7 +119,7 @@ class DBProvider {
     return listAudio;
   }
 
-  Future<AudioItem> audioGet(int id, {int idS}) async {
+  Future<AudioItem> getAudio(int id, {int idS}) async {
     Database db = await this.database;
     final List<Map<String, dynamic>> list = await db.query(TableAudio.table,
         where: "${idS == null ? TableAudio.id : TableAudio.idS} = ?",
@@ -150,7 +153,7 @@ class DBProvider {
     List<int> audiosIds =
         json.decode(list[0][TableCollection.audios]).cast<int>();
     for (int i = 0; i < audiosIds.length; i++) {
-      AudioItem step = await audioGet(audiosIds[i]);
+      AudioItem step = await getAudio(audiosIds[i]);
       if (step != null) audios.add(step);
       //print("id audio "+step.id.toString());
     }
@@ -172,6 +175,20 @@ class DBProvider {
     Database db = await this.database;
     await db.delete(TableAudio.table,
         where: "${TableAudio.id} = ?", whereArgs: [id]);
+  }
+
+  Future<void> removeAudio(int id) async {
+    Database db = await this.database;
+    int deleted = 1;
+    await db.update(TableAudio.table, {TableAudio.deleted: deleted},
+      where: "${TableAudio.id} = ?", whereArgs: [id]);
+  }
+
+  Future<void> restoreAudio(int id) async {
+    Database db = await this.database;
+    int deleted = 0;
+    await db.update(TableAudio.table, {TableAudio.deleted: deleted},
+      where: "${TableAudio.id} = ?", whereArgs: [id]);
   }
 
   Future<bool> audioEdit(
@@ -253,15 +270,15 @@ class DBProvider {
       List<int> audiosIds =
           (json.decode(element[TableCollection.audios])).cast<int>();
       for (int i = 0; i < audiosIds.length; i++) {
-        AudioItem a = await audioGet(audiosIds[i]);
+        AudioItem a = await getAudio(audiosIds[i]);
         if (a != null) audios.add(a);
       }
       item.playlist = audios;
       item.count = audios.length;
       int time = 0;
-      // for (int i = 0; i < audios.length; i++) {
-      //   time += audios[i].duration.inMilliseconds;
-      // }
+      for (int i = 0; i < audios.length; i++) {
+        time += audios[i].duration.inMilliseconds;
+      }
       item.duration = Duration(milliseconds: time);
       items.add(item);
     });
