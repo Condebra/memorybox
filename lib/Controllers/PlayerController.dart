@@ -1,9 +1,7 @@
 import 'dart:async';
 
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:recorder/Controllers/States/PlayerState.dart';
-import 'package:recorder/UI/Player.dart';
 import 'package:recorder/models/AudioModel.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -42,21 +40,18 @@ class PlayerController {
 
     ///Status
     _audioPlayer.onPlayerStateChanged.listen((AudioPlayerState state) async {
-      if (state == AudioPlayerState.COMPLETED) {
+      print(state);
+      if (state == AudioPlayerState.COMPLETED)
         _currentDuration = _maxDuration;
-        if (queue.length > 1) next();
+      // print("CURRENT POSITION => $currentPosition");
+      if (state == AudioPlayerState.COMPLETED) {
+        // print(state);
+        if (currentPosition < queue.length - 1) {
+          currentPosition++;
+          _play(queue[currentPosition]);
+        }
+        // print("CURRENT POSITION $currentPosition");
       }
-      // if (s == AudioPlayerState.COMPLETED) {
-        // print(s);
-        // if (currentPosition < queue.length)
-        //   currentPosition++;
-        // queue.removeAt(0);
-        // if (queue.isNotEmpty) {
-        // if (queue.isNotEmpty || currentPosition >= 0 && queue[currentPosition] != null) {
-        //   // await _play(queue.first);
-        //   await _play(queue[currentPosition]);
-        // }
-      // } else {}
       _playerState = state;
       setState();
     });
@@ -80,30 +75,24 @@ class PlayerController {
     stop();
     queue.clear(); //немного костыльно
     currentPosition = 0;
-    if (repeat) {
-      for (int i = 0; i < 1000; i++)
+    print("LIST LENGTH ${list.length}");
+    if (repeat)
+      for (int i = 0; i < 10000; i++) //ещё немного костылирования
         queue.addAll(list);
-    }
     else queue.addAll(list);
-    print("=queue=${queue.toString()}=queue=");
+    // print("=queue=${queue.toString()}=queue=");
     await _play(queue[currentPosition]);
-    for (int i = 1; i < queue.length; i++) {
-      currentPosition = i;
-      await _play(queue[currentPosition]);
-    }
   }
 
   _play(AudioItem item) async {
-    print("play ${item.toMap()}");
-
+    // print("play ${item.toMap()}");
     int result = await _audioPlayer.play(item.pathAudio);
     if (result == 1) {
       _currentItem = item;
       playing = true;
       _loading = true;
-    } else {
+    } else
       playing = false;
-    }
     setState();
   }
 
@@ -121,28 +110,22 @@ class PlayerController {
   }
 
   next() {
-    print("NEXT() $currentPosition, ${queue.length}");
+    // print("NEXT() $currentPosition, ${queue.length}");
+    currentPosition++;
     if (queue.isNotEmpty && currentPosition > -1 && currentPosition < queue.length)
       _play(queue[currentPosition]);
     else {
       stop();
-      // // queue.removeAt(0);
-      // currentPosition++;
-      // if (queue.isNotEmpty && currentPosition < queue.length) {
-      //   _play(queue[currentPosition]);
-      //   // _play(queue[0]);
-      // } else {
-      //   stop();
-      // }
     }
   }
 
   prev() {
-    // if (queue.isEmpty)
+    // print("PREV() $currentPosition, ${queue.length}");
+    currentPosition--;
+    if (queue.isNotEmpty && currentPosition > -1 && currentPosition < queue.length)
+      _play(queue[currentPosition]);
+    else
       stop();
-    // else {
-      _play(queue.first);
-    // }
   }
 
   seek(Duration duration) {
