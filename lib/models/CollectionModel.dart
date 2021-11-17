@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:recorder/DB/DBModel.dart';
-import 'package:recorder/models/AudioModel.dart';
+import 'package:recorder/models/AudioItem.dart';
 
 class CollectionItem {
   final int id;

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:recorder/models/AudioModel.dart';
+import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/models/CollectionModel.dart';
 import 'package:recorder/Rest/Audio/AudioProvider.dart';
 import 'package:recorder/Rest/Playlist/PlaylistProvider.dart';

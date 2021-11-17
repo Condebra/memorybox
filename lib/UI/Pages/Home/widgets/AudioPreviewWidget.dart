@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
-import 'package:recorder/models/AudioModel.dart';
+import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/widgets/AudioItem.dart';
 import 'package:recorder/UI/widgets/AudioPreviewGenerate.dart';

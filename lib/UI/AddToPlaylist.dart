@@ -7,7 +7,7 @@ import 'package:recorder/Utils/DialogsIntegron/DialogIntegron.dart';
 import 'package:recorder/Utils/DialogsIntegron/DialogLoading.dart';
 import 'package:recorder/Utils/app_keys.dart';
 import 'package:recorder/Utils/time/TimeParse.dart';
-import 'package:recorder/models/AudioModel.dart';
+import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/models/CollectionModel.dart';
 import 'package:recorder/models/Put.dart';
 

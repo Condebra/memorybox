@@ -7,7 +7,7 @@ import 'package:recorder/Controllers/States/PlayerState.dart';
 import 'package:recorder/Rest/Audio/AudioProvider.dart';
 import 'package:recorder/Rest/Playlist/PlaylistProvider.dart';
 import 'package:recorder/Utils/app_keys.dart';
-import 'package:recorder/models/AudioModel.dart';
+import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/models/Put.dart';
 import 'package:rxdart/rxdart.dart';
 

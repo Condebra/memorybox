@@ -1,6 +1,6 @@
 
 import 'package:flutter/foundation.dart';
-import 'package:recorder/models/AudioModel.dart';
+import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/models/CollectionModel.dart';
 
 enum CollectionStates{

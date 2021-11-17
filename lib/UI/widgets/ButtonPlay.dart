@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recorder/models/AudioModel.dart';
+import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 
 class ButtonPlay extends StatefulWidget {

@@ -13,7 +13,7 @@ import 'package:recorder/Utils/DropMenu/DropMenuItem.dart';
 import 'package:recorder/Utils/DropMenu/FocusedMenuHolder.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:recorder/Utils/time/TimeParse.dart';
-import 'package:recorder/models/AudioModel.dart';
+import 'package:recorder/models/AudioItem.dart';
 
 class StateViewItemCollection extends StatefulWidget {
   @override

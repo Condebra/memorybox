@@ -6,7 +6,7 @@ import 'package:recorder/Style.dart';
 import 'package:recorder/UI/widgets/Appbar.dart';
 import 'package:recorder/UI/widgets/AudioItem.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
-import 'package:recorder/models/AudioModel.dart';
+import 'package:recorder/models/AudioItem.dart';
 
 class StateAddAudioCollection extends StatefulWidget {
   @override
@@ -91,28 +91,30 @@ class _StateAddAudioCollectionState extends State<StateAddAudioCollection> {
               width: 30,
             ),
             Container(
-                width: MediaQuery.of(context).size.width - 32 - 30 - 50 - 10,
-                child: TextField(
-                  controller: context
-                      .read<GeneralController>()
-                      .collectionsController
-                      .controllerSearch,
-                  maxLines: 1,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintStyle: TextStyle(
-                      fontSize: 20,
-                      color: cBlack.withOpacity(0.5),
-                      fontWeight: FontWeight.w400,
-                    ),
-                    hintText: "Поиск",
+              width: MediaQuery.of(context).size.width - 32 - 30 - 50 - 10,
+              child: TextField(
+                controller: context
+                    .read<GeneralController>()
+                    .collectionsController
+                    .controllerSearch,
+                maxLines: 1,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintStyle: TextStyle(
+                    fontSize: 20,
+                    color: cBlack.withOpacity(0.5),
+                    fontWeight: FontWeight.w400,
                   ),
-                  style: TextStyle(
-                      color: cBlack,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w400,
-                      fontFamily: fontFamily),
-                )),
+                  hintText: "Поиск",
+                ),
+                style: TextStyle(
+                  color: cBlack,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: fontFamily,
+                ),
+              ),
+            ),
             SizedBox(
               width: 10,
             ),
@@ -120,7 +122,7 @@ class _StateAddAudioCollectionState extends State<StateAddAudioCollection> {
               width: 30,
               height: 30,
               child: IconSvg(IconsSvg.search),
-            )
+            ),
           ],
         ),
       ),
@@ -129,43 +131,47 @@ class _StateAddAudioCollectionState extends State<StateAddAudioCollection> {
 
   Widget _audios() {
     return StreamBuilder<CollectionsState>(
-        stream: context
-            .read<GeneralController>()
-            .collectionsController
-            .streamCollections,
-        builder: (context, snapshot) {
-          List<AudioItem> list = [];
-          if (snapshot.hasData) {
-            if (snapshot.data.audiosSearch != null &&
-                snapshot.data.audiosSearch.isNotEmpty) {
-              list = snapshot.data.audiosSearch;
-            } else {
-              list = snapshot.data.audiosAll;
-            }
+      stream: context
+          .read<GeneralController>()
+          .collectionsController
+          .streamCollections,
+      builder: (context, snapshot) {
+        List<AudioItem> list = [];
+        if (snapshot.hasData) {
+          if (snapshot.data.audiosSearch != null &&
+              snapshot.data.audiosSearch.isNotEmpty) {
+            list = snapshot.data.audiosSearch;
+          } else {
+            list = snapshot.data.audiosAll;
           }
-          if (list == null || list.isEmpty) return Center(child: Text("Нет аудиозаписей"),);
-          return Column(
-            children: List.generate(list.length, (index) {
-              return Column(
-                children: [
-                  AudioItemWidget(
-                    colorPlay: cSwamp,
-                    selected: true,
-                    onSelect: () {
-                      context
-                          .read<GeneralController>()
-                          .collectionsController
-                          .selectAudio(list[index], index);
-                    },
-                    item: list[index],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                ],
-              );
-            }),
+        }
+        if (list == null || list.isEmpty)
+          return Center(
+            child: Text("Нет аудиозаписей"),
           );
-        });
+        return Column(
+          children: List.generate(list.length, (index) {
+            return Column(
+              children: [
+                AudioItemWidget(
+                  colorPlay: cSwamp,
+                  selected: true,
+                  onSelect: () {
+                    context
+                        .read<GeneralController>()
+                        .collectionsController
+                        .selectAudio(list[index], index);
+                  },
+                  item: list[index],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+              ],
+            );
+          }),
+        );
+      },
+    );
   }
 }

@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:recorder/models/AudioModel.dart';
+import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/UI/widgets/AudioItem.dart';
 
 class AudioPreviewGenerate extends StatefulWidget {

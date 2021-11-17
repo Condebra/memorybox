@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:recorder/DB/DB.dart';
 import 'package:recorder/Rest/Audio/AudioProvider.dart';
 import 'package:recorder/Utils/checkConnection.dart';
-import 'package:recorder/models/AudioModel.dart';
+import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/models/CollectionModel.dart';
 import 'package:recorder/models/Put.dart';
 import 'package:recorder/Rest/API.dart';

@@ -8,7 +8,7 @@ import 'package:recorder/UI/EditingAudio.dart';
 import 'package:recorder/Utils/DropMenu/DropMenuItem.dart';
 import 'package:recorder/Utils/DropMenu/FocusedMenuHolder.dart';
 import 'package:recorder/Utils/time/TimeParse.dart';
-import 'package:recorder/models/AudioModel.dart';
+import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:provider/provider.dart';
