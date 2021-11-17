@@ -7,7 +7,7 @@ import 'package:recorder/UI/widgets/Appbar.dart';
 import 'package:provider/provider.dart';
 import 'package:recorder/UI/widgets/AudioItem.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
-import 'package:recorder/models/AudioModel.dart';
+import 'package:recorder/models/AudioItem.dart';
 
 class StateAddCollection extends StatefulWidget {
   @override

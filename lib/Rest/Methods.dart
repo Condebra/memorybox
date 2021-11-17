@@ -8,7 +8,7 @@ class Methods {
 }
 
 class _AuthMethods{
-  String get sendCode => "send";
+  String get sendCode => "register";
   String get checkCode => "auth";
 }
 class _AudioMethods{

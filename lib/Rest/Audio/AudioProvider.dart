@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:recorder/DB/DB.dart';
 import 'package:recorder/Utils/checkConnection.dart';
-import 'package:recorder/models/AudioModel.dart';
+import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/models/Put.dart';
 import 'package:recorder/Rest/API.dart';
 import 'package:recorder/Rest/Rest.dart';

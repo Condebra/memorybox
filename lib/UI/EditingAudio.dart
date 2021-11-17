@@ -7,7 +7,7 @@ import 'package:recorder/Rest/Audio/AudioProvider.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/Utils/DialogsIntegron/DialogLoading.dart';
 import 'package:recorder/Utils/app_keys.dart';
-import 'package:recorder/models/AudioModel.dart';
+import 'package:recorder/models/AudioItem.dart';
 
 editAudio(AudioItem item, GeneralController controller) {
   showModalBottomSheet(

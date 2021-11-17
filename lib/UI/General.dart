@@ -7,7 +7,7 @@ import 'package:recorder/UI/Pages/Search/SearchPage.dart';
 import 'package:recorder/UI/Pages/Restore/Restore.dart';
 import 'package:recorder/UI/Pages/Subscription/SubscritionPage.dart';
 import 'package:recorder/UI/widgets/MainMenu.dart';
-import 'package:recorder/models/AudioModel.dart';
+import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/Pages/AudioList/AudioListPage.dart';
 import 'package:recorder/UI/Pages/Profile/ProfilePage.dart';

@@ -13,7 +13,7 @@ import 'package:recorder/Controllers/ProfileController.dart';
 import 'package:recorder/Controllers/RecordController.dart';
 import 'package:recorder/UI/Pages/Record/showRecord.dart';
 import 'package:recorder/Utils/app_keys.dart';
-import 'package:recorder/models/AudioModel.dart';
+import 'package:recorder/models/AudioItem.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 part 'States/RecordState.dart';

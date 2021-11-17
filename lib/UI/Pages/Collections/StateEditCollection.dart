@@ -7,7 +7,7 @@ import 'package:recorder/Style.dart';
 import 'package:recorder/UI/widgets/Appbar.dart';
 import 'package:recorder/UI/widgets/AudioItem.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
-import 'package:recorder/models/AudioModel.dart';
+import 'package:recorder/models/AudioItem.dart';
 
 class StateEditCollection extends StatefulWidget {
   @override
@@ -17,12 +17,12 @@ class StateEditCollection extends StatefulWidget {
 class _StateEditCollectionState extends State<StateEditCollection> {
   bool editHeader = false;
   bool editComment = false;
-  FocusNode focusNode =FocusNode();
+  FocusNode focusNode = FocusNode();
 
   @override
   void initState() {
     focusNode.addListener(() {
-      if(!focusNode.hasFocus){
+      if (!focusNode.hasFocus) {
         editHeader = false;
       }
       setState(() {});
@@ -44,10 +44,10 @@ class _StateEditCollectionState extends State<StateEditCollection> {
         top: 25,
         textRightButton: "Сохранить",
         height: 90,
-        tapLeftButton: (){
+        tapLeftButton: () {
           context.read<GeneralController>().collectionsController.back();
         },
-        tapRightButton:  (){
+        tapRightButton: () {
           context.read<GeneralController>().collectionsController.backAndSave();
         },
       ),
@@ -82,112 +82,121 @@ class _StateEditCollectionState extends State<StateEditCollection> {
   Widget _header() {
     // if (editHeader) {
     //   FocusScope.of(context).autofocus(focusNode);
-      return Container(
-        // height: 40,
-        child: TextField(
-          focusNode: focusNode,
-          maxLines: 1,
-          controller: context
-              .read<GeneralController>()
-              .collectionsController
-              .controllerHeader,
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            hintStyle: TextStyle(
-              fontSize: 24,
-              color: cBackground.withOpacity(0.7),
-              fontWeight: FontWeight.w700,
-            ),
-            hintText: "Название",
-          ),
-          style: TextStyle(
-              color: cBackground,
-              fontSize: 24,
-              fontWeight: FontWeight.w700,
-              fontFamily: fontFamily),
-        ),
-      );
-  }
-  Widget _image(){
-    return StreamBuilder<String>(
-        stream: context
+    return Container(
+      // height: 40,
+      child: TextField(
+        focusNode: focusNode,
+        maxLines: 1,
+        controller: context
             .read<GeneralController>()
             .collectionsController
-            .streamPhoto,
-        builder: (context, snapshot) {
-          return GestureDetector(
-            behavior: HitTestBehavior.deferToChild,
-            onTap: () {
-              context
-                  .read<GeneralController>()
-                  .collectionsController
-                  .addImage();
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                        color: Color.fromRGBO(0, 0, 0, 0.25),
-                        offset: Offset(0,4),
-                        blurRadius: 20,
-                        spreadRadius: 0
-                    )
-                  ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(15)),
-                child: Container(
-                  width: MediaQuery.of(context).size.width-32,
-                  height: (MediaQuery.of(context).size.width-32)*240/382,
-                  child: !snapshot.hasData || snapshot.data == null ?
-                  StreamBuilder<CollectionsState> (
-                    stream: context
-                        .read<GeneralController>()
-                        .collectionsController
-                        .streamCollections,
-                    builder: (context, snapshot1) {
-                      // child: snapshot.data.currentItem.isLocalPicture?Image.file(File(snapshot.data.currentItem.picture),fit: BoxFit.cover,):Image(image: NetworkImage(snapshot.data.currentItem.picture), fit: BoxFit.cover)),
-                      return snapshot1.data?.currentItem?.picture == null
-                          ? Container(
-                        color: cBackground.withOpacity(.9),
-                            child: Center(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(Radius.circular(100)),
-                                    border: Border.all(color: cBlack)
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: IconSvg(IconsSvg.camera, color: cBlack),
-                            )),),
-                          )
-                          :  snapshot1.data.currentItem.isLocalPicture ?
-                      Image.file(File(snapshot1.data.currentItem.picture),fit: BoxFit.cover,) :
-                      Image(image: NetworkImage(snapshot1.data.currentItem.picture), fit: BoxFit.cover);
-                    }
-                  )
-                      : Image.file(File(snapshot.data), fit: BoxFit.cover,),
-                ),
-              ),
-            ),
-          );
-        }
+            .controllerHeader,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          hintStyle: TextStyle(
+            fontSize: 24,
+            color: cBackground.withOpacity(0.7),
+            fontWeight: FontWeight.w700,
+          ),
+          hintText: "Название",
+        ),
+        style: TextStyle(
+          color: cBackground,
+          fontSize: 24,
+          fontWeight: FontWeight.w700,
+          fontFamily: fontFamily,
+        ),
+      ),
     );
   }
+
+  Widget _image() {
+    return StreamBuilder<String>(
+      stream:
+          context.read<GeneralController>().collectionsController.streamPhoto,
+      builder: (context, snapshot) {
+        return GestureDetector(
+          behavior: HitTestBehavior.deferToChild,
+          onTap: () {
+            context.read<GeneralController>().collectionsController.addImage();
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                    color: Color.fromRGBO(0, 0, 0, 0.25),
+                    offset: Offset(0, 4),
+                    blurRadius: 20,
+                    spreadRadius: 0)
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+              child: Container(
+                width: MediaQuery.of(context).size.width - 32,
+                height: (MediaQuery.of(context).size.width - 32) * 240 / 382,
+                child: !snapshot.hasData || snapshot.data == null
+                    ? StreamBuilder<CollectionsState>(
+                        stream: context
+                            .read<GeneralController>()
+                            .collectionsController
+                            .streamCollections,
+                        builder: (context, snapshot1) {
+                          // child: snapshot.data.currentItem.isLocalPicture?Image.file(File(snapshot.data.currentItem.picture),fit: BoxFit.cover,):Image(image: NetworkImage(snapshot.data.currentItem.picture), fit: BoxFit.cover)),
+                          return snapshot1.data?.currentItem?.picture == null
+                              ? Container(
+                                  color: cBackground.withOpacity(.9),
+                                  child: Center(
+                                    child: Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(100)),
+                                            border: Border.all(color: cBlack)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(16.0),
+                                          child: IconSvg(IconsSvg.camera,
+                                              color: cBlack),
+                                        )),
+                                  ),
+                                )
+                              : snapshot1.data.currentItem.isLocalPicture
+                                  ? Image.file(
+                                      File(snapshot1.data.currentItem.picture),
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Image(
+                                      image: NetworkImage(
+                                          snapshot1.data.currentItem.picture),
+                                      fit: BoxFit.cover,
+                                    );
+                        },
+                      )
+                    : Image.file(
+                        File(snapshot.data),
+                        fit: BoxFit.cover,
+                      ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   Widget _desc() {
     return Container(
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-              width: 1,
-              color: cGreen.withOpacity(0.2),
+            width: 1,
+            color: cGreen.withOpacity(0.2),
           ),
         ),
       ),
       child: TextField(
         minLines: 5,
         maxLines: 100,
-        controller:  context
+        controller: context
             .read<GeneralController>()
             .collectionsController
             .controllerComment,
@@ -201,10 +210,10 @@ class _StateEditCollectionState extends State<StateEditCollection> {
           hintText: "Введите описание...",
         ),
         style: TextStyle(
-            color: cBlack,
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-            fontFamily: fontFamily,
+          color: cBlack,
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+          fontFamily: fontFamily,
         ),
       ),
     );
@@ -231,7 +240,8 @@ class _StateEditCollectionState extends State<StateEditCollection> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Нет аудиозаписей",
+                    Text(
+                      "Нет аудиозаписей",
                       style: TextStyle(
                           color: cBlack.withOpacity(0.4),
                           fontFamily: fontFamily,
@@ -285,14 +295,15 @@ class _StateEditCollectionState extends State<StateEditCollection> {
                           delete: true,
                           item: list[index],
                         ),
-                        SizedBox(height: 10,),
+                        SizedBox(
+                          height: 10,
+                        ),
                       ],
                     );
                   }),
                 ),
               ],
             );
-        }
-    );
+        });
   }
 }

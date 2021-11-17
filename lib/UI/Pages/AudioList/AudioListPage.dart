@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Controllers/HomeController.dart';
-import 'package:recorder/models/AudioModel.dart';
+import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/widgets/Appbar.dart';
-import 'package:recorder/UI/widgets/AudioItem.dart';
 import 'package:recorder/UI/widgets/AudioPreviewGenerate.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:recorder/generated/l10n.dart';

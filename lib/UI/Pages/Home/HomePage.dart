@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:recorder/Controllers/HomeController.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
-import 'package:recorder/models/AudioModel.dart';
+import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/Pages/Home/widgets/AudioPreviewWidget.dart';
 import 'package:recorder/UI/Pages/Home/widgets/CollectionsWidget.dart';
