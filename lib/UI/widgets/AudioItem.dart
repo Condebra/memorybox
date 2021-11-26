@@ -21,12 +21,13 @@ class AudioItemWidget extends StatefulWidget {
   final bool delete;
   final Function onSelect;
 
-  AudioItemWidget(
-      {@required this.item,
-      this.colorPlay = cBlueSoso,
-      this.selected = false,
-      this.onSelect,
-      this.delete = false});
+  AudioItemWidget({
+    @required this.item,
+    this.colorPlay = cBlueSoso,
+    this.selected = false,
+    this.onSelect,
+    this.delete = false,
+  });
 
   @override
   _AudioItemWidgetState createState() => _AudioItemWidgetState();
@@ -41,9 +42,10 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
       child: Container(
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-            color: cBackground,
-            border: Border.all(color: Color.fromRGBO(58, 58, 85, 0.2)),
-            borderRadius: BorderRadius.circular(41)),
+          color: cBackground,
+          border: Border.all(color: Color.fromRGBO(58, 58, 85, 0.2)),
+          borderRadius: BorderRadius.circular(41),
+        ),
         child: Row(
           children: [
             Padding(
@@ -88,16 +90,18 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
                     Text(
                       '${widget.item.name}',
                       style: TextStyle(
-                          color: cBlack,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400),
+                        color: cBlack,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                     Text(
                       '${time(widget.item.duration)}',
                       style: TextStyle(
-                          color: cBlack.withOpacity(0.5),
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400),
+                        color: cBlack.withOpacity(0.5),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                      ),
                     )
                   ],
                 ),
@@ -121,8 +125,12 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
                     child: Container(
                       height: 30,
                       width: 30,
-                      child: IconSvg(IconsSvg.delete,
-                          width: 30, height: 30, color: cBlack),
+                      child: IconSvg(
+                        IconsSvg.delete,
+                        width: 30,
+                        height: 30,
+                        color: cBlack,
+                      ),
                     ))
                 : !widget.selected
                     ? openMenu()
@@ -135,8 +143,11 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(5.0),
-                              child: IconSvg(IconsSvg.selectedOn,
-                                  height: 50, width: 50),
+                              child: IconSvg(
+                                IconsSvg.selectedOn,
+                                height: 50,
+                                width: 50,
+                              ),
                             ))
                         : GestureDetector(
                             behavior: HitTestBehavior.deferToChild,
@@ -146,9 +157,13 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(5.0),
-                              child: IconSvg(IconsSvg.selectedOff,
-                                  height: 50, width: 50),
-                            )),
+                              child: IconSvg(
+                                IconsSvg.selectedOff,
+                                height: 50,
+                                width: 50,
+                              ),
+                            ),
+                          ),
           ],
         ),
       ),
@@ -168,30 +183,30 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
       menuItems: [
         FocusedMenuItem(
           onPressed: () {
-            addToPlaylist([widget.item],
-                context.read<GeneralController>());
+            addToPlaylist([widget.item], context.read<GeneralController>());
           },
           title: Text(
             "Добавить в подборку",
             style: TextStyle(
-                color: cBlack,
-                fontWeight: FontWeight.w400,
-                fontSize: 14,
-                fontFamily: fontFamily),
+              color: cBlack,
+              fontWeight: FontWeight.w400,
+              fontSize: 14,
+              fontFamily: fontFamily,
+            ),
           ),
         ),
         FocusedMenuItem(
           onPressed: () {
-            editAudio(
-                widget.item, context.read<GeneralController>());
+            editAudio(widget.item, context.read<GeneralController>());
           },
           title: Text(
             "Редактировать",
             style: TextStyle(
-                color: cBlack,
-                fontWeight: FontWeight.w400,
-                fontSize: 14,
-                fontFamily: fontFamily),
+              color: cBlack,
+              fontWeight: FontWeight.w400,
+              fontSize: 14,
+              fontFamily: fontFamily,
+            ),
           ),
         ),
         FocusedMenuItem(
@@ -210,10 +225,11 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
           title: Text(
             "Скачать",
             style: TextStyle(
-                color: cBlack,
-                fontWeight: FontWeight.w400,
-                fontSize: 14,
-                fontFamily: fontFamily),
+              color: cBlack,
+              fontWeight: FontWeight.w400,
+              fontSize: 14,
+              fontFamily: fontFamily,
+            ),
           ),
         ),
         FocusedMenuItem(
@@ -222,18 +238,17 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
                 .read<GeneralController>()
                 .restoreController
                 .delete(widget.item);
-            context
-                .read<GeneralController>()
-                .homeController
-                .load();
+            context.read<GeneralController>().homeController.load();
+            context.read<GeneralController>().homeController.loadAudios();
           },
           title: Text(
             "Удалить",
             style: TextStyle(
-                color: cBlack,
-                fontWeight: FontWeight.w400,
-                fontSize: 14,
-                fontFamily: fontFamily),
+              color: cBlack,
+              fontWeight: FontWeight.w400,
+              fontSize: 14,
+              fontFamily: fontFamily,
+            ),
           ),
         ),
       ],
@@ -241,10 +256,8 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
       child: Container(
         height: 30,
         child: Padding(
-            padding:
-            const EdgeInsets.symmetric(horizontal: 14.0),
-            child: IconSvg(IconsSvg.moreAudios,
-                width: 18, color: cBlack)),
+            padding: const EdgeInsets.symmetric(horizontal: 14.0),
+            child: IconSvg(IconsSvg.moreAudios, width: 18, color: cBlack)),
       ),
     );
   }

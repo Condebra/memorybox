@@ -109,7 +109,9 @@ class DBProvider {
     Database db = await this.database;
     int deleted = removed ? 1 : 0;
     final List<Map<String, dynamic>> list = await db.query(TableAudio.table,
-    where: "${TableAudio.deleted} = ?", whereArgs: [deleted]);
+        where: "${TableAudio.deleted} = ?",
+        whereArgs: [deleted],
+        orderBy: "${TableAudio.id} DESC");
     // print("=== AudiosGet "+list.toString());
     List<AudioItem> listAudio = [];
     list.forEach((element) {
@@ -134,7 +136,8 @@ class DBProvider {
 
   Future<int> getIdByName(String name) async {
     Database db = await this.database;
-    final id = await db.query(TableAudio.table, where: "${TableAudio.name} = ?", whereArgs: [name]);
+    final id = await db.query(TableAudio.table,
+        where: "${TableAudio.name} = ?", whereArgs: [name]);
     // print("=======>getId==> ${id[0].values.first}");
     return id[0].values.first;
   }
@@ -142,9 +145,10 @@ class DBProvider {
   Future<CollectionItem> collectionGet(int id) async {
     Database db = await this.database;
     final List<Map<String, dynamic>> list = await db.query(
-        TableCollection.table,
-        where: "${TableCollection.id} = ?",
-        whereArgs: [id]);
+      TableCollection.table,
+      where: "${TableCollection.id} = ?",
+      whereArgs: [id],
+    );
     print("collectionGet " + list.toString());
 
     CollectionItem item = CollectionItem.fromDB(list[0]);
@@ -180,14 +184,14 @@ class DBProvider {
     Database db = await this.database;
     int deleted = 1;
     await db.update(TableAudio.table, {TableAudio.deleted: deleted},
-      where: "${TableAudio.id} = ?", whereArgs: [id]);
+        where: "${TableAudio.id} = ?", whereArgs: [id]);
   }
 
   Future<void> restoreAudio(int id) async {
     Database db = await this.database;
     int deleted = 0;
     await db.update(TableAudio.table, {TableAudio.deleted: deleted},
-      where: "${TableAudio.id} = ?", whereArgs: [id]);
+        where: "${TableAudio.id} = ?", whereArgs: [id]);
   }
 
   Future<bool> audioEdit(
@@ -257,10 +261,12 @@ class DBProvider {
     return (await db.insert(TableAudio.table, item.toMap()));
   }
 
-  Future<List<CollectionItem>> collectionsGet() async {
+  Future<List<CollectionItem>> getCollections() async {
     Database db = await this.database;
     final List<Map<String, dynamic>> list =
-        await db.query(TableCollection.table);
+        await db.query(TableCollection.table,
+          orderBy: "${TableCollection.id} DESC",
+        );
     // print("=== collectionsGet ${list}");
     List<CollectionItem> items = [];
     list.forEach((element) async {

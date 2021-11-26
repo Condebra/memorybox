@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Routes.dart';
@@ -26,15 +27,21 @@ class LoginController {
         duration: Duration(milliseconds: 300), curve: Curves.ease);
   }
 
-  stepTwoTap() async {
+  stepTwoTap(BuildContext context) async {
     if (maskFormatter.getUnmaskedText().length == 10) {
       controllerPages.animateToPage(2,
           duration: Duration(milliseconds: 300), curve: Curves.ease);
       getCode();
-    }
+    } else
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text("Номер телефона слишком короткий"),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
   }
 
-  stepThreeTap() async {
+  stepThreeTap(BuildContext context) async {
     if (maskFormatterCode.getUnmaskedText().length == 4) {
       Put response = await AuthProvider.checkCode(
           "7${maskFormatter.getUnmaskedText()}",
@@ -45,11 +52,23 @@ class LoginController {
         checkCode();
         await Future.delayed(
             Duration(milliseconds: 700)); //wtf is that? why are we waiting?
-        pushHome(AppKeys.scaffoldKeyAuth.currentContext);
+        pushHome(context);
       } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text("Неправильный код"),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
         controllerCode.text = "";
       }
-    }
+    } else
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text("Код слишком короткий"),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
   }
 
   futureAuthSet(bool state, {BuildContext restartContext}) async {

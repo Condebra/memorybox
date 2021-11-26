@@ -144,39 +144,38 @@ class AudioProvider {
           uploadAudio: false,
           duration: Duration(milliseconds: duration)));
       await syncAudio();
-      return Put(error: 201, mess: "ok", localError: true);
-      // String token = await tokenDB();
-      // String urlQuery = urlConstructor(Methods.audio.upload);
-      // var dio = Dio();
-      // dio.options.headers['Authorization'] = 'Bearer $token';
-      // var formData = FormData.fromMap({
-      //   "name": name,
-      //   "description": description,
-      //   "duration": duration,
-      //   "Accept": "application/json",
-      //   "Content-Type": "multipart/form-data;",
-      //   "audio": await MultipartFile.fromFile(
-      //       pathFileAudio, filename: pathFileAudio
-      //       .split("/")
-      //       .last),
-      //
-      //   "picture": image == null ? MultipartFile.fromBytes(
-      //       (await rootBundle.load('assets/images/play.png')).buffer
-      //           .asUint8List(), filename: "play.png")
-      //       : await MultipartFile.fromFile(image, filename: image
-      //       .split("/")
-      //       .last)
-      // });
-      //
-      //
-      // Response response = await dio.post(urlQuery, data: formData,);
-      // print(response.statusCode);
-      // if (response.statusCode == 201) {
-      //   await DBProvider.db.audioAdd(AudioItem(name: name, description: description, pathAudio: pathFileAudio, picture: image, isLocalAudio: true, uploadAudio: true, duration: Duration(milliseconds: duration), idS: response.data['id']));
-      //   return Put(error: 201, mess: "Ok", localError: false);
-      // } else {
-      //   return Put(error: response.statusCode, mess: "", localError: true);
-      // }
+      // return Put(error: 201, mess: "ok", localError: true);
+      String token = await tokenDB();
+      String urlQuery = urlConstructor(Methods.audio.upload);
+      var dio = Dio();
+      dio.options.headers['Authorization'] = 'Bearer $token';
+      var formData = FormData.fromMap({
+        "name": name,
+        "description": description,
+        "duration": duration,
+        "Accept": "application/json",
+        "Content-Type": "multipart/form-data;",
+        "audio": await MultipartFile.fromFile(
+            pathFileAudio, filename: pathFileAudio
+            .split("/")
+            .last),
+
+        "picture": image == null ? MultipartFile.fromBytes(
+            (await rootBundle.load('assets/images/play.png')).buffer
+                .asUint8List(), filename: "play.png")
+            : await MultipartFile.fromFile(image, filename: image
+            .split("/")
+            .last)
+      });
+
+      Response response = await dio.post(urlQuery, data: formData,);
+      print(response.statusCode);
+      if (response.statusCode == 201) {
+        await DBProvider.db.audioAdd(AudioItem(name: name, description: description, pathAudio: pathFileAudio, picture: image, isLocalAudio: true, uploadAudio: true, duration: Duration(milliseconds: duration), idS: response.data['id']));
+        return Put(error: 201, mess: "Ok", localError: false);
+      } else {
+        return Put(error: response.statusCode, mess: "", localError: true);
+      }
     }
   }
 
@@ -309,40 +308,45 @@ class AudioProvider {
     }
   }
 
-  /// Новая версия
-  static Future<List<AudioItem>> getAll() async {
-    // print("GET AUDIOS (getAll)");
-    if (await futureAuth()) {
-      // print("future auth get audio");
-      return await DBProvider.db.getAudios();
-    } else if (!await checkConnection()) {
-      print("no connection get audios");
-      return await DBProvider.db.getAudios();
-    } else {
+  static Future<List<AudioItem>> getServerAudios() async {
+    List<AudioItem> list = [];
+    if (!await futureAuth() && await checkConnection()) {
       String token = await tokenDB();
       String urlQuery = urlConstructor(Methods.audio.getUserAudio);
       Map<String, dynamic> body = Map();
       print("-=-=-=-=-=-" + urlQuery);
       var response;
-      response = await Rest.post(urlQuery, body, token: token);
-      List<AudioItem> listS =
-          response.map((i) => AudioItem.fromMap(i)).toList().cast<AudioItem>();
-      if (listS == null) {
-        listS = [];
+      try {
+        response = await Rest.post(urlQuery, body, token: token);
+        list.addAll(response.map((i) => AudioItem.fromMap(i)).toList().cast<AudioItem>());
+      } catch (e) {
+        print(e);
       }
-      List<AudioItem> listL = await DBProvider.db.getAudios();
-      List<AudioItem> listOut = listL;
-      for (int i = 0; i < listS.length; i++) {
-        bool find = false;
-        for (int j = 0; j < listL.length; j++) {
-          if (listL[j].idS != null && listL[j].idS == listS[i].idS) find = true;
-        }
-        if (!find) {
-          listOut.add(listS[i]);
-        }
-      }
-      return listOut;
+      // if (listS == null) {
+      //   listS = [];
+      // }
+      // List<AudioItem> listL = await DBProvider.db.getAudios();
+      // List<AudioItem> listOut = listL;
+      // for (int i = 0; i < listS.length; i++) {
+      //   bool find = false;
+      //   for (int j = 0; j < listL.length; j++) {
+      //     if (listL[j].idS != null && listL[j].idS == listS[i].idS) find = true;
+      //   }
+      //   if (!find) {
+      //     listOut.add(listS[i]);
+      //   }
+      // }
+      // listL.forEach((element) => {
+      //   if (!listS.contains(element)) listS.add(element)
+      // });
+      // return listOut;
     }
+    return list;
+  }
+
+  /// Новая версия
+  static Future<List<AudioItem>> getAudios() async {
+    return await DBProvider.db.getAudios();
   }
 
   static Future<int> createLocal(

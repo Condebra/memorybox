@@ -29,7 +29,6 @@ class CollectionsController {
   List<AudioItem> audiosAll;
   List<AudioItem> _audiosSearch;
   Function update;
-  bool _edit;
   String input = "";
   List<AudioItem> results = [];
 
@@ -201,7 +200,7 @@ class CollectionsController {
 
   createCollection() async {
     if (controllerHeader.text.isNotEmpty) {
-      if (controllerComment.text.isNotEmpty) {
+      // if (controllerComment.text.isNotEmpty) {
         _state = CollectionStates.loading;
         setState();
         int response = await PlaylistProvider.create(
@@ -218,10 +217,10 @@ class CollectionsController {
         _pathPhoto = null;
         update();
         back();
-      } else {
-        showDialogIntegronError(AppKeys.scaffoldKey.currentContext,
-            "Некорректное описание плейлиста");
-      }
+      // } else {
+      //   showDialogIntegronError(AppKeys.scaffoldKey.currentContext,
+      //       "Некорректное описание плейлиста");
+      // }
     } else {
       showDialogIntegronError(AppKeys.scaffoldKey.currentContext,
           "Некорректное название плейлиста");

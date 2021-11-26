@@ -32,13 +32,16 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
       // The store cannot be reached or accessed. Update the UI accordingly.
       print("inApp isnt available");
     } else {
-      const Set<String> _kIds = {'test'};
+      const Set<String> _kIds = {'testmemory_1'};
       final ProductDetailsResponse response =
           await InAppPurchaseConnection.instance.queryProductDetails(_kIds);
       if (response.notFoundIDs.isNotEmpty) {
+        print("Not Found");
         // Handle the error.
       }
+      print("RESPONSE => $response");
       List<ProductDetails> products = response.productDetails;
+      print("PRODUCTS => $products");
       subTest = products[0];
     }
   }
@@ -50,7 +53,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     final PurchaseParam purchaseParam =
         PurchaseParam(productDetails: productDetails);
     InAppPurchaseConnection.instance
-        .buyConsumable(purchaseParam: purchaseParam);
+        .buyNonConsumable(purchaseParam: purchaseParam);
   }
 
   @override

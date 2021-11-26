@@ -19,9 +19,6 @@ class StateViewCollection extends StatefulWidget {
 }
 
 class _StateViewCollectionState extends State<StateViewCollection> {
-  List<CollectionItem> leftColumn = [];
-  List<CollectionItem> rightColumn = [];
-  List<CollectionItem> playlists = [];
 
   @override
   void initState() {

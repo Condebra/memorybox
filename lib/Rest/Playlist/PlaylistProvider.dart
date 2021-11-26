@@ -21,13 +21,13 @@ class PlaylistProvider {
   static Future<List<dynamic>> get({int id, int ids}) async {
     if (await futureAuth() || !await checkConnection()) {
       if (id == null) {
-        return await DBProvider.db.collectionsGet();
+        return await DBProvider.db.getCollections();
       } else {
         return (await DBProvider.db.collectionGet(id)).playlist;
       }
     } else {
       if (id == null) {
-        List<CollectionItem> listL = await DBProvider.db.collectionsGet();
+        List<CollectionItem> listL = await DBProvider.db.getCollections();
         List<CollectionItem> listS;
         String token = await tokenDB();
         String urlQuery = urlConstructor(Methods.playlist.get);
@@ -70,7 +70,7 @@ class PlaylistProvider {
           for (int j = 0; j < listS.length; j++) {}
         }
         print("collection get returned collections");
-        return DBProvider.db.collectionsGet();
+        return DBProvider.db.getCollections();
       } else {
         print("collection get returned audios");
 
@@ -330,11 +330,11 @@ class PlaylistProvider {
 
   static Future<List<CollectionItem>> syncCollections() async {
     if (await futureAuth()) {
-      return await DBProvider.db.collectionsGet();
+      return await DBProvider.db.getCollections();
     } else if (!await checkConnection()) {
-      return await DBProvider.db.collectionsGet();
+      return await DBProvider.db.getCollections();
     } else {
-      List<CollectionItem> L = await DBProvider.db.collectionsGet();
+      List<CollectionItem> L = await DBProvider.db.getCollections();
       List<CollectionItem> S;
       String token = await tokenDB();
       String urlQuery = urlConstructor(Methods.playlist.get);
@@ -463,7 +463,7 @@ class PlaylistProvider {
           await DBProvider.db.collectionEdit(L[i].id, ids: ids);
         }
       }
-      return DBProvider.db.collectionsGet();
+      return DBProvider.db.getCollections();
     }
   }
 
@@ -518,10 +518,10 @@ class PlaylistProvider {
   ///================================================================================
   static Future<List<CollectionItem>> getAll() async {
     if (!await checkConnection() || await futureAuth()) {
-      return await DBProvider.db.collectionsGet();
+      return await DBProvider.db.getCollections();
     } else {
       List<CollectionItem> out = [];
-      List<CollectionItem> l = await DBProvider.db.collectionsGet();
+      List<CollectionItem> l = await DBProvider.db.getCollections();
       List<CollectionItem> s = [];
       String token = await tokenDB();
       String urlQuery = urlConstructor(Methods.playlist.get);

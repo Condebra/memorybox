@@ -13,15 +13,16 @@ import 'package:recorder/models/Put.dart';
 
 addToPlaylist(List<AudioItem> items, GeneralController controller) {
   showModalBottomSheet(
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      context: AppKeys.scaffoldKey.currentContext,
-      builder: (context) {
-        return AddAudioContent(
-          controller: controller,
-          items: items,
-        );
-      });
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    context: AppKeys.scaffoldKey.currentContext,
+    builder: (context) {
+      return AddAudioContent(
+        controller: controller,
+        items: items,
+      );
+    },
+  );
 }
 
 class AddAudioContent extends StatefulWidget {
@@ -58,15 +59,16 @@ class _AddAudioContentState extends State<AddAudioContent> {
   add(CollectionItem collectionItem) async {
     showDialogLoading(context);
     Put response;
-    for (int i = 0; i < widget.items.length; i++) {
+    widget.items.forEach((element) async {
       response = await PlaylistProvider.addAudioToPlaylist(
-          collectionItem.id ?? collectionItem.idS,
-          widget.items[i].id ?? widget.items[i].idS,
-          isLocalAudio: widget.items[i].id == null ? false : true,
-          isLocalPlaylist: collectionItem.id == null ? false : true);
-    }
+        collectionItem.id ?? collectionItem.idS,
+        element.id ?? element.idS,
+        isLocalAudio: element.id != null,
+        isLocalPlaylist: collectionItem.id != null,
+      );
+    });
     closeDialog(context);
-    closeDialog(context);
+    // closeDialog(context);
     if (response.error == 201) {
       showDialogIntegronError(context, "Добавлено");
       widget.controller.homeController.load();
@@ -87,7 +89,9 @@ class _AddAudioContentState extends State<AddAudioContent> {
             color: cBackground,
             borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
         child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(), child: _content()),
+          physics: BouncingScrollPhysics(),
+          child: _content(),
+        ),
       ),
     );
   }

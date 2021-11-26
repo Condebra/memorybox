@@ -23,6 +23,7 @@ class _AudioListPageState extends State<AudioListPage> {
   void initState() {
     super.initState();
     context.read<GeneralController>().homeController.loadAudios();
+    context.read<GeneralController>().homeController.loadServerAudios();
   }
 
   @override
@@ -136,7 +137,10 @@ class _AudioListPageState extends State<AudioListPage> {
           GestureDetector(
             onTap: () {
               // List<AudioItem> list = context.read<GeneralController>().homeController.audios;
-              context.read<GeneralController>().playerController.play(list, repeat: repeatActive);
+              context
+                  .read<GeneralController>()
+                  .playerController
+                  .play(list, repeat: repeatActive);
             },
             child: Container(
               decoration: BoxDecoration(
@@ -144,18 +148,23 @@ class _AudioListPageState extends State<AudioListPage> {
               child: Row(
                 children: [
                   Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-                      child: IconSvg(IconsSvg.play,
-                          width: 38, color: Color.fromRGBO(140, 132, 226, 1))),
+                    padding: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                    child: IconSvg(
+                      IconsSvg.play,
+                      width: 38,
+                      color: Color.fromRGBO(140, 132, 226, 1),
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 7),
                     child: Text(
                       S.of(context).play_all,
                       style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: cBlueSoso,
-                          fontFamily: fontFamilyMedium),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: cBlueSoso,
+                        fontFamily: fontFamilyMedium,
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -192,7 +201,6 @@ class _AudioListPageState extends State<AudioListPage> {
             seconds: all.inSeconds + state.audios[i].duration.inSeconds);
       }
       return "${all.toString().split(".").first.padLeft(8, "0")}";
-      // return "${all.inHours < 10 ? "0" + all.inHours.toString() : all.inHours.toString()}:${all.inMinutes % 60 < 10 ? "0" + (all.inMinutes % 60).toString() : (all.inMinutes % 60).toString()}";
     }
 
     return Column(
@@ -201,18 +209,20 @@ class _AudioListPageState extends State<AudioListPage> {
         Text(
           '${state.audios.length} ${S.of(context).audio}',
           style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              color: cBackground,
-              fontFamily: fontFamilyMedium),
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            color: cBackground,
+            fontFamily: fontFamilyMedium,
+          ),
         ),
         Text(
           timeInfo(),
           style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              color: cBackground,
-              fontFamily: fontFamilyMedium),
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            color: cBackground,
+            fontFamily: fontFamilyMedium,
+          ),
         )
       ],
     );

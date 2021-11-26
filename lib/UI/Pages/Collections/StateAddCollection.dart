@@ -110,7 +110,8 @@ class _StateAddCollectionState extends State<StateAddCollection> {
     // if (editHeader) {
     //   FocusScope.of(context).autofocus(focusNode);
     return TextField(
-      focusNode: focusNode,
+      // focusNode: focusNode,
+      autofocus: true,
       maxLines: 1,
       controller: context
           .read<GeneralController>()

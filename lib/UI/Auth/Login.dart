@@ -33,7 +33,12 @@ class _LoginState extends State<Login> {
         child: Scaffold(
           resizeToAvoidBottomInset: true,
           key: AppKeys.scaffoldKeyAuth,
-          body: SingleChildScrollView(child: Background(title: DefaultTitle(), body: body())),
+          body: SingleChildScrollView(
+            child: Background(
+              title: DefaultTitle(),
+              body: body(),
+            ),
+          ),
         ),
       ),
     );
@@ -93,7 +98,7 @@ class _LoginState extends State<Login> {
 
   Widget stepTwo() {
     return Padding(
-      padding: const EdgeInsets.only(left:12.0, right: 12),
+      padding: const EdgeInsets.only(left: 12.0, right: 12),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -160,14 +165,14 @@ class _LoginState extends State<Login> {
             children: [
               ButtonOrange(
                   onTap: () {
-                    controller.stepTwoTap();
+                    controller.stepTwoTap(context);
                   },
                   text: S.of(context).btn_next),
               SizedBox(
                 height: 24,
               ),
               InkWell(
-                onTap: (){
+                onTap: () {
                   controller.futureAuthSet(true, restartContext: context);
                 },
                 child: Text(
@@ -282,7 +287,7 @@ class _LoginState extends State<Login> {
             children: [
               ButtonOrange(
                   onTap: () {
-                    controller.stepThreeTap();
+                    controller.stepThreeTap(context);
                   },
                   text: S.of(context).btn_next),
               Text(
