@@ -130,7 +130,7 @@ class RestoreController {
     try {
       var file = File(item.pathAudio);
       file.delete();
-      DBProvider.db.audioDelete(item.id);
+      DBProvider.db.deleteAudio(item.id);
       print("delete file ${item.pathAudio}");
     } catch (e) {
       print(e);

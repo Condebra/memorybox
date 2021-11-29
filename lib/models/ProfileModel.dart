@@ -11,20 +11,22 @@ class ProfileModel {
   final int free;
   final int max;
   final bool local;
+  bool anonimus;
 
   factory ProfileModel.fromMap(Map<String, dynamic> map) {
     return new ProfileModel(
-      picture: map['picture'] as String,
-      name: map['name'],
-      phone: map['phone'] as String,
-      subscribe: map['subscribe'] as int,
-      created_at: DateFormat("yyyy-MM-ddTHH:mm:ss.vvvZ").parse(map['created_at']),
-      updated_at: DateFormat("yyyy-MM-ddTHH:mm:ss.vvvZ").parse(map['updated_at']),
-      free: map['space']['free'].toInt() as int,
-      max: map['space']['max'].toInt() as int,
-      id: map['id'],
-      local: false
-    );
+        picture: map['picture'] as String,
+        name: map['name'],
+        phone: map['phone'] as String,
+        subscribe: map['subscribe'] as int,
+        created_at:
+            DateFormat("yyyy-MM-ddTHH:mm:ss.vvvZ").parse(map['created_at']),
+        updated_at:
+            DateFormat("yyyy-MM-ddTHH:mm:ss.vvvZ").parse(map['updated_at']),
+        free: map['space']['free'].toInt() as int,
+        max: map['space']['max'].toInt() as int,
+        id: map['id'],
+        local: false);
   }
 
   Map<String, dynamic> toMap() {
@@ -41,6 +43,17 @@ class ProfileModel {
     } as Map<String, dynamic>;
   }
 
-  ProfileModel(
-      {this.picture, this.name, this.phone, this.free, this.max, this.created_at, this.subscribe,this.updated_at, this.id, this.local});
+  ProfileModel({
+    this.picture,
+    this.name,
+    this.phone,
+    this.free,
+    this.max,
+    this.created_at,
+    this.subscribe,
+    this.updated_at,
+    this.id,
+    this.local,
+    this.anonimus,
+  });
 }

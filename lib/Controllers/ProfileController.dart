@@ -12,6 +12,7 @@ import 'package:recorder/Utils/app_keys.dart';
 import 'package:recorder/Utils/tokenDB.dart';
 import 'package:recorder/models/ProfileModel.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileController {
   final _picker = ImagePicker();
@@ -59,7 +60,7 @@ class ProfileController {
     setState();
   }
 
-  closeEdit() {
+  cancelEdit() {
     _imagePath = null;
     _edit = false;
     setState();
@@ -83,68 +84,79 @@ class ProfileController {
 
   deleteAccount(BuildContext context) {
     showDialogRecorder(
-        context: context,
-        title: Text(
-          "Точно удалить?",
-          style: TextStyle(
-              color: cBlack,
-              fontWeight: FontWeight.w400,
-              fontSize: 20,
-              fontFamily: fontFamily),
+      context: context,
+      title: Text(
+        "Точно удалить?",
+        style: TextStyle(
+          color: cBlack,
+          fontWeight: FontWeight.w400,
+          fontSize: 20,
+          fontFamily: fontFamily,
         ),
-        body: Text(
-          "Все аудиофайлы исчезнут и восстановить аккаунт будет невозможно",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              color: cBlack.withOpacity(0.7),
+      ),
+      body: Text(
+        "Все аудиофайлы исчезнут и восстановить аккаунт будет невозможно",
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: cBlack.withOpacity(0.7),
+          fontFamily: fontFamily,
+          fontSize: 14,
+        ),
+      ),
+      buttons: [
+        DialogIntegronButton(
+          onPressed: () {
+            closeDialog(context);
+            //todo delete account
+          },
+          textButton: Text(
+            "Удалить",
+            style: TextStyle(
+              color: cBackground,
+              fontSize: 16,
               fontFamily: fontFamily,
-              fontSize: 14),
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          background: cRed,
+          borderColor: cRed,
         ),
-        buttons: [
-          DialogIntegronButton(
-              onPressed: () {
-                closeDialog(context);
-                //todo delete account
-              },
-              textButton: Text(
-                "Удалить",
-                style: TextStyle(
-                    color: cBackground,
-                    fontSize: 16,
-                    fontFamily: fontFamily,
-                    fontWeight: FontWeight.w500),
-              ),
-              background: cRed,
-              borderColor: cRed),
-          DialogIntegronButton(
-              onPressed: () {
-                closeDialog(context);
-              },
-              textButton: Text(
-                "Нет",
-                style: TextStyle(
-                    color: cBlueSoso,
-                    fontSize: 16,
-                    fontFamily: fontFamily,
-                    fontWeight: FontWeight.w400),
-              ),
-              borderColor: cBlueSoso),
-        ]);
+        DialogIntegronButton(
+          onPressed: () {
+            closeDialog(context);
+          },
+          textButton: Text(
+            "Нет",
+            style: TextStyle(
+              color: cBlueSoso,
+              fontSize: 16,
+              fontFamily: fontFamily,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          borderColor: cBlueSoso,
+        ),
+      ],
+    );
   }
 
   logOut(BuildContext context) async {
     print('ProfileController => Out');
-    Navigator.pushReplacementNamed(
-        context, Routes.welcomeNew);
+    Navigator.pushReplacementNamed(context, Routes.welcomeNew);
+    _profile = null;
+    var prefs = await SharedPreferences.getInstance();
+    prefs.clear();
     await tokenDB(token: "null");
+    setState();
   }
 
   setState() {
     ProfileState state = ProfileState(
-        edit: _edit,
-        profile: _profile,
-        loading: _loading,
-        imagePath: _imagePath);
+      edit: _edit,
+      profile: _profile,
+      loading: _loading,
+      imagePath: _imagePath,
+    );
     _profileController.sink.add(state);
   }
 

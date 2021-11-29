@@ -109,20 +109,18 @@ class _ProfileImageState extends State<ProfileImage> {
                 Container(
                   width: 216,
                   height: 216,
-                  decoration: BoxDecoration(color: Colors.black.withOpacity(0.5)),
+                  decoration:
+                      BoxDecoration(color: Colors.black.withOpacity(0.5)),
                   child: Center(
                     child: Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        border: Border.all(color: cBackground.withOpacity(.8), width: 2)
-                      ),
+                          borderRadius: BorderRadius.circular(100),
+                          border: Border.all(
+                              color: cBackground.withOpacity(.8), width: 2)),
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: IconSvg(IconsSvg.camera,
-                            color: cBackground,
-                            width: 50,
-                          height: 50
-                        ),
+                            color: cBackground, width: 50, height: 50),
                       ),
                     ),
                   ),

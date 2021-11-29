@@ -7,7 +7,7 @@ import 'package:recorder/UI/Pages/Collections/StateAddAudioCollection.dart';
 import 'package:recorder/UI/Pages/Collections/StateAddCollection.dart';
 import 'package:recorder/UI/Pages/Collections/StateEditCollection.dart';
 import 'package:recorder/UI/Pages/Collections/StateLoadingCollection.dart';
-import 'package:recorder/UI/Pages/Collections/StateViewCollection.dart';
+import 'package:recorder/UI/Pages/Collections/StateViewCollections.dart';
 import 'package:recorder/UI/Pages/Collections/StateViewItemCollection.dart';
 
 class CollectionsPage extends StatefulWidget {

@@ -90,7 +90,9 @@ class DBProvider {
         subscribe: null,
         updated_at: null,
         id: null,
-        local: local);
+        local: local,
+
+    );
   }
 
   Future<void> profileEdit({String name, String picture, bool isLocal}) async {
@@ -174,7 +176,7 @@ class DBProvider {
     return item;
   }
 
-  Future<void> audioDelete(int id) async {
+  Future<void> deleteAudio(int id) async {
     Database db = await this.database;
     await db.delete(TableAudio.table,
         where: "${TableAudio.id} = ?", whereArgs: [id]);

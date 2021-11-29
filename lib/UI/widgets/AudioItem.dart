@@ -95,13 +95,22 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    Text(
-                      '${time(widget.item.duration)}',
-                      style: TextStyle(
-                        color: cBlack.withOpacity(0.5),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                      ),
+                    Row(
+                      children: [
+                        Text(
+                          '${time(widget.item.duration)}',
+                          style: TextStyle(
+                            color: cBlack.withOpacity(0.5),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        IconSvg(
+                          IconsSvg.cloudStorage,
+                          color: widget.item.uploadAudio ? Colors.green : Colors.black12,
+                          height: 12,
+                        )
+                      ],
                     )
                   ],
                 ),
@@ -209,29 +218,29 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
             ),
           ),
         ),
-        FocusedMenuItem(
-          onPressed: null,
-          title: Text(
-            "Поделиться",
-            style: TextStyle(
-                color: cBlack,
-                fontWeight: FontWeight.w400,
-                fontSize: 14,
-                fontFamily: fontFamily),
-          ),
-        ),
-        FocusedMenuItem(
-          onPressed: null,
-          title: Text(
-            "Скачать",
-            style: TextStyle(
-              color: cBlack,
-              fontWeight: FontWeight.w400,
-              fontSize: 14,
-              fontFamily: fontFamily,
-            ),
-          ),
-        ),
+        // FocusedMenuItem(
+        //   onPressed: null,
+        //   title: Text(
+        //     "Поделиться",
+        //     style: TextStyle(
+        //         color: cBlack,
+        //         fontWeight: FontWeight.w400,
+        //         fontSize: 14,
+        //         fontFamily: fontFamily),
+        //   ),
+        // ),
+        // FocusedMenuItem(
+        //   onPressed: null,
+        //   title: Text(
+        //     "Скачать",
+        //     style: TextStyle(
+        //       color: cBlack,
+        //       fontWeight: FontWeight.w400,
+        //       fontSize: 14,
+        //       fontFamily: fontFamily,
+        //     ),
+        //   ),
+        // ),
         FocusedMenuItem(
           onPressed: () async {
             await context

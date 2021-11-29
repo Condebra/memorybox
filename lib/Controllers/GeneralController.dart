@@ -109,7 +109,7 @@ class GeneralController {
           return false;
         }
         if (pageHistory.last == 4) {
-          profileController.closeEdit();
+          profileController.cancelEdit();
           pageHistory.removeLast();
           return false;
         }

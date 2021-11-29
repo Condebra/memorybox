@@ -73,6 +73,7 @@ class LoginController {
 
   futureAuthSet(bool state, {BuildContext restartContext}) async {
     await futureAuth(state: state);
+    print(state);
     if (restartContext != null) {
       Navigator.pushReplacementNamed(restartContext, Routes.initial);
     }

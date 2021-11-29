@@ -303,9 +303,9 @@ class RecordController {
   //   await AudioProvider.edit();
   // }
 
-  share() async {
+  upload() async {
     if (!_loading && _uploadIndex == null) {
-      _loading = true;
+      // _loading = true;
       setState();
       String name = nameController.text;
       String desc = descController.text;
@@ -320,7 +320,7 @@ class RecordController {
               duration: Duration(milliseconds: duration),
               pathAudio: path,
               picture: null));
-      _loading = false;
+      // _loading = false;
       setState();
     }
   }

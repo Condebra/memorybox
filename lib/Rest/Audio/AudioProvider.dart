@@ -71,7 +71,7 @@ class AudioProvider {
               }
             }
             if (!find) {
-              await DBProvider.db.audioDelete(listL[i].id);
+              await DBProvider.db.deleteAudio(listL[i].id);
             }
           }
           return await DBProvider.db.getAudios();
@@ -90,7 +90,7 @@ class AudioProvider {
   static Future<Put> delete(int id, {int ids}) async {
     print("DELETE AUDIO ${id.toString()} ${ids.toString()}");
     if (await futureAuth() || !await checkConnection()) {
-      await DBProvider.db.audioDelete(id);
+      await DBProvider.db.deleteAudio(id);
       return Put(error: 200, mess: "ok", localError: true);
     } else {
       if (ids != null) {
@@ -110,7 +110,7 @@ class AudioProvider {
       } else {
         try {
           AudioItem item = await DBProvider.db.getAudio(id);
-          await DBProvider.db.audioDelete(item.id);
+          await DBProvider.db.deleteAudio(item.id);
         } catch (e) {}
         return Put(error: 200, mess: "ok", localError: false);
       }
@@ -155,23 +155,36 @@ class AudioProvider {
         "duration": duration,
         "Accept": "application/json",
         "Content-Type": "multipart/form-data;",
-        "audio": await MultipartFile.fromFile(
-            pathFileAudio, filename: pathFileAudio
-            .split("/")
-            .last),
-
-        "picture": image == null ? MultipartFile.fromBytes(
-            (await rootBundle.load('assets/images/play.png')).buffer
-                .asUint8List(), filename: "play.png")
-            : await MultipartFile.fromFile(image, filename: image
-            .split("/")
-            .last)
+        "audio": await MultipartFile.fromFile(pathFileAudio,
+            filename: pathFileAudio.split("/").last),
+        "picture": image == null
+            ? MultipartFile.fromBytes(
+                (await rootBundle.load('assets/images/play.png'))
+                    .buffer
+                    .asUint8List(),
+                filename: "play.png",
+              )
+            : await MultipartFile.fromFile(
+                image,
+                filename: image.split("/").last,
+              )
       });
 
-      Response response = await dio.post(urlQuery, data: formData,);
+      Response response = await dio.post(
+        urlQuery,
+        data: formData,
+      );
       print(response.statusCode);
       if (response.statusCode == 201) {
-        await DBProvider.db.audioAdd(AudioItem(name: name, description: description, pathAudio: pathFileAudio, picture: image, isLocalAudio: true, uploadAudio: true, duration: Duration(milliseconds: duration), idS: response.data['id']));
+        await DBProvider.db.audioAdd(AudioItem(
+            name: name,
+            description: description,
+            pathAudio: pathFileAudio,
+            picture: image,
+            isLocalAudio: true,
+            uploadAudio: true,
+            duration: Duration(milliseconds: duration),
+            idS: response.data['id']));
         return Put(error: 201, mess: "Ok", localError: false);
       } else {
         return Put(error: response.statusCode, mess: "", localError: true);
@@ -247,9 +260,7 @@ class AudioProvider {
   }
 
   static Future<List<AudioItem>> syncAudio() async {
-    if (await futureAuth()) {
-      return await DBProvider.db.getAudios();
-    } else if (await checkConnection()) {
+    if (await futureAuth() || await checkConnection()) {
       return await DBProvider.db.getAudios();
     } else {
       String token = await tokenDB();
@@ -318,7 +329,10 @@ class AudioProvider {
       var response;
       try {
         response = await Rest.post(urlQuery, body, token: token);
-        list.addAll(response.map((i) => AudioItem.fromMap(i)).toList().cast<AudioItem>());
+        list.addAll(response
+            .map((i) => AudioItem.fromMap(i))
+            .toList()
+            .cast<AudioItem>());
       } catch (e) {
         print(e);
       }
@@ -352,8 +366,9 @@ class AudioProvider {
   static Future<int> createLocal(
       String name, String description, int duration, String pathFileAudio,
       {String image, int ids}) async {
-    print('save audio localaly');
-    return await DBProvider.db.audioAdd(AudioItem(
+    print('save audio locally');
+    return await DBProvider.db.audioAdd(
+      AudioItem(
         name: name,
         idS: ids,
         description: description,
@@ -361,7 +376,9 @@ class AudioProvider {
         picture: image,
         isLocalAudio: true,
         uploadAudio: false,
-        duration: Duration(milliseconds: duration)));
+        duration: Duration(milliseconds: duration),
+      ),
+    );
   }
 
   static Future<int> getId(String name) async {

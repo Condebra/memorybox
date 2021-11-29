@@ -83,6 +83,7 @@ class _RecordPageState extends State<RecordPage> {
         SizedBox(
           height: 32,
         ),
+
         /// Панель
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -108,6 +109,7 @@ class _RecordPageState extends State<RecordPage> {
           ],
         ),
         Spacer(),
+
         /// Заголовок
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -123,6 +125,7 @@ class _RecordPageState extends State<RecordPage> {
           ],
         ),
         Spacer(),
+
         /// Полоса мощности
         Container(
           height: 70,
@@ -168,6 +171,7 @@ class _RecordPageState extends State<RecordPage> {
           ),
         ),
         Spacer(),
+
         /// Продолжительность записи
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -249,12 +253,19 @@ class _RecordPageState extends State<RecordPage> {
               ),
               InkWell(
                   onTap: () async {
-                    Put res = await widget.controller.recordController.share();
+                    Put res = await widget.controller.recordController.upload();
                   },
-                  child: IconSvg(IconsSvg.upload, width: 30, height: 30)),
-              Spacer(),
-              IconSvg(IconsSvg.download, width: 30, height: 30),
-              Spacer(),
+                  child: IconSvg(
+                    IconsSvg.cloudStorage,
+                    width: 25,
+                    height: 25,
+                  )),
+              // Spacer(),
+              SizedBox(
+                width: 20,
+              ),
+              // IconSvg(IconsSvg.download, width: 30, height: 30),
+              // Spacer(),
               InkWell(
                   hoverColor: Colors.transparent,
                   focusColor: Colors.transparent,
@@ -267,18 +278,20 @@ class _RecordPageState extends State<RecordPage> {
                         title: Text(
                           "Точно удалить?",
                           style: TextStyle(
-                              color: cBlack,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 20,
-                              fontFamily: fontFamily),
+                            color: cBlack,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 20,
+                            fontFamily: fontFamily,
+                          ),
                         ),
                         body: Text(
                           "Запись будет безвозвратно удалена ",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              color: cBlack.withOpacity(0.7),
-                              fontFamily: fontFamily,
-                              fontSize: 14),
+                            color: cBlack.withOpacity(0.7),
+                            fontFamily: fontFamily,
+                            fontSize: 14,
+                          ),
                         ),
                         buttons: [
                           DialogIntegronButton(
@@ -289,30 +302,36 @@ class _RecordPageState extends State<RecordPage> {
                               textButton: Text(
                                 "Удалить",
                                 style: TextStyle(
-                                    color: cBackground,
-                                    fontSize: 16,
-                                    fontFamily: fontFamily,
-                                    fontWeight: FontWeight.w500),
+                                  color: cBackground,
+                                  fontSize: 16,
+                                  fontFamily: fontFamily,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                               background: cRed,
                               borderColor: cRed),
                           DialogIntegronButton(
-                              onPressed: () {
-                                closeDialog(context);
-                              },
-                              textButton: Text(
-                                "Нет",
-                                style: TextStyle(
-                                    color: cBlueSoso,
-                                    fontSize: 16,
-                                    fontFamily: fontFamily,
-                                    fontWeight: FontWeight.w400),
+                            onPressed: () {
+                              closeDialog(context);
+                            },
+                            textButton: Text(
+                              "Нет",
+                              style: TextStyle(
+                                color: cBlueSoso,
+                                fontSize: 16,
+                                fontFamily: fontFamily,
+                                fontWeight: FontWeight.w400,
                               ),
-                              borderColor: cBlueSoso),
+                            ),
+                            borderColor: cBlueSoso,
+                          ),
                         ]);
                   },
-                  child: IconSvg(IconsSvg.delete, width: 30, height: 30)),
-              Spacer(),
+                  child: IconSvg(
+                    IconsSvg.delete,
+                    width: 25,
+                    height: 25,
+                  )),
               Spacer(),
               Container(
                 height: 30,
@@ -326,7 +345,7 @@ class _RecordPageState extends State<RecordPage> {
                     }),
               ),
               SizedBox(
-                width: 10,
+                width: 20,
               ),
               GestureDetector(
                 onTap: () async {
@@ -335,12 +354,13 @@ class _RecordPageState extends State<RecordPage> {
                   await widget.controller.homeController.load();
                 },
                 child: Text(
-                  "Сохранить",
+                  "Сохранить?",
                   style: TextStyle(
-                      color: cBlack,
-                      fontSize: 16,
-                      fontFamily: fontFamily,
-                      fontWeight: FontWeight.w400),
+                    color: cBlack,
+                    fontSize: 16,
+                    fontFamily: fontFamily,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ),
               SizedBox(
@@ -355,8 +375,7 @@ class _RecordPageState extends State<RecordPage> {
           children: [
             TextField(
               textAlign: TextAlign.center,
-              controller:
-                  widget.controller.recordController.nameController,
+              controller: widget.controller.recordController.nameController,
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintStyle: TextStyle(
@@ -378,8 +397,7 @@ class _RecordPageState extends State<RecordPage> {
             //Text("описание", style: TextStyle(color: cBlack.withOpacity(0.5), fontWeight: FontWeight.w400, fontFamily: fontFamily, fontSize: 16),),
             TextField(
               textAlign: TextAlign.center,
-              controller:
-                  widget.controller.recordController.descController,
+              controller: widget.controller.recordController.descController,
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintStyle: TextStyle(

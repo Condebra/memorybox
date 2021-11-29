@@ -1,36 +1,35 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<String> tokenDB ({String token})async{
+Future<String> tokenDB({String token}) async {
   final prefs = await SharedPreferences.getInstance();
 
-  if(token == null){
-    var token =  prefs.getString("token")??"null";
+  if (token == null) {
+    var token = prefs.getString("token") ?? "null";
     return token;
-  }else{
+  } else {
     await futureAuth(state: false);
-    await prefs.setString("token",token);
+    await prefs.setString("token", token);
   }
 }
 
 /// check or set(?) auth
-Future<bool> futureAuth ({bool state})async{
+Future<bool> futureAuth({bool state}) async {
   final prefs = await SharedPreferences.getInstance();
-
-  if(state == null){
-    var state = prefs.getBool("futureAuth")??false;
+  print("Future Auth $state");
+  if (state == null) {
+    var state = prefs.getBool("futureAuth") ?? false;
     return state;
-  }else{
-    await prefs.setBool("futureAuth",state);
+  } else {
+    await prefs.setBool("futureAuth", state);
   }
 }
 
-Future<bool> uploadProfilePhoto ({bool state})async{
+Future<bool> uploadProfilePhoto({bool state}) async {
   final prefs = await SharedPreferences.getInstance();
-  if(state == null){
-    var state =  prefs.getBool("uploadProfilePhoto")??false;
+  if (state == null) {
+    var state = prefs.getBool("uploadProfilePhoto") ?? false;
     return state;
-  }else{
-    await prefs.setBool("uploadProfilePhoto",state);
+  } else {
+    await prefs.setBool("uploadProfilePhoto", state);
   }
 }
-

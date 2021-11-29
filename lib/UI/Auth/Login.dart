@@ -100,6 +100,7 @@ class _LoginState extends State<Login> {
     return Padding(
       padding: const EdgeInsets.only(left: 12.0, right: 12),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
@@ -130,9 +131,12 @@ class _LoginState extends State<Login> {
                         )
                       ]),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 4,
+                      horizontal: 62,
+                    ),
                     child: TextField(
-                      textAlign: TextAlign.center,
+                      textAlign: TextAlign.start,
                       controller: controller.controllerNum,
                       inputFormatters: [controller.maskFormatter],
                       keyboardType: TextInputType.number,
@@ -240,6 +244,7 @@ class _LoginState extends State<Login> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 116),
                   decoration: BoxDecoration(
                       color: cBackground,
                       borderRadius: BorderRadius.all(Radius.circular(41)),
@@ -251,31 +256,28 @@ class _LoginState extends State<Login> {
                           color: Color.fromRGBO(0, 0, 0, 0.17),
                         )
                       ]),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: TextField(
-                      textAlign: TextAlign.center,
-                      controller: controller.controllerCode,
-                      inputFormatters: [controller.maskFormatterCode],
-                      keyboardType: TextInputType.number,
-                      style: TextStyle(
-                        color: cBlack,
+                  child: TextField(
+                    textAlign: TextAlign.start,
+                    controller: controller.controllerCode,
+                    inputFormatters: [controller.maskFormatterCode],
+                    keyboardType: TextInputType.number,
+                    style: TextStyle(
+                      color: cBlack,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.normal,
+                    ),
+                    decoration: InputDecoration(
+                      alignLabelWithHint: false,
+                      border: InputBorder.none,
+                      // prefix: Text('+7 '),
+                      filled: true,
+                      hintText: "Код",
+                      hintStyle: TextStyle(
+                        color: Colors.black45,
                         fontSize: 20,
                         fontWeight: FontWeight.w400,
                         fontStyle: FontStyle.normal,
-                      ),
-                      decoration: InputDecoration(
-                        alignLabelWithHint: false,
-                        border: InputBorder.none,
-                        // prefix: Text('+7 '),
-                        filled: true,
-                        hintText: "Код",
-                        hintStyle: TextStyle(
-                          color: Colors.black45,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                        ),
                       ),
                     ),
                   ),

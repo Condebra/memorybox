@@ -40,7 +40,7 @@ class _PhoneNumberState extends State<PhoneNumber> {
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 20.0),
             child: Text(
-              '${widget.person.phone ?? "Нет номера"}',
+              widget.person.phone,
               style: phoneTextStyle(isPhone: true),
             ),
           ),

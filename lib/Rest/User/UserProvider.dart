@@ -7,13 +7,14 @@ import 'package:recorder/Utils/tokenDB.dart';
 import 'package:recorder/models/ProfileModel.dart';
 import 'package:recorder/models/Put.dart';
 
-class UserProvider{
-
-  static Future<dynamic> get()async{
+class UserProvider {
+  static Future<dynamic> get() async {
     ProfileModel profile = await DBProvider.db.profileGet();
-    if(await futureAuth() || !await checkConnection()){
+    if (await futureAuth() || !await checkConnection()) {
+      if (await futureAuth() == true)
+        profile.anonimus = true;
       return profile;
-    }else {
+    } else {
       String urlQuery = urlConstructor(Methods.user.get);
       String token = await tokenDB();
       Map<String, dynamic> body = Map();
@@ -22,11 +23,11 @@ class UserProvider{
       if (response is Put) {
         return response;
       } else {
-        ProfileModel profileS =  ProfileModel.fromMap(response);
-        if(profileS.name != profile.name){
+        ProfileModel profileS = ProfileModel.fromMap(response);
+        if (profileS.name != profile.name) {
           await edit(name: profile.name);
         }
-        if(!(await uploadProfilePhoto())){
+        if (!(await uploadProfilePhoto())) {
           await edit(imagePath: profile.picture);
         }
         return profileS;
@@ -44,17 +45,18 @@ class UserProvider{
         String token = await tokenDB();
         Map<String, dynamic> body = Map();
         if (imagePath != null) {
-          body['picture'] =
-          await MultipartFile.fromFile(imagePath, filename: imagePath
-              .split("/")
-              .last);
+          body['picture'] = await MultipartFile.fromFile(imagePath,
+              filename: imagePath.split("/").last);
         }
         if (name != null) body['name'] = name;
         if (phone != null) body['description'] = phone;
         var dio = Dio();
         dio.options.headers['Authorization'] = 'Bearer $token';
         var formData = FormData.fromMap(body);
-        Response response = await dio.post(urlQuery, data: formData,);
+        Response response = await dio.post(
+          urlQuery,
+          data: formData,
+        );
         if (response.statusCode == 200) {
           if (imagePath != null) {
             await uploadProfilePhoto(state: true);
@@ -66,5 +68,4 @@ class UserProvider{
       }
     }
   }
-
 }

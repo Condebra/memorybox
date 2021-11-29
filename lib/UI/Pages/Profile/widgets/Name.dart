@@ -18,7 +18,7 @@ class _ProfileNameState extends State<ProfileName> {
     return widget.isEdit
         ? nameIsEdit(context)
         : Text(
-            '${widget.person.name??"Ваше имя"}',
+            '${widget.person.name??"Анонимус"}',
             style: nameTextStyle,
           );
   }
