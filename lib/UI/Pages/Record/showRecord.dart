@@ -9,11 +9,9 @@ import 'package:recorder/Utils/DialogsIntegron/DialogLoading.dart';
 import 'package:recorder/Utils/DialogsIntegron/DialogRecorder.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:recorder/Utils/app_keys.dart';
-import 'package:recorder/models/Put.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> showRecord(GeneralController controller) async {
-  await AppKeys.scaffoldKey.currentState.showBottomSheet(
+  AppKeys.scaffoldKey.currentState.showBottomSheet(
     (context) => RecordPage(controller),
     backgroundColor: Colors.transparent,
   );
@@ -253,7 +251,7 @@ class _RecordPageState extends State<RecordPage> {
               ),
               InkWell(
                   onTap: () async {
-                    Put res = await widget.controller.recordController.upload();
+                    await widget.controller.recordController.upload();
                   },
                   child: IconSvg(
                     IconsSvg.cloudStorage,
@@ -350,7 +348,7 @@ class _RecordPageState extends State<RecordPage> {
               GestureDetector(
                 onTap: () async {
                   // Navigator.pop(AppKeys.scaffoldKey.currentState.context);
-                  Put res = await widget.controller.recordController.save();
+                  await widget.controller.recordController.save();
                   await widget.controller.homeController.load();
                 },
                 child: Text(
@@ -555,7 +553,7 @@ class _RecordPageState extends State<RecordPage> {
   String time(Duration duration) {
     String nullCheck(int c) {
       if (c < 10) {
-        return "0${c}";
+        return "0$c";
       } else {
         return c.toString();
       }

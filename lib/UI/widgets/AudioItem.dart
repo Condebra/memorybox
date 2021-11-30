@@ -105,10 +105,16 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
                             fontWeight: FontWeight.w400,
                           ),
                         ),
-                        IconSvg(
-                          IconsSvg.cloudStorage,
-                          color: widget.item.uploadAudio ? Colors.green : Colors.black12,
-                          height: 12,
+                        Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 2.0),
+                          child: IconSvg(
+                            IconsSvg.cloudStorage,
+                            color: widget.item.uploadAudio
+                                ? Colors.green
+                                : Colors.black12,
+                            height: 12,
+                          ),
                         )
                       ],
                     )
@@ -218,6 +224,25 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
             ),
           ),
         ),
+        if (widget.item.isLocalAudio)
+          FocusedMenuItem(
+            onPressed: () {
+              context
+                  .read<GeneralController>()
+                  .recordController
+                  .uploadAudio(widget.item);
+            },
+            title: Text(
+              "Загрузить в облако",
+              style: TextStyle(
+                color: cBlack,
+                fontWeight: FontWeight.w400,
+                fontSize: 14,
+                fontFamily: fontFamily,
+              ),
+            ),
+          ),
+        if (widget.item.isLocalAudio)
         // FocusedMenuItem(
         //   onPressed: null,
         //   title: Text(

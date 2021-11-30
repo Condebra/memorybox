@@ -68,6 +68,9 @@ class _EditAudioContentState extends State<EditAudioContent> {
   }
 
   Widget _content() {
+    var created = widget.item.createAt.toString();
+    var createdDate = created.split(" ").first.split("-").reversed.join(".");
+    var createdTime = created.split(" ").last.substring(0, 8);
     return Padding(
       padding: const EdgeInsets.only(left: 30, top: 10, right: 30, bottom: 20),
       child: Column(
@@ -86,7 +89,8 @@ class _EditAudioContentState extends State<EditAudioContent> {
                   // if(controllerName.text != "") name=controllerName.text;
                   // if(controllerDesc.text != "") desc=controllerDesc.text;
                   showDialogLoading(context);
-                  await AudioProvider.edit(widget.item.id ?? widget.item.idS,
+                  await AudioProvider.edit(
+                    widget.item.id ?? widget.item.idS,
                     isLocal: widget.item.id == null ? false : true,
                     name: name,
                     desc: desc,
@@ -205,7 +209,7 @@ class _EditAudioContentState extends State<EditAudioContent> {
           Padding(
             padding: EdgeInsets.symmetric(vertical: 6),
             child: Text(
-              "Создано: ${widget.item.createAt.toString()}",
+              "Создано: $createdDate в $createdTime",
               style: TextStyle(
                 color: cBlack.withOpacity(.8),
                 fontWeight: FontWeight.w400,

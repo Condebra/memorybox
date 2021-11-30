@@ -8,7 +8,6 @@ import 'package:recorder/Rest/Audio/AudioProvider.dart';
 import 'package:recorder/Rest/Playlist/PlaylistProvider.dart';
 import 'package:recorder/Utils/app_keys.dart';
 import 'package:recorder/models/AudioItem.dart';
-import 'package:recorder/models/Put.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'package:flutter_audio_recorder2/flutter_audio_recorder2.dart';
@@ -20,7 +19,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class RecordController {
   FlutterAudioRecorder2 _recorder;
   Recording _current;
-  LocalFileSystem _localFileSystem;
+  // LocalFileSystem _localFileSystem;
   RecordingStatus _currentStatus = RecordingStatus.Unset;
 
   // final _streamControllerRecord = StreamController<RecordState>.broadcast();
@@ -282,7 +281,7 @@ class RecordController {
     var audioId = await AudioProvider.getId(name);
     print("===RecordId===>$audioId");
     var prefs = await SharedPreferences.getInstance();
-    var playlistId = await prefs.getInt("playlist");
+    var playlistId = prefs.getInt("playlist");
     print("===playlistId===>$playlistId");
     if (playlistId != null && playlistId != 0) {
       var resp = await PlaylistProvider.addAudioToPlaylist(playlistId, audioId);
@@ -320,9 +319,15 @@ class RecordController {
               duration: Duration(milliseconds: duration),
               pathAudio: path,
               picture: null));
+      print(_uploadIndex);
       // _loading = false;
       setState();
     }
+  }
+
+  uploadAudio(AudioItem audio) async {
+    print(audio.toMap());
+    await AudioProvider.upload(0, audioItem: audio);
   }
 
   delete() {
