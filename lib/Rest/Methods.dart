@@ -34,7 +34,8 @@ class _PlaylistMethods{
 class _UserMethods{
   String get  get => "user";
   String get  edit => "change";
-
+  String get delete => "delete";
+  //TODO /logout & /delete
 }
 
 

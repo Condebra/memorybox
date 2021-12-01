@@ -138,7 +138,7 @@ class RestoreController {
     await load();
   }
 
-  delete(AudioItem item) async {
+  delete(AudioItem item, {bool fromCloud = false}) async {
     print("delete attempt ${item.toMap()}");
     showDialogRecorder(
       context: AppKeys.scaffoldKey.currentContext,
@@ -164,7 +164,10 @@ class RestoreController {
         DialogIntegronButton(
           onPressed: () async {
             // await DBProvider.db.audioDelete(item.id);
-            await DBProvider.db.removeAudio(item.id);
+            if (fromCloud)
+              await AudioProvider.deleteOnCloud(ids: item.idS);
+            else
+              await DBProvider.db.removeAudio(item.id);
             closeDialog(AppKeys.scaffoldKey.currentContext);
           },
           textButton: Text(

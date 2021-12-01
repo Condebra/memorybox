@@ -35,7 +35,7 @@ class PlaylistProvider {
         var response;
         response = await Rest.post(urlQuery, body, token: token);
         if (response is Put) {
-          if (response.error == 401) {
+          if (response.code == 401) {
             tokenDB(token: "null");
             return null;
           }
@@ -84,7 +84,7 @@ class PlaylistProvider {
         print(response.runtimeType);
         if (response.runtimeType.toString() == "Put") {
           Put r = response;
-          if (r.error == 401) {
+          if (r.code == 401) {
             tokenDB(token: "null");
             return null;
           }
@@ -128,7 +128,7 @@ class PlaylistProvider {
       for (int i = 0; i < audio.length; i++) {
         await DBProvider.db.collectionAddAudio(idPlaylist, audio[i]);
       }
-      return Put(error: 201, mess: "ok", localError: true);
+      return Put(code: 201, message: "ok", isLocal: true);
     } else {
       CollectionItem collectionItem =
           await DBProvider.db.collectionGet(idPlaylist);
@@ -153,14 +153,14 @@ class PlaylistProvider {
       print(response.runtimeType);
       if (response.runtimeType.toString() == "Put") {
         Put r = response;
-        if (r.error == 401) {
+        if (r.code == 401) {
           tokenDB(token: "null");
           return null;
         } else {
-          return Put(error: 201, mess: "ok", localError: false);
+          return Put(code: 201, message: "ok", isLocal: false);
         }
       } else {
-        return Put(error: 201, mess: "ok", localError: false);
+        return Put(code: 201, message: "ok", isLocal: false);
       }
     }
   }
@@ -171,7 +171,7 @@ class PlaylistProvider {
     if (!isLocalPlaylist) {
       if (isLocalAudio) {
         print("Попытка добавить локальное аудио в плейлист на сервере");
-        return Put(error: 500, mess: "ok", localError: false);
+        return Put(code: 500, message: "ok", isLocal: false);
 
         // CollectionItem item = await getFromId(idS: idPlaylist);
         // var response = await http.get(item.picture);
@@ -195,23 +195,23 @@ class PlaylistProvider {
         print(response.runtimeType);
         if (response.runtimeType.toString() == "Put") {
           Put r = response;
-          if (r.error == 401) {
+          if (r.code == 401) {
             tokenDB(token: "null");
             return null;
           } else {
-            return Put(error: 201, mess: "ok", localError: false);
+            return Put(code: 201, message: "ok", isLocal: false);
           }
         } else {
-          return Put(error: 201, mess: "ok", localError: false);
+          return Put(code: 201, message: "ok", isLocal: false);
         }
       }
     } else {
       if (isLocalAudio) {
         await DBProvider.db.collectionAddAudio(idPlaylist, idAudio);
-        return Put(error: 201, mess: "ok", localError: false);
+        return Put(code: 201, message: "ok", isLocal: false);
       } else {
         print("попИт ка  добавить  аудио на сервере в локальный плейлист ");
-        return Put(error: 500, mess: "ok", localError: false);
+        return Put(code: 500, message: "ok", isLocal: false);
 
         ///будут выгружены все аудио
         ///--------v2
@@ -277,13 +277,13 @@ class PlaylistProvider {
     if (response is Put) {
       return response;
     } else {
-      return Put(error: 401, mess: "ok", localError: false);
+      return Put(code: 401, message: "ok", isLocal: false);
     }
   }
 
   static Future<Put> deleteLocal(int idPlaylist) async {
     await DBProvider.db.collectionDelete(idPlaylist);
-    return Put(error: 401, mess: "ok", localError: false);
+    return Put(code: 401, message: "ok", isLocal: false);
   }
 
   static Future<int> createOnlyS(String name, String desc, String file) async {
@@ -342,7 +342,7 @@ class PlaylistProvider {
       var response;
       response = await Rest.post(urlQuery, body, token: token);
       if (response is Put) {
-        if (response.error == 401) {
+        if (response.code == 401) {
           tokenDB(token: "null");
           return null;
         }
@@ -478,12 +478,12 @@ class PlaylistProvider {
     print(response.runtimeType);
     if (response.runtimeType.toString() == "Put") {
       Put r = response;
-      if (r.error == 401) {
+      if (r.code == 401) {
         tokenDB(token: "null");
         return null;
       }
     } else {
-      return Put(error: 200, mess: "ok", localError: false);
+      return Put(code: 200, message: "ok", isLocal: false);
     }
   }
 
@@ -508,9 +508,9 @@ class PlaylistProvider {
         data: formData,
       );
       if (response.statusCode == 200) {
-        return Put(error: 200, mess: "Ok", localError: false);
+        return Put(code: 200, message: "Ok", isLocal: false);
       } else {
-        return Put(error: response.statusCode, mess: "", localError: true);
+        return Put(code: response.statusCode, message: "", isLocal: true);
       }
     }
   }
@@ -529,7 +529,7 @@ class PlaylistProvider {
       var response;
       response = await Rest.post(urlQuery, body, token: token);
       if (response is Put) {
-        if (response.error == 401) {
+        if (response.code == 401) {
           tokenDB(token: "null");
           return null;
         }
@@ -573,7 +573,7 @@ class PlaylistProvider {
       print(response.runtimeType);
       if (response.runtimeType.toString() == "Put") {
         Put r = response;
-        if (r.error == 401) {
+        if (r.code == 401) {
           tokenDB(token: "null");
           return [];
         }

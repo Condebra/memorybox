@@ -13,6 +13,7 @@ import 'package:recorder/Style.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:provider/provider.dart';
 import 'ButtonPlay.dart';
+import 'package:recorder/Rest/Audio/AudioProvider.dart';
 
 class AudioItemWidget extends StatefulWidget {
   final AudioItem item;
@@ -242,7 +243,6 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
               ),
             ),
           ),
-        if (widget.item.isLocalAudio)
         // FocusedMenuItem(
         //   onPressed: null,
         //   title: Text(
@@ -266,25 +266,46 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
         //     ),
         //   ),
         // ),
-        FocusedMenuItem(
-          onPressed: () async {
-            await context
-                .read<GeneralController>()
-                .restoreController
-                .delete(widget.item);
-            context.read<GeneralController>().homeController.load();
-            context.read<GeneralController>().homeController.loadAudios();
-          },
-          title: Text(
-            "Удалить",
-            style: TextStyle(
-              color: cBlack,
-              fontWeight: FontWeight.w400,
-              fontSize: 14,
-              fontFamily: fontFamily,
+        if (widget.item.isLocalAudio)
+          FocusedMenuItem(
+            onPressed: () async {
+              await context
+                  .read<GeneralController>()
+                  .restoreController
+                  .delete(widget.item);
+              context.read<GeneralController>().homeController.load();
+              context.read<GeneralController>().homeController.loadAudios();
+            },
+            title: Text(
+              "Удалить с устройства",
+              style: TextStyle(
+                color: cBlack,
+                fontWeight: FontWeight.w400,
+                fontSize: 14,
+                fontFamily: fontFamily,
+              ),
             ),
           ),
-        ),
+        if (!widget.item.isLocalAudio)
+          FocusedMenuItem(
+            onPressed: () async {
+              await context
+                  .read<GeneralController>()
+                  .restoreController
+                  .delete(widget.item, fromCloud: true);
+              context.read<GeneralController>().homeController.load();
+              context.read<GeneralController>().homeController.loadAudios();
+            },
+            title: Text(
+              "Удалить из облака",
+              style: TextStyle(
+                color: cBlack,
+                fontWeight: FontWeight.w400,
+                fontSize: 14,
+                fontFamily: fontFamily,
+              ),
+            ),
+          ),
       ],
       onPressed: () {},
       child: Container(

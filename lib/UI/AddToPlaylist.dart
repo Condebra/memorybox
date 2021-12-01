@@ -69,7 +69,7 @@ class _AddAudioContentState extends State<AddAudioContent> {
     });
     closeDialog(context);
     // closeDialog(context);
-    if (response.error == 201) {
+    if (response.code == 201) {
       showDialogIntegronError(context, "Добавлено");
       widget.controller.homeController.load();
     } else {

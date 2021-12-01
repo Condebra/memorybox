@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:recorder/DB/DB.dart';
 import 'package:recorder/Utils/checkConnection.dart';
@@ -23,7 +24,7 @@ class AudioProvider {
       response = await Rest.post(urlQuery, body, token: token);
       if (response.runtimeType.toString() == "Put") {
         Put r = response;
-        if (r.error == 401) {
+        if (r.code == 401) {
           tokenDB(token: "null");
           return null;
         }
@@ -84,34 +85,24 @@ class AudioProvider {
     }
   }
 
-  static Future<Put> delete(int id, {int ids}) async {
-    print("DELETE AUDIO ${id.toString()} ${ids.toString()}");
-    if (await futureAuth() || !await checkConnection()) {
-      await DBProvider.db.deleteAudio(id);
-      return Put(error: 200, mess: "ok", localError: true);
-    } else {
-      if (ids != null) {
-        String urlQuery = urlConstructor(Methods.audio.delete);
-        print(urlQuery);
-        String token = await tokenDB();
+  static Future<Put> deleteOnCloud({@required int ids}) async {
+    print("DELETE AUDIO Cloud ${ids.toString()}");
+    if (ids != null) {
+      String urlQuery = urlConstructor(Methods.audio.delete);
+      print(urlQuery);
+      String token = await tokenDB();
 
-        Map<String, dynamic> body = Map();
-        body['id'] = ids;
-        var response;
-        response = await Rest.post(urlQuery, body, token: token);
-        if (response is Put) {
-          return response;
-        } else {
-          return Put(error: 200, mess: "ok", localError: false);
-        }
+      Map<String, dynamic> body = Map();
+      body['id'] = ids;
+      var response;
+      response = await Rest.post(urlQuery, body, token: token);
+      if (response is Put) {
+        return response;
       } else {
-        try {
-          AudioItem item = await DBProvider.db.getAudio(id);
-          await DBProvider.db.deleteAudio(item.id);
-        } catch (e) {}
-        return Put(error: 200, mess: "ok", localError: false);
+        return Put(code: 200, message: "ok", isLocal: false);
       }
     }
+    return Put(code: 400, message: "Audio is not on server", isLocal: false);
   }
 
   static Future<Put> create(
@@ -130,7 +121,7 @@ class AudioProvider {
           isLocalAudio: true,
           uploadAudio: false,
           duration: Duration(milliseconds: duration)));
-      return Put(error: 201, mess: "ok", localError: true);
+      return Put(code: 201, message: "ok", isLocal: true);
     } else {
       await DBProvider.db.audioAdd(AudioItem(
           name: name,
@@ -182,9 +173,9 @@ class AudioProvider {
             uploadAudio: true,
             duration: Duration(milliseconds: duration),
             idS: response.data['id']));
-        return Put(error: 201, mess: "Ok", localError: false);
+        return Put(code: 201, message: "Ok", isLocal: false);
       } else {
-        return Put(error: response.statusCode, mess: "", localError: true);
+        return Put(code: response.statusCode, message: "", isLocal: true);
       }
     }
   }
@@ -200,7 +191,7 @@ class AudioProvider {
       response = await Rest.post(urlQuery, body, token: token);
       if (response.runtimeType.toString() == "Put") {
         Put r = response;
-        if (r.error == 401) {
+        if (r.code == 401) {
           tokenDB(token: "null");
           return null;
         }
@@ -226,7 +217,7 @@ class AudioProvider {
     if (response is Put) {
       return response;
     } else {
-      return Put(error: 200, mess: "ok", localError: false);
+      return Put(code: 200, message: "ok", isLocal: false);
     }
   }
 
@@ -250,9 +241,9 @@ class AudioProvider {
       data: formData,
     );
     if (response.statusCode == 200) {
-      return Put(error: 200, mess: "Ok", localError: false);
+      return Put(code: 200, message: "Ok", isLocal: false);
     } else {
-      return Put(error: response.statusCode, mess: "", localError: true);
+      return Put(code: response.statusCode, message: "", isLocal: true);
     }
   }
 
@@ -441,9 +432,9 @@ class AudioProvider {
       } else {
         await editOnlyS(id);
       }
-      return Put(error: 200, mess: "ok", localError: true);
+      return Put(code: 200, message: "ok", isLocal: true);
     }
-    return Put(error: 200, mess: "ok", localError: true);
+    return Put(code: 200, message: "ok", isLocal: true);
   }
 
   static Future<AudioItem> getFromServer(int idS) async {
@@ -455,7 +446,7 @@ class AudioProvider {
     response = await Rest.post(urlQuery, body, token: token);
     if (response.runtimeType.toString() == "Put") {
       Put r = response;
-      if (r.error == 401) {
+      if (r.code == 401) {
         tokenDB(token: "null");
         return null;
       }

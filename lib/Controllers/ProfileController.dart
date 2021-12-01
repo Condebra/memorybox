@@ -107,7 +107,7 @@ class ProfileController {
         DialogIntegronButton(
           onPressed: () {
             closeDialog(context);
-            //todo delete account
+            deleteProfile(context);
           },
           textButton: Text(
             "Удалить",
@@ -148,6 +148,24 @@ class ProfileController {
     prefs.clear();
     await tokenDB(token: "null");
     setState();
+  }
+
+  deleteProfile(BuildContext context) async {
+    var attempt = await UserProvider.delete();
+    print("attempt $attempt");
+    if (await UserProvider.delete()) {
+      logOut(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Пользователь удалён"),
+        ),
+      );
+    } else
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Произошла ошибка удаления"),
+        ),
+      );
   }
 
   setState() {

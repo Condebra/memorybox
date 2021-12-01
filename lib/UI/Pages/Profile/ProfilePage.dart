@@ -29,6 +29,10 @@ class _ProfilePageState extends State<ProfilePage> {
           stream:
               context.read<GeneralController>().profileController.streamProfile,
           builder: (context, snapshot) {
+            if (snapshot.data == null || !snapshot.hasData)
+              return Center(
+                child: CircularProgressIndicator(),
+              );
             return Scaffold(
               backgroundColor: cBackground.withOpacity(0.0),
               appBar: MyAppBar(
@@ -53,16 +57,18 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: IconButton(
                     onPressed: () {
                       if (!snapshot.data.edit) {
-                        context.read<GeneralController>().createRouteOnEdit(
-                            currentPage: 4);
+                        context
+                            .read<GeneralController>()
+                            .createRouteOnEdit(currentPage: 4);
                         context
                             .read<GeneralController>()
                             .profileController
                             .editProfile();
-                      } else context
-                          .read<GeneralController>()
-                          .profileController
-                          .closeAndSaveEdit();
+                      } else
+                        context
+                            .read<GeneralController>()
+                            .profileController
+                            .closeAndSaveEdit();
                     },
                     icon: (!snapshot.data.edit)
                         ? Icon(Icons.edit)
@@ -162,9 +168,12 @@ class _ProfilePageState extends State<ProfilePage> {
             padding: const EdgeInsets.only(top: 10),
             child: textSubscription(),
           ),
-          SubscriptionProgress(person: state.profile, onTap: () {
-            context.read<GeneralController>().openSubscribe();
-          },),
+          SubscriptionProgress(
+            person: state.profile,
+            onTap: () {
+              context.read<GeneralController>().openSubscribe();
+            },
+          ),
           Padding(
             padding: const EdgeInsets.only(top: 35, bottom: 120),
             child: bottomButtons(context),

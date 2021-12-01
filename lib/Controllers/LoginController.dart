@@ -46,7 +46,7 @@ class LoginController {
       Put response = await AuthProvider.checkCode(
           "7${maskFormatter.getUnmaskedText()}",
           maskFormatterCode.getUnmaskedText());
-      if (response.error == 200) {
+      if (response.code == 200) {
         controllerPages.animateToPage(3,
             duration: Duration(milliseconds: 300), curve: Curves.ease);
         checkCode();

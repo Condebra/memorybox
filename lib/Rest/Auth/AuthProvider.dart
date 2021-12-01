@@ -14,7 +14,7 @@ class AuthProvider{
     if(response is Put) {
       return response;
     }else{
-      return Put(error: 200, mess: "ok", localError: false);
+      return Put(code: 200, message: "ok", isLocal: false);
     }
   }
   static Future<Put> checkCode(String phone, String code)async{
@@ -28,7 +28,7 @@ class AuthProvider{
       return response;
     }else{
       await tokenDB(token: response['token']);
-      return Put(error: 200, mess: "ok", localError: false);
+      return Put(code: 200, message: "ok", isLocal: false);
     }
   }
 }

@@ -20,22 +20,19 @@ Local errors
 1000 - ошибка синтаксиса
  */
 
-
-
-
 import 'package:flutter/material.dart';
 
 class Put {
-  int error;
-  bool localError;
-  String mess;
+  int code;
+  bool isLocal;
+  String message;
   Put({
-    @required this.error,
-    @required this.mess,
-    @required this.localError
+    @required this.code,
+    @required this.message,
+    @required this.isLocal
   });
   factory Put.fromJson(Map<String,dynamic> json){
     print("put decode ${json['code']}");
-    return Put(error: json['code'], localError: false, mess: json['mess']);
+    return Put(code: json['code'], isLocal: false, message: json['mess']);
   }
 }

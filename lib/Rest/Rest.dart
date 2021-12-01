@@ -25,7 +25,7 @@ class Rest {
             print("res $res");
             return res;
     }else{
-      return Put(error: response.statusCode, localError: false, mess: "");
+      return Put(code: response.statusCode, isLocal: false, message: "");
     }
   }
 }

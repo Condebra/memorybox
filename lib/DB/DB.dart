@@ -128,12 +128,8 @@ class DBProvider {
         where: "${idS == null ? TableAudio.id : TableAudio.idS} = ?",
         whereArgs: [idS ?? id]);
     // print("=== AudioGet $idS" + list.toString());
-    // AudioItem item;
-    // list.forEach((element) {
-    //   item = AudioItem.fromDB(element);
-    // });
+
     return AudioItem.fromDB(list.first);
-    // return AudioItem.fromDB(list[0]);
   }
 
   Future<int> getIdByName(String name) async {
