@@ -1,3 +1,4 @@
+// import 'package:adapty_flutter/models/adapty_error.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -7,11 +8,13 @@ import 'package:recorder/UI/Auth/Login.dart';
 import 'package:recorder/UI/Auth/OldPerson.dart';
 import 'package:recorder/UI/General.dart';
 import 'package:recorder/UI/Pages/Splash.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
+// import 'package:in_app_purchase/in_app_purchase.dart';
 import 'generated/l10n.dart';
+// import 'package:adapty_flutter/adapty_flutter.dart';
 
 void main() {
-  InAppPurchaseConnection.enablePendingPurchases();
+
+  // InAppPurchaseConnection.enablePendingPurchases();
   SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent));
   runApp(MyApp());
