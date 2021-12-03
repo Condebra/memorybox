@@ -62,35 +62,35 @@ class _MainMenuState extends State<MainMenu> {
                 child: Column(
                   children: [
                     item(
-                        IconSvg(IconsSvg.home,
+                        iconSvg(IconsSvg.home,
                             height: 30, width: 30, color: cBlack),
                         "Главная", onTap: () {
                       context.read<GeneralController>().setPage(0);
                       context.read<GeneralController>().setMenu(false);
                     }),
                     item(
-                        IconSvg(IconsSvg.profile,
+                        iconSvg(IconsSvg.profile,
                             height: 30, width: 30, color: cBlack),
                         "Профиль", onTap: () {
                       context.read<GeneralController>().setPage(4);
                       context.read<GeneralController>().setMenu(false);
                     }),
                     item(
-                        IconSvg(IconsSvg.category,
+                        iconSvg(IconsSvg.category,
                             height: 30, width: 30, color: cBlack),
                         "Подборки", onTap: () {
                       context.read<GeneralController>().setPage(1);
                       context.read<GeneralController>().setMenu(false);
                     }),
                     item(
-                        IconSvg(IconsSvg.paper,
+                        iconSvg(IconsSvg.paper,
                             height: 30, width: 30, color: cBlack),
                         "Все аудиофайлы", onTap: () {
                       context.read<GeneralController>().setPage(3);
                       context.read<GeneralController>().setMenu(false);
                     }),
                     item(
-                        IconSvg(IconsSvg.search,
+                        iconSvg(IconsSvg.search,
                             height: 30, width: 30, color: cBlack),
                         "Поиск", onTap: () {
                       context
@@ -98,7 +98,7 @@ class _MainMenuState extends State<MainMenu> {
                           .setPage(5, restore: true);
                     }),
                     item(
-                        IconSvg(IconsSvg.delete,
+                        iconSvg(IconsSvg.delete,
                             height: 30, width: 30, color: cBlack),
                         "Недавно удаленные", onTap: () {
                       context
@@ -108,7 +108,7 @@ class _MainMenuState extends State<MainMenu> {
                     }),
                     // SizedBox(height: 30,),
                     item(
-                        IconSvg(IconsSvg.wallet,
+                        iconSvg(IconsSvg.wallet,
                             height: 30, width: 30, color: cBlack),
                         "Подписка", onTap: () {
                       context.read<GeneralController>().openSubscribe();

@@ -19,7 +19,6 @@ void showDialogRecorder({
     else
       counter = 1;
   }
-  GlobalKey key = new GlobalKey();
 
   Widget _buttons(double height) {
     return counter == 0

@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 part 'IconData.dart';
 
-Widget IconSvg(int id,
+Widget iconSvg(int id,
     {Color color, double width, double height, bool nullColor}) {
   String icon(String name, {bool active, bool check}) {
     String path = "assets/images/";

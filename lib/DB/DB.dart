@@ -86,9 +86,9 @@ class DBProvider {
         phone: null,
         free: 500,
         max: 500,
-        created_at: null,
+        createdAt: null,
         subscribe: null,
-        updated_at: null,
+        updatedAt: null,
         id: null,
         local: local,
 
@@ -192,7 +192,7 @@ class DBProvider {
         where: "${TableAudio.id} = ?", whereArgs: [id]);
   }
 
-  Future<bool> audioEdit(
+  Future<void> audioEdit(
     int id, {
     String name,
     String picture,
@@ -296,7 +296,7 @@ class DBProvider {
     return await db.insert(TableCollection.table, item.toMap());
   }
 
-  Future<bool> collectionEdit(int id,
+  Future<void> collectionEdit(int id,
       {String name,
       String picture,
       String desc,

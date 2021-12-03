@@ -75,8 +75,7 @@ class ProfileController {
     if (maskFormatter.getUnmaskedText() != _profile.phone &&
         maskFormatter.getUnmaskedText().length == 10)
       p = maskFormatter.getUnmaskedText();
-    var response =
-        await UserProvider.edit(name: n, phone: p, imagePath: _imagePath);
+    await UserProvider.edit(name: n, phone: p, imagePath: _imagePath);
     closeDialog(AppKeys.scaffoldKey.currentContext);
     _edit = false;
     load();

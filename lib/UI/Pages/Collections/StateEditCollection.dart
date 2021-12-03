@@ -154,7 +154,7 @@ class _StateEditCollectionState extends State<StateEditCollection> {
                                             border: Border.all(color: cBlack)),
                                         child: Padding(
                                           padding: const EdgeInsets.all(16.0),
-                                          child: IconSvg(IconsSvg.camera,
+                                          child: iconSvg(IconsSvg.camera,
                                               color: cBlack),
                                         )),
                                   ),

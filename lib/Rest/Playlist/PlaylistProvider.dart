@@ -1,10 +1,6 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:recorder/DB/DB.dart';
-import 'package:recorder/Rest/Audio/AudioProvider.dart';
 import 'package:recorder/Utils/checkConnection.dart';
 import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/models/CollectionModel.dart';
@@ -12,10 +8,6 @@ import 'package:recorder/models/Put.dart';
 import 'package:recorder/Rest/API.dart';
 import 'package:recorder/Rest/Rest.dart';
 import 'package:recorder/Utils/tokenDB.dart';
-import 'dart:io';
-import 'package:http/http.dart' as http;
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 
 class PlaylistProvider {
   static Future<List<dynamic>> get({int id, int ids}) async {
@@ -138,18 +130,7 @@ class PlaylistProvider {
       Map<String, dynamic> body = Map();
       body['id'] = collectionItem.idS;
 
-      var response;
-      String au = "";
-      for (int i = 0; i < audio.length; i++) {
-        AudioItem item = await DBProvider.db.getAudio(audio[i]);
-
-        if (i > 0) {
-          au += item.idS.toString();
-        } else {
-          au += "," + item.idS.toString();
-        }
-      }
-      response = await Rest.post(urlQuery, body, token: token);
+      var response = await Rest.post(urlQuery, body, token: token);
       print(response.runtimeType);
       if (response.runtimeType.toString() == "Put") {
         Put r = response;
@@ -190,7 +171,6 @@ class PlaylistProvider {
         Map<String, dynamic> body = Map();
         body['id'] = idPlaylist;
         var response;
-        String au = "$idAudio";
         response = await Rest.post(urlQuery, body, token: token);
         print(response.runtimeType);
         if (response.runtimeType.toString() == "Put") {
@@ -231,7 +211,7 @@ class PlaylistProvider {
     }
   }
 
-  static Future<Put> edit(int id,
+  static Future<void> edit(int id,
       {String name, String desc, String imagePath}) async {
     if (name != null || desc != null || imagePath != null) {
       // if(await futureAuth()){
@@ -262,10 +242,6 @@ class PlaylistProvider {
       // }
     }
   }
-
-  // static Future<Put> deleteFromPlaylist() async {
-  //   //to do
-  // }
 
   static Future<Put> deleteS(int idsPlaylist) async {
     String token = await tokenDB();

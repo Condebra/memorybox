@@ -206,7 +206,7 @@ class _RecordPageState extends State<RecordPage> {
                   child: Container(
                     height: 80,
                     width: 80,
-                    child: IconSvg(IconsSvg.pause, color: cOrange),
+                    child: iconSvg(IconsSvg.pause, color: cOrange),
                   ),
                 ),
                 Container(
@@ -243,7 +243,7 @@ class _RecordPageState extends State<RecordPage> {
                 onTap: () async {
                   await widget.controller.recordController.upload();
                 },
-                child: IconSvg(
+                child: iconSvg(
                   IconsSvg.cloudStorage,
                   width: 25,
                   height: 25,
@@ -317,7 +317,7 @@ class _RecordPageState extends State<RecordPage> {
                     ],
                   );
                 },
-                child: IconSvg(
+                child: iconSvg(
                   IconsSvg.delete,
                   width: 25,
                   height: 25,
@@ -425,7 +425,7 @@ class _RecordPageState extends State<RecordPage> {
                     }
                   } catch (e) {}
                 },
-                child: IconSvg(IconsSvg.back15)),
+                child: iconSvg(IconsSvg.back15)),
             GestureDetector(
               behavior: HitTestBehavior.deferToChild,
               onTap: () {
@@ -434,7 +434,7 @@ class _RecordPageState extends State<RecordPage> {
               child: Container(
                 height: 80,
                 width: 80,
-                child: IconSvg(
+                child: iconSvg(
                     state.state == AudioPlayerState.PLAYING
                         ? IconsSvg.pause
                         : IconsSvg.play,
@@ -455,7 +455,7 @@ class _RecordPageState extends State<RecordPage> {
                     print(e);
                   }
                 },
-                child: IconSvg(IconsSvg.next15)),
+                child: iconSvg(IconsSvg.next15)),
           ],
         ),
         SizedBox(

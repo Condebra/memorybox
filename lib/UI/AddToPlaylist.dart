@@ -6,7 +6,6 @@ import 'package:recorder/UI/Pages/Home/widgets/CollectionItemOne.dart';
 import 'package:recorder/Utils/DialogsIntegron/DialogIntegron.dart';
 import 'package:recorder/Utils/DialogsIntegron/DialogLoading.dart';
 import 'package:recorder/Utils/app_keys.dart';
-import 'package:recorder/Utils/time/TimeParse.dart';
 import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/models/CollectionModel.dart';
 import 'package:recorder/models/Put.dart';
@@ -68,7 +67,6 @@ class _AddAudioContentState extends State<AddAudioContent> {
       );
     });
     closeDialog(context);
-    // closeDialog(context);
     if (response.code == 201) {
       showDialogIntegronError(context, "Добавлено");
       widget.controller.homeController.load();
@@ -123,35 +121,37 @@ class _AddAudioContentState extends State<AddAudioContent> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: List.generate(
-                    leftColumn.length,
-                    (index) => Column(
-                          children: [
-                            CollectionItemOne(
-                              onTap: () {
-                                add(leftColumn[index]);
-                              },
-                              item: leftColumn[index],
-                            ),
-                            SizedBox(height: 16)
-                          ],
-                        )),
+                  leftColumn.length,
+                  (index) => Column(
+                    children: [
+                      CollectionItemOne(
+                        onTap: () {
+                          add(leftColumn[index]);
+                        },
+                        item: leftColumn[index],
+                      ),
+                      SizedBox(height: 16)
+                    ],
+                  ),
+                ),
               ),
               SizedBox(width: 15.5),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: List.generate(
-                    rightColumn.length,
-                    (index) => Column(
-                          children: [
-                            CollectionItemOne(
-                              onTap: () {
-                                add(rightColumn[index]);
-                              },
-                              item: rightColumn[index],
-                            ),
-                            SizedBox(height: 16)
-                          ],
-                        )),
+                  rightColumn.length,
+                  (index) => Column(
+                    children: [
+                      CollectionItemOne(
+                        onTap: () {
+                          add(rightColumn[index]);
+                        },
+                        item: rightColumn[index],
+                      ),
+                      SizedBox(height: 16)
+                    ],
+                  ),
+                ),
               )
             ],
           ),

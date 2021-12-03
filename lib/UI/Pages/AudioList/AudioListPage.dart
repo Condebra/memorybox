@@ -22,8 +22,8 @@ class _AudioListPageState extends State<AudioListPage> {
   @override
   void initState() {
     super.initState();
-    context.read<GeneralController>().homeController.loadAudios();
-    context.read<GeneralController>().homeController.loadServerAudios();
+    context.read<GeneralController>().homeController.load();
+    setState(() {});
   }
 
   @override
@@ -49,7 +49,7 @@ class _AudioListPageState extends State<AudioListPage> {
                 onPressed: () {
                   context.read<GeneralController>().setPage(2, restore: true);
                 },
-                icon: IconSvg(IconsSvg.delete, color: cBackground),
+                icon: iconSvg(IconsSvg.delete, color: cBackground),
               ),
             ),
             child: Container(
@@ -149,7 +149,7 @@ class _AudioListPageState extends State<AudioListPage> {
                 children: [
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-                    child: IconSvg(
+                    child: iconSvg(
                       IconsSvg.play,
                       width: 38,
                       color: Color.fromRGBO(140, 132, 226, 1),
@@ -181,7 +181,7 @@ class _AudioListPageState extends State<AudioListPage> {
                 repeatActive = !repeatActive;
                 setState(() {});
               },
-              child: IconSvg(
+              child: iconSvg(
                 IconsSvg.audioRepeat,
                 color: repeatActive ? repeatColorActive : repeatColorInActive,
                 width: 30,

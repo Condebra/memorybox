@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:intl/intl.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Controllers/States/CollectionsState.dart';
 import 'package:recorder/Style.dart';
@@ -12,7 +11,6 @@ import 'package:recorder/UI/widgets/AudioItem.dart';
 import 'package:recorder/Utils/DropMenu/DropMenuItem.dart';
 import 'package:recorder/Utils/DropMenu/FocusedMenuHolder.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
-import 'package:recorder/Utils/time/TimeParse.dart';
 import 'package:recorder/models/AudioItem.dart';
 
 class StateViewItemCollection extends StatefulWidget {
@@ -128,7 +126,7 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
                 width: 27,
                 height: 27,
                 child: Center(
-                  child: IconSvg(IconsSvg.more,
+                  child: iconSvg(IconsSvg.more,
                       width: 41, height: 8, color: cBackground),
                 ),
               ),
@@ -313,7 +311,7 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-                                        IconSvg(IconsSvg.play,
+                                        iconSvg(IconsSvg.play,
                                             color: cBackground,
                                             height: 38,
                                             width: 38),
@@ -336,7 +334,7 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
                                               repeatActive = !repeatActive;
                                               setState(() {});
                                             },
-                                            child: IconSvg(
+                                            child: iconSvg(
                                               IconsSvg.audioRepeat,
                                               color: repeatActive ? repeatColorActive : repeatColorInActive,
                                               width: 30,

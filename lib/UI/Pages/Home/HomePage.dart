@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:recorder/Controllers/HomeController.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
-import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/Pages/Home/widgets/AudioPreviewWidget.dart';
 import 'package:recorder/UI/Pages/Home/widgets/CollectionsWidget.dart';
@@ -55,7 +54,7 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () {
                   context.read<GeneralController>().setPage(5, restore: true);
                 },
-                icon: IconSvg(IconsSvg.search, color: cBackground),
+                icon: iconSvg(IconsSvg.search, color: cBackground),
               ),
             ),
           ),

@@ -72,7 +72,7 @@ class _MyAppBarState extends State<MyAppBar> {
                           borderRadius: BorderRadius.all(Radius.circular(15))),
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
-                        child: IconSvg(IconsSvg.back, width: 27, height: 27),
+                        child: iconSvg(IconsSvg.back, width: 27, height: 27),
                       ),
                     ),
                   )
@@ -95,7 +95,7 @@ class _MyAppBarState extends State<MyAppBar> {
                               child: Container(
                                 width: 27,
                                 height: 27,
-                                child: IconSvg(IconsSvg.menu,
+                                child: iconSvg(IconsSvg.menu,
                                     width: 28, height: 21, color: cBackground),
                               ),
                             )),
@@ -114,7 +114,7 @@ class _MyAppBarState extends State<MyAppBar> {
                     child: Container(
                       width: 27,
                       height: 27,
-                      child: IconSvg(IconsSvg.add,
+                      child: iconSvg(IconsSvg.add,
                           width: 28, height: 21, color: cBackground),
                     ),
                   )),
@@ -132,7 +132,7 @@ class _MyAppBarState extends State<MyAppBar> {
                             onTap: () {
                               widget.tapRightButton == null?null:widget.tapRightButton();
                             },
-                            child: IconSvg(IconsSvg.more,
+                            child: iconSvg(IconsSvg.more,
                                 width: 41, height: 8, color: cBackground),
                         ),
                       ),

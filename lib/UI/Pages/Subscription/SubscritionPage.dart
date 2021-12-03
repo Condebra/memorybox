@@ -228,7 +228,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
   Widget buildRow(BuildContext context, String text, int icon) {
     return Row(
       children: [
-        IconSvg(icon, width: 20),
+        iconSvg(icon, width: 20),
         SizedBox(
           width: 11,
         ),

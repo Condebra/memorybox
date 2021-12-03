@@ -119,7 +119,7 @@ class _ProfileImageState extends State<ProfileImage> {
                               color: cBackground.withOpacity(.8), width: 2)),
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
-                        child: IconSvg(IconsSvg.camera,
+                        child: iconSvg(IconsSvg.camera,
                             color: cBackground, width: 50, height: 50),
                       ),
                     ),

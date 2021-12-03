@@ -7,11 +7,9 @@ import 'package:recorder/UI/Pages/Search/SearchPage.dart';
 import 'package:recorder/UI/Pages/Restore/Restore.dart';
 import 'package:recorder/UI/Pages/Subscription/SubscritionPage.dart';
 import 'package:recorder/UI/widgets/MainMenu.dart';
-import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/Pages/AudioList/AudioListPage.dart';
 import 'package:recorder/UI/Pages/Profile/ProfilePage.dart';
-import 'package:recorder/UI/Pages/Record/RecordPage.dart';
 import 'package:recorder/UI/widgets/Background.dart';
 import 'package:recorder/UI/widgets/MainPanel.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
@@ -97,9 +95,9 @@ class _GeneralState extends State<General> {
                     },
                     items: [
                       ItemMainPanel(
-                        icon: IconSvg(IconsSvg.home,
+                        icon: iconSvg(IconsSvg.home,
                             width: 24, height: 24, color: colorActive),
-                        iconInactive: IconSvg(IconsSvg.home,
+                        iconInactive: iconSvg(IconsSvg.home,
                             color: colorInactive, width: 24, height: 24),
                         text: Text(
                           "Главная",
@@ -107,9 +105,9 @@ class _GeneralState extends State<General> {
                         ),
                       ),
                       ItemMainPanel(
-                        icon: IconSvg(IconsSvg.category,
+                        icon: iconSvg(IconsSvg.category,
                             width: 24, height: 24, color: colorActive),
-                        iconInactive: IconSvg(IconsSvg.category,
+                        iconInactive: iconSvg(IconsSvg.category,
                             width: 24, height: 24, color: colorInactive),
                         text: Text(
                           "Подборки",
@@ -136,7 +134,7 @@ class _GeneralState extends State<General> {
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(12.0),
-                                    child: IconSvg(IconsSvg.voice,
+                                    child: iconSvg(IconsSvg.voice,
                                         width: 24, height: 24),
                                   ),
                                 );
@@ -162,7 +160,7 @@ class _GeneralState extends State<General> {
                                       ),
                                       child: Padding(
                                         padding: const EdgeInsets.all(12.0),
-                                        child: IconSvg(IconsSvg.voice,
+                                        child: iconSvg(IconsSvg.voice,
                                             width: 24,
                                             height: 24,
                                             color: cOrange),
@@ -178,9 +176,9 @@ class _GeneralState extends State<General> {
                         ),
                       ),
                       ItemMainPanel(
-                        icon: IconSvg(IconsSvg.paper,
+                        icon: iconSvg(IconsSvg.paper,
                             width: 24, height: 24, color: colorActive),
-                        iconInactive: IconSvg(IconsSvg.paper,
+                        iconInactive: iconSvg(IconsSvg.paper,
                             width: 24, height: 24, color: colorInactive),
                         text: Text(
                           "Аудиозаписи",
@@ -188,9 +186,9 @@ class _GeneralState extends State<General> {
                         ),
                       ),
                       ItemMainPanel(
-                        icon: IconSvg(IconsSvg.profile,
+                        icon: iconSvg(IconsSvg.profile,
                             width: 24, height: 24, color: colorActive),
-                        iconInactive: IconSvg(IconsSvg.profile,
+                        iconInactive: iconSvg(IconsSvg.profile,
                             width: 24, height: 24, color: colorInactive),
                         text: Text(
                           "Профиль",

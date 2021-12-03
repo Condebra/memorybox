@@ -5,8 +5,8 @@ import 'package:recorder/Utils/Svg/IconSVG.dart';
 class SubscriptionPrice {
   final String price;
   final String timeDuration;
-  Widget activeIcon = IconSvg(IconsSvg.activeSubscription, height: 50, color: cOrange);
-  Widget inactiveIcon = IconSvg(IconsSvg.disactiveSubscription, height: 50);
+  Widget activeIcon = iconSvg(IconsSvg.activeSubscription, height: 50, color: cOrange);
+  Widget inactiveIcon = iconSvg(IconsSvg.disactiveSubscription, height: 50);
 
   SubscriptionPrice({
     @required this.price,

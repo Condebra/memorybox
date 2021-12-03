@@ -113,7 +113,7 @@ class _PlayerPageState extends State<PlayerPage> {
                       quarterTurns: 2,
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
-                        child: IconSvg(IconsSvg.next, color: cBlack),
+                        child: iconSvg(IconsSvg.next, color: cBlack),
                       ),
                     ),
                   ),
@@ -132,7 +132,7 @@ class _PlayerPageState extends State<PlayerPage> {
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
-                        child: IconSvg(IconsSvg.back15),
+                        child: iconSvg(IconsSvg.back15),
                       )),
                   _buttonPlay(state, onTap: () {
                     if (state.state == AudioPlayerState.PLAYING) {
@@ -155,7 +155,7 @@ class _PlayerPageState extends State<PlayerPage> {
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(4.0),
-                      child: IconSvg(IconsSvg.next15),
+                      child: iconSvg(IconsSvg.next15),
                     ),
                   ),
                   GestureDetector(
@@ -164,7 +164,7 @@ class _PlayerPageState extends State<PlayerPage> {
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(4.0),
-                      child: IconSvg(IconsSvg.next, color: cBlack),
+                      child: iconSvg(IconsSvg.next, color: cBlack),
                     ),
                   ),
                 ],
@@ -177,7 +177,7 @@ class _PlayerPageState extends State<PlayerPage> {
                 children: [
                   Padding( //there will be repeat button
                     padding: const EdgeInsets.all(4.0),
-                    child: IconSvg(IconsSvg.audioRepeat, color: Colors.transparent),
+                    child: iconSvg(IconsSvg.audioRepeat, color: Colors.transparent),
                   ),
                   showMenu(state),
                 ],
@@ -302,8 +302,8 @@ class _PlayerPageState extends State<PlayerPage> {
           ),
         )
             : state.state == AudioPlayerState.PLAYING
-            ? IconSvg(IconsSvg.pause, color: cOrange, width: 80, height: 80)
-            : IconSvg(IconsSvg.play, color: cOrange, width: 50, height: 50),
+            ? iconSvg(IconsSvg.pause, color: cOrange, width: 80, height: 80)
+            : iconSvg(IconsSvg.play, color: cOrange, width: 50, height: 50),
       ),
     );
   }
@@ -485,7 +485,7 @@ class _PlayerPageState extends State<PlayerPage> {
         onPressed: () {},
         child: Padding(
           padding: const EdgeInsets.all(4.0),
-          child: IconSvg(IconsSvg.more, color: cBlack, width: 30),
+          child: iconSvg(IconsSvg.more, color: cBlack, width: 30),
         ),
       ),
     );

@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:recorder/Controllers/States/RestoreState.dart';
 import 'package:recorder/DB/DB.dart';
 import 'package:recorder/Rest/Audio/AudioProvider.dart';
@@ -13,8 +12,6 @@ import 'package:recorder/Utils/app_keys.dart';
 import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/models/Put.dart';
 import 'package:rxdart/rxdart.dart';
-
-import 'GeneralController.dart';
 
 class RestoreController {
   BehaviorSubject _controllerRestore = BehaviorSubject<RestoreState>();
@@ -135,6 +132,15 @@ class RestoreController {
       file.delete();
       DBProvider.db.deleteAudio(item.id);
       print("delete file ${item.pathAudio}");
+    } catch (e) {
+      print(e);
+    }
+    await load();
+  }
+
+  deleteFinalCloud({@required int ids}) async {
+    try {
+      AudioProvider.deleteOnCloud(ids: ids);
     } catch (e) {
       print(e);
     }

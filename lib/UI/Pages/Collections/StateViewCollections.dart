@@ -5,14 +5,11 @@ import 'package:recorder/Controllers/States/CollectionsState.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/Pages/Home/widgets/CollectionItemOne.dart';
 import 'package:recorder/UI/widgets/Appbar.dart';
-import 'package:recorder/models/CollectionModel.dart';
 import 'package:provider/provider.dart';
 
 class StateViewCollection extends StatefulWidget {
-  List<CollectionItem> items;
 
   StateViewCollection();
-  // StateViewCollection({this.items});
 
   @override
   _StateViewCollectionState createState() => _StateViewCollectionState();

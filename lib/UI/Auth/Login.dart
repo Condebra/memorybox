@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:recorder/Controllers/LoginController.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/widgets/Background.dart';
@@ -363,7 +362,7 @@ class _LoginState extends State<Login> {
         SizedBox(
           height: 70,
         ),
-        IconSvg(IconsSvg.heart, width: 45, color: cOrange),
+        iconSvg(IconsSvg.heart, width: 45, color: cOrange),
       ],
     );
   }

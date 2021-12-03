@@ -121,7 +121,7 @@ class _StateAddAudioCollectionState extends State<StateAddAudioCollection> {
             Container(
               width: 30,
               height: 30,
-              child: IconSvg(IconsSvg.search),
+              child: iconSvg(IconsSvg.search),
             ),
           ],
         ),

@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/Style.dart';
-import 'package:recorder/UI/widgets/AudioItem.dart';
 import 'package:recorder/UI/widgets/AudioPreviewGenerate.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:recorder/generated/l10n.dart';
@@ -108,7 +107,7 @@ class _AudioPreviewState extends State<AudioPreview> {
                 fontWeight: FontWeight.w400,
                 color: cBlack.withOpacity(0.5)),
           ),
-          IconSvg(IconsSvg.audioArrow, width: 60, height: 60),
+          iconSvg(IconsSvg.audioArrow, width: 60, height: 60),
         ],
       ),
     );

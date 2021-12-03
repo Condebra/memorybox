@@ -1,5 +1,3 @@
-import 'package:recorder/UI/Pages/Collections/OpenCollection/OpenCollection.dart';
-
 class Routes {
   static String get initial => "/splash";
   static String get home => "/home";

@@ -291,7 +291,7 @@ class _StateSelectSeveralCollectionState
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      IconSvg(
+                                      iconSvg(
                                         IconsSvg.play,
                                         color: cBackground,
                                         height: 38,

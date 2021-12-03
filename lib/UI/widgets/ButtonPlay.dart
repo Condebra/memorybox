@@ -50,7 +50,7 @@ class _ButtonPlayState extends State<ButtonPlay> {
       //   tap = false;
       //   setState(() {});
       // },
-      child: IconSvg(
+      child: iconSvg(
           widget.play
               ? widget.item.activeIcon
               : widget.item.inActiveIcon ?? widget.item.activeIcon,

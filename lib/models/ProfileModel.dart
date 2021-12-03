@@ -5,8 +5,8 @@ class ProfileModel {
   final String name;
   final String phone;
   final int subscribe;
-  final DateTime created_at;
-  final DateTime updated_at;
+  final DateTime createdAt;
+  final DateTime updatedAt;
   final int id;
   final int free;
   final int max;
@@ -19,9 +19,9 @@ class ProfileModel {
         name: map['name'],
         phone: map['phone'] as String,
         subscribe: map['subscribe'] as int,
-        created_at:
+        createdAt:
             DateFormat("yyyy-MM-ddTHH:mm:ss.vvvZ").parse(map['created_at']),
-        updated_at:
+        updatedAt:
             DateFormat("yyyy-MM-ddTHH:mm:ss.vvvZ").parse(map['updated_at']),
         free: map['space']['free'].toInt() as int,
         max: map['space']['max'].toInt() as int,
@@ -36,8 +36,8 @@ class ProfileModel {
       'name': this.name,
       'phone': this.phone,
       'subscribe': this.subscribe,
-      'created_at': this.created_at,
-      'updated_at': this.updated_at,
+      'created_at': this.createdAt,
+      'updated_at': this.updatedAt,
       'avMemory': this.free,
       'usMemory': this.max,
     } as Map<String, dynamic>;
@@ -49,9 +49,9 @@ class ProfileModel {
     this.phone,
     this.free,
     this.max,
-    this.created_at,
+    this.createdAt,
     this.subscribe,
-    this.updated_at,
+    this.updatedAt,
     this.id,
     this.local,
     this.anonimus,

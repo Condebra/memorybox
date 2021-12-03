@@ -182,7 +182,7 @@ class _StateAddCollectionState extends State<StateAddCollection> {
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.all(16.0),
-                                child: IconSvg(IconsSvg.camera, color: cBlack),
+                                child: iconSvg(IconsSvg.camera, color: cBlack),
                               )),
                         )
                       : Image.file(

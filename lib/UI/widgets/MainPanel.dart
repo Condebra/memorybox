@@ -125,7 +125,7 @@ class _MainPanelState extends State<MainPanel> {
                                                       Container(
                                                         height: 30,
                                                         width: 30,
-                                                        child: IconSvg(IconsSvg.addOutline, width: 30,height: 30),
+                                                        child: iconSvg(IconsSvg.addOutline, width: 30,height: 30),
                                                       ),
                                                       SizedBox(height: 8,),
                                                       Text("Добавить", style: TextStyle(color: cBlack, fontFamily: fontFamily, fontSize: 10, fontWeight: FontWeight.w400, ),),
@@ -142,7 +142,7 @@ class _MainPanelState extends State<MainPanel> {
                                                       Container(
                                                         height: 30,
                                                         width: 30,
-                                                        child: IconSvg(IconsSvg.upload, width: 30,height: 30),
+                                                        child: iconSvg(IconsSvg.upload, width: 30,height: 30),
                                                       ),
                                                       SizedBox(height: 8,),
                                                       Text("Поделиться", style: TextStyle(color: cBlack, fontFamily: fontFamily, fontSize: 10, fontWeight: FontWeight.w400, ),),
@@ -159,7 +159,7 @@ class _MainPanelState extends State<MainPanel> {
                                                       Container(
                                                         height: 30,
                                                         width: 30,
-                                                        child: IconSvg(IconsSvg.download, width: 30,height: 30),
+                                                        child: iconSvg(IconsSvg.download, width: 30,height: 30),
                                                       ),
                                                       SizedBox(height: 8,),
                                                       Text("Скачать", style: TextStyle(color: cBlack, fontFamily: fontFamily, fontSize: 10, fontWeight: FontWeight.w400, ),),
@@ -177,7 +177,7 @@ class _MainPanelState extends State<MainPanel> {
                                                       Container(
                                                         height: 30,
                                                         width: 30,
-                                                        child: IconSvg(IconsSvg.delete, width: 30,height: 30),
+                                                        child: iconSvg(IconsSvg.delete, width: 30,height: 30),
                                                       ),
                                                       SizedBox(height: 8,),
                                                       Text("Удалить", style: TextStyle(color: cBlack, fontFamily: fontFamily, fontSize: 10, fontWeight: FontWeight.w400, ),),
@@ -203,7 +203,7 @@ class _MainPanelState extends State<MainPanel> {
                                                       Container(
                                                         height: 30,
                                                         width: 30,
-                                                        child: IconSvg(IconsSvg.swap, width: 30,height: 30),
+                                                        child: iconSvg(IconsSvg.swap, width: 30,height: 30),
                                                       ),
                                                       SizedBox(height: 8,),
                                                       Text("Восстановить", style: TextStyle(color: cBlack, fontFamily: fontFamily, fontSize: 10, fontWeight: FontWeight.w400, ),),
@@ -220,7 +220,7 @@ class _MainPanelState extends State<MainPanel> {
                                                       Container(
                                                         height: 30,
                                                         width: 30,
-                                                        child: IconSvg(IconsSvg.delete, width: 30,height: 30),
+                                                        child: iconSvg(IconsSvg.delete, width: 30,height: 30),
                                                       ),
                                                       SizedBox(height: 8,),
                                                       Text("Удалить", style: TextStyle(color: cBlack, fontFamily: fontFamily, fontSize: 10, fontWeight: FontWeight.w400, ),),
@@ -363,7 +363,7 @@ class _MainPanelState extends State<MainPanel> {
               Container(
                 width: 50,
                 height: 50,
-                child: ButtonPlay(state, onTap: () {
+                child: buttonPlay(state, onTap: () {
                   if (state.state == AudioPlayerState.PLAYING) {
                     context.read<GeneralController>().playerController.pause();
                   } else if (state.state == AudioPlayerState.PAUSED) {
@@ -474,7 +474,7 @@ class _MainPanelState extends State<MainPanel> {
                 onPressed: () {
                   context.read<GeneralController>().playerController.next();
                 },
-                icon: IconSvg(IconsSvg.next),
+                icon: iconSvg(IconsSvg.next),
               ),
               // Container(
               //   width: 82,
@@ -501,7 +501,7 @@ class _MainPanelState extends State<MainPanel> {
     );
   }
 
-  Widget ButtonPlay(PlayerState state, {Function onTap}) {
+  Widget buttonPlay(PlayerState state, {Function onTap}) {
     return GestureDetector(
       behavior: HitTestBehavior.deferToChild,
       onTap: () {
@@ -524,9 +524,9 @@ class _MainPanelState extends State<MainPanel> {
                 ),
               )
             : state.state == AudioPlayerState.PLAYING
-                ? IconSvg(IconsSvg.pause,
+                ? iconSvg(IconsSvg.pause,
                     color: cBackground, width: 50, height: 50)
-                : IconSvg(IconsSvg.play,
+                : iconSvg(IconsSvg.play,
                     color: cBackground, width: 50, height: 50),
       ),
     );

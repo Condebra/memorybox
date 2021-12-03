@@ -12,7 +12,7 @@ Future<String> tokenDB({String token}) async {
   }
 }
 
-/// check or set(?) auth
+/// check or set(?) auth wtf
 Future<bool> futureAuth({bool state}) async {
   final prefs = await SharedPreferences.getInstance();
   print("Future Auth $state");

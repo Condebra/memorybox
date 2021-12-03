@@ -49,7 +49,6 @@ class LoginController {
       if (response.code == 200) {
         controllerPages.animateToPage(3,
             duration: Duration(milliseconds: 300), curve: Curves.ease);
-        checkCode();
         await Future.delayed(
             Duration(milliseconds: 700)); //wtf is that? why are we waiting?
         pushHome(context);
@@ -88,17 +87,13 @@ class LoginController {
     AuthProvider.sendCode("7${maskFormatter.getUnmaskedText()}");
   }
 
-  checkCode() async {} //todo checking codes
-
   pushHome(BuildContext context) {
-    // generalController.setPage(0);
     Navigator.pushAndRemoveUntil(
         context, routeHome(), (Route<dynamic> route) => false);
   }
 
   Route routeHome() {
     var curve = Curves.ease;
-    var curveTween = CurveTween(curve: curve);
 
     return PageRouteBuilder(
       transitionDuration: Duration(milliseconds: 400),
@@ -108,7 +103,6 @@ class LoginController {
         var end = Offset.zero;
         var tween =
             Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-        var offsetAnimation = animation.drive(tween);
         var curvedAnimation = CurvedAnimation(
           parent: animation,
           curve: curve,

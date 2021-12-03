@@ -7,7 +7,6 @@ import 'package:recorder/UI/Auth/Login.dart';
 import 'package:recorder/UI/Auth/OldPerson.dart';
 import 'package:recorder/UI/General.dart';
 import 'package:recorder/UI/Pages/Splash.dart';
-import 'package:recorder/UI/Pages/Subscription/SubscritionPage.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'generated/l10n.dart';
 

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Controllers/States/ProfileState.dart';
-import 'package:recorder/Utils/Svg/IconSVG.dart';
-import 'package:recorder/Utils/app_keys.dart';
-import 'package:recorder/models/ProfileModel.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/Pages/Profile/widgets/ProfileImage.dart';
 import 'package:recorder/UI/Pages/Profile/widgets/Name.dart';
@@ -11,7 +8,6 @@ import 'package:recorder/UI/Pages/Profile/widgets/PhoneNumber.dart';
 import 'package:recorder/UI/Pages/Profile/widgets/SubscriptionProgress.dart';
 import 'package:recorder/UI/widgets/Appbar.dart';
 import 'package:recorder/generated/l10n.dart';
-import 'package:recorder/main.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {

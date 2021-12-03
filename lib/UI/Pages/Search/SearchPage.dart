@@ -107,7 +107,7 @@ class _SearchPageState extends State<SearchPage> {
               decoration: InputDecoration(
                   suffixIcon: Padding(
                     padding: const EdgeInsets.only(left: 10.0, right: 10, top: 8, bottom: 10 ),
-                    child: IconSvg(IconsSvg.search, height: 22, width: 22),
+                    child: iconSvg(IconsSvg.search, height: 22, width: 22),
                   ),
                   // contentPadding: EdgeInsets.all(0),
                   enabledBorder: InputBorder.none,

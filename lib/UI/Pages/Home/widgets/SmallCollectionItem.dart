@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:recorder/Style.dart';
-import 'package:recorder/generated/l10n.dart';
 import 'package:recorder/models/CollectionModel.dart';
 
 class SmallCollectionItem extends StatefulWidget {

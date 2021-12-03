@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:recorder/models/ProfileModel.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/Pages/Profile/widgets/ProgressBar.dart';
-import 'package:recorder/generated/l10n.dart';
-import 'package:percent_indicator/percent_indicator.dart';
-import 'package:recorder/Controllers/GeneralController.dart';
 
 class SubscriptionProgress extends StatefulWidget {
   final ProfileModel person;

@@ -11,7 +11,6 @@ import 'package:recorder/models/AudioItem.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'package:flutter_audio_recorder2/flutter_audio_recorder2.dart';
-import 'package:file/local.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,10 +18,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class RecordController {
   FlutterAudioRecorder2 _recorder;
   Recording _current;
-  // LocalFileSystem _localFileSystem;
   RecordingStatus _currentStatus = RecordingStatus.Unset;
 
-  // final _streamControllerRecord = StreamController<RecordState>.broadcast();
   get streamRecord => _behaviorSubject.stream;
 
   var nameController = TextEditingController();
@@ -143,7 +140,6 @@ class RecordController {
         customPath = appDocDirectory.path +
             customPath +
             DateTime.now().millisecondsSinceEpoch.toString();
-        // DateTime.now().toString();
         _recorder =
             FlutterAudioRecorder2(customPath, audioFormat: AudioFormat.WAV);
 
@@ -261,10 +257,7 @@ class RecordController {
   }
 
   save() async {
-    //todo save
     print('-----------------------------------------------save---------------');
-    // if (!_loading) {
-    //   _loading = true;
     setState();
     var now = DateTime.now();
     String name = nameController.text.isNotEmpty
@@ -287,24 +280,13 @@ class RecordController {
       var resp = await PlaylistProvider.addAudioToPlaylist(playlistId, audioId);
       print(resp);
     }
-    // _loading = false;
     setState();
     if (res != null && _open)
       Navigator.pop(AppKeys.scaffoldKey.currentState.context);
   }
 
-  // editOnSave() async {
-  //   String name = nameController.text;
-  //   String desc = descController.text.isNotEmpty
-  //       ? descController.text
-  //       : "Описание отсутсвует";
-  //
-  //   await AudioProvider.edit();
-  // }
-
   upload() async {
     if (!_loading && _uploadIndex == null) {
-      // _loading = true;
       setState();
       String name = nameController.text;
       String desc = descController.text;
@@ -320,7 +302,6 @@ class RecordController {
               pathAudio: path,
               picture: null));
       print(_uploadIndex);
-      // _loading = false;
       setState();
     }
   }
@@ -330,26 +311,27 @@ class RecordController {
     await AudioProvider.upload(0, audioItem: audio);
   }
 
-  delete() {
-    //todo delete
-  }
-
   setState() {
     _behaviorSubject.sink.add(
-        RecordState(_current.status, _powerList, _current.duration, maxPower,
-            loading: _loading,
-            playerState: PlayerState(
-              item: null,
-              state: _playerState,
-              playing: true,
-              current: _currentDuration,
-              max: _maxDuration,
-              loading: _loadingPLayer,
-            )));
+      RecordState(
+        _current.status,
+        _powerList,
+        _current.duration,
+        maxPower,
+        loading: _loading,
+        playerState: PlayerState(
+          item: null,
+          state: _playerState,
+          playing: true,
+          current: _currentDuration,
+          max: _maxDuration,
+          loading: _loadingPLayer,
+        ),
+      ),
+    );
   }
 
   dispose() {
     _behaviorSubject.close();
-    // _streamControllerRecord.close();
   }
 }

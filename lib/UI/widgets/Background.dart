@@ -31,7 +31,7 @@ class _BackgroundState extends State<Background> {
                     children: [
                       AspectRatio(
                         aspectRatio: 414 / 369,
-                        child: IconSvg(IconsSvg.backEllipse,
+                        child: iconSvg(IconsSvg.backEllipse,
                             width: MediaQuery.of(context).size.width,
                             color: widget.color == null ? cBlueSoso : widget.color),
                       ),

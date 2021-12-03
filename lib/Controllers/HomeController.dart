@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/models/CollectionModel.dart';
@@ -74,13 +72,13 @@ class HomeController {
   loadServerAudios() async {
     var remoteAudio = await AudioProvider.getServerAudios();
     List<AudioItem> temp = [];
-    audios.forEach((element) {
-      if (element.idS != null)
-        remoteAudio.forEach((item) {
-          if (item.idS == element.idS) temp.add(item);
+    audios.forEach((localItem) {
+      if (localItem.idS != null)
+        remoteAudio.forEach((remoteItem) {
+          if (remoteItem.idS == localItem.idS) temp.add(remoteItem);
         });
       else
-        temp.add(element);
+        temp.add(localItem);
     });
     audios
       ..clear()

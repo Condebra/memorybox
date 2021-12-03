@@ -90,7 +90,7 @@ class _CollectionPhotoWidgetState extends State<CollectionPhotoWidget> {
                               padding: const EdgeInsets.all(3.83),
                               child: Row(
                                 children: [
-                                  IconSvg(IconsSvg.play,
+                                  iconSvg(IconsSvg.play,
                                       width: 38.33,
                                       height: 38.33,
                                       color:

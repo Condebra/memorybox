@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:recorder/Style.dart';
-import 'package:recorder/generated/l10n.dart';
 
 class ButtonOrange extends StatefulWidget {
   final Function onTap;

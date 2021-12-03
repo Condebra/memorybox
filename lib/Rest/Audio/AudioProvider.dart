@@ -111,7 +111,7 @@ class AudioProvider {
     print('save');
 
     if (await futureAuth() || !await checkConnection()) {
-      var a = await rootBundle.load('assets/images/play.png');
+      await rootBundle.load('assets/images/play.png');
 
       await DBProvider.db.audioAdd(AudioItem(
           name: name,
@@ -293,14 +293,6 @@ class AudioProvider {
               uploadAudio: true,
             ));
           }
-        }
-      }
-      for (int i = 0; i < listL.length; i++) {
-        bool find = false;
-        if (listL[i].idS == null) {
-          // await upload(listL[i].name, listL[i].description,
-          //     listL[i].duration.inMilliseconds, listL[i].pathAudio);
-          find = true;
         }
       }
       return await DBProvider.db.getAudios();

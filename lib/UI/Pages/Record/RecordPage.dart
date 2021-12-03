@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:recorder/Controllers/GeneralController.dart';
 
 class RecordPage extends StatefulWidget {
 

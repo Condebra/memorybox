@@ -75,7 +75,7 @@ class _OldPersonState extends State<OldPerson> {
             ),
           ),
         ),
-        IconSvg(IconsSvg.heart, width: 45, color: cOrange),
+        iconSvg(IconsSvg.heart, width: 45, color: cOrange),
         SizedBox(),
         SizedBox(),
         Container(

@@ -112,7 +112,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
                         Spacer(),
                         Padding(
                           padding: const EdgeInsets.only(right: 2.0),
-                          child: IconSvg(
+                          child: iconSvg(
                             IconsSvg.cloudStorage,
                             color: widget.item.uploadAudio
                                 ? Colors.green
@@ -141,12 +141,15 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
                                 .restoreController
                                 .deleteFinal(widget.item);
                           else
-                            AudioProvider.deleteOnCloud(ids: widget.item.idS);
+                            context
+                                .read<GeneralController>()
+                                .restoreController
+                                .deleteFinalCloud(ids: widget.item.idS);
                         },
                     child: Container(
                       height: 30,
                       width: 30,
-                      child: IconSvg(
+                      child: iconSvg(
                         IconsSvg.delete,
                         width: 30,
                         height: 30,
@@ -164,7 +167,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(5.0),
-                              child: IconSvg(
+                              child: iconSvg(
                                 IconsSvg.selectedOn,
                                 height: 50,
                                 width: 50,
@@ -178,7 +181,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(5.0),
-                              child: IconSvg(
+                              child: iconSvg(
                                 IconsSvg.selectedOff,
                                 height: 50,
                                 width: 50,
@@ -310,7 +313,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
         height: 30,
         child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 14.0),
-            child: IconSvg(IconsSvg.moreAudios, width: 18, color: cBlack)),
+            child: iconSvg(IconsSvg.moreAudios, width: 18, color: cBlack)),
       ),
     );
   }
@@ -377,5 +380,4 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
       ],
     );
   }
-
 }

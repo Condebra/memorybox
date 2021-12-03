@@ -102,7 +102,7 @@ class _RestoreState extends State<Restore> {
                   width: 27,
                   height: 27,
                   child: Center(
-                    child: IconSvg(IconsSvg.more,
+                    child: iconSvg(IconsSvg.more,
                         width: 41, height: 8, color: cBackground),
                   ),
                 ),

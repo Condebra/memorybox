@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:recorder/Controllers/CollectionsController.dart';
 import 'package:recorder/Controllers/RestoreController.dart';
-import 'package:recorder/UI/Pages/Subscription/SubscritionPage.dart';
 import 'package:recorder/UI/Player.dart';
 import 'package:rxdart/rxdart.dart';
 import 'States/PlayerState.dart';

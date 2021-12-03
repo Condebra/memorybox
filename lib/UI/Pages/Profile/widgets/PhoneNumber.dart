@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/models/ProfileModel.dart';
 import 'package:recorder/Style.dart';
-import 'package:recorder/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
 class PhoneNumber extends StatefulWidget {
