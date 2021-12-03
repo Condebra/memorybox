@@ -1,6 +1,4 @@
 import 'package:adapty_flutter/models/adapty_paywall.dart';
-import 'package:adapty_flutter/results/get_paywalls_result.dart';
-import 'package:adapty_flutter/results/make_purchase_result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
@@ -15,21 +13,15 @@ import 'package:provider/provider.dart';
 import 'package:adapty_flutter/adapty_flutter.dart';
 import 'package:adapty_flutter/models/adapty_error.dart';
 
-// import 'package:in_app_purchase/in_app_purchase.dart';
-
 class SubscriptionPage extends StatefulWidget {
   @override
   _SubscriptionPageState createState() => _SubscriptionPageState();
 }
 
 class _SubscriptionPageState extends State<SubscriptionPage> {
-  // var _subscription;
-
-  var subTest;
+  int currentIndex = 1;
   List products = [];
-
-  //sub_month;
-  //sub_year;
+  bool premium = false;
 
   void init() async {
     try {
@@ -40,7 +32,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
       print("ERROR $e");
     }
     try {
-      final GetPaywallsResult getPaywallsResult = await Adapty.getPaywalls();
+      var getPaywallsResult = await Adapty.getPaywalls();
       final List<AdaptyPaywall> paywalls = getPaywallsResult.paywalls;
       this.products = getPaywallsResult.products;
       print(paywalls);
@@ -48,63 +40,26 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     } catch (e) {
       print(e);
     }
-    // final bool available = await InAppPurchaseConnection.instance.isAvailable();
-    // print("inApp Init");
-    // if (!available) {
-    //   // The store cannot be reached or accessed. Update the UI accordingly.
-    //   print("inApp isnt available");
-    // } else {
-    //   const Set<String> _kIds = {'testmemory_1'};
-    //   final ProductDetailsResponse response =
-    //       await InAppPurchaseConnection.instance.queryProductDetails(_kIds);
-    //   if (response.notFoundIDs.isNotEmpty) {
-    //     print("Not Found");
-    //     // Handle the error.
-    //   }
-    //   print("RESPONSE => $response");
-    //   List<ProductDetails> products = response.productDetails;
-    //   print("PRODUCTS => $products");
-    //   subTest = products[0];
-    // }
   }
   
   makePurchase({int id}) async {
+    var internalId = id == 0 ? 1 : 0;
     try {
-      var purchaseResult = await Adapty.makePurchase(this.products[0]);
+      var purchaseResult = await Adapty.makePurchase(this.products[internalId]);
       if (purchaseResult.purchaserInfo.accessLevels['premium'].isActive) {
         print("===== You are PREMIUM user =====");
+        premium = true; //TODO make it more secure &
       }
     } on AdaptyError catch (adaptyErr) {
       print("ADAPTY ERROR $adaptyErr");
     }
   }
 
-  // void _listenToPurchaseUpdated(det) {}
-
-  // void buy(subs) {
-  //   final ProductDetails productDetails = subs;
-  //   final PurchaseParam purchaseParam =
-  //       PurchaseParam(productDetails: productDetails);
-  //   InAppPurchaseConnection.instance
-  //       .buyNonConsumable(purchaseParam: purchaseParam);
-  // }
-
   @override
   void initState() {
     init();
-    // Stream purchaseUpdated =
-    //     InAppPurchaseConnection.instance.purchaseUpdatedStream;
-    // _subscription = purchaseUpdated.listen((purchaseDetailsList) {
-    //   _listenToPurchaseUpdated(purchaseDetailsList);
-    // }, onDone: () {
-    //   _subscription.cancel();
-    // }, onError: (error) {
-    //   // handle error here.
-    // });
     super.initState();
   }
-
-  int currentIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -151,7 +106,8 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                         fontFamily: fontFamilyMedium,
                         letterSpacing: 2,
                       ),
-                    )
+                    ),
+                    premium ? Text("Премиум") : Container(),
                   ],
                 ),
               ),
@@ -261,7 +217,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                           child: ButtonOrange(
                             onTap: () {
                               // buy(subTest);
-                              makePurchase(id: 0);
+                              makePurchase(id: currentIndex);
                             },
                             text: currentIndex == 0
                                 ? S.of(context).subscription_for_month
