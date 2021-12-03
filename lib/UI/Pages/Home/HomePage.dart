@@ -32,28 +32,6 @@ class _HomePageState extends State<HomePage> {
   double hEmptyView = 48.0 + 58.0 + 38.0 + 105.0 + 24.0;
   bool isScroll = true;
 
-  initSize() {
-    hAll = 64 +
-        48 +
-        24 +
-        44 +
-        ((MediaQuery.of(context).size.width / 2 - 43 / 2) * 240 / 183);
-    hEmptyView = 48.0 + 58.0 + 38.0 + 105.0 + 24.0;
-    bool isScrollStep = (hAll >
-            MediaQuery.of(context).size.height + hEmptyView) ||
-        (context.read<GeneralController>().collectionsController.audiosAll !=
-                null &&
-            context
-                .read<GeneralController>()
-                .collectionsController
-                .audiosAll
-                .isNotEmpty);
-    if (isScrollStep != isScroll)
-      setState(() {
-        isScroll = isScrollStep;
-      });
-  }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:recorder/Controllers/States/RestoreState.dart';
 import 'package:recorder/DB/DB.dart';
 import 'package:recorder/Rest/Audio/AudioProvider.dart';
@@ -13,6 +13,8 @@ import 'package:recorder/Utils/app_keys.dart';
 import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/models/Put.dart';
 import 'package:rxdart/rxdart.dart';
+
+import 'GeneralController.dart';
 
 class RestoreController {
   BehaviorSubject _controllerRestore = BehaviorSubject<RestoreState>();
@@ -34,6 +36,7 @@ class RestoreController {
     setState();
     // _items = await AudioProvider.deleted();
     _items = await DBProvider.db.getAudios(removed: true);
+    _items.addAll(await AudioProvider.deleted());
     _loading = false;
     setState();
   }
@@ -138,7 +141,7 @@ class RestoreController {
     await load();
   }
 
-  delete(AudioItem item, {bool fromCloud = false}) async {
+  Future<void> delete(AudioItem item, {bool fromCloud = false}) async {
     print("delete attempt ${item.toMap()}");
     showDialogRecorder(
       context: AppKeys.scaffoldKey.currentContext,
@@ -163,7 +166,6 @@ class RestoreController {
       buttons: [
         DialogIntegronButton(
           onPressed: () async {
-            // await DBProvider.db.audioDelete(item.id);
             if (fromCloud)
               await AudioProvider.deleteOnCloud(ids: item.idS);
             else
@@ -184,6 +186,7 @@ class RestoreController {
         DialogIntegronButton(
           onPressed: () {
             closeDialog(AppKeys.scaffoldKey.currentContext);
+            return;
           },
           textButton: Text(
             "Нет",
@@ -201,10 +204,10 @@ class RestoreController {
 
   deleteSeveral(List<AudioItem> items) async {
     if (items.isNotEmpty) {
-      bool findLocal = false;
-      items.forEach((element) {
-        if (element.idS == null) findLocal = true;
-      });
+      // bool findLocal = false;
+      // items.forEach((element) {
+      //   if (element.idS == null) findLocal = true;
+      // });
       showDialogRecorder(
         context: AppKeys.scaffoldKey.currentContext,
         title: Text(

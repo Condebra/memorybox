@@ -242,7 +242,8 @@ class _EditAudioContentState extends State<EditAudioContent> {
                 ),
               ],
             ),
-          )
+          ),
+          Text("${widget.item.toMap()}", style: TextStyle(color: Colors.black),),
         ],
       ),
     );

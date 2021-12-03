@@ -75,23 +75,22 @@ class _AudioPreviewState extends State<AudioPreview> {
   }
 
   Widget audiosPreview(BuildContext context) {
-    return widget.items.isEmpty
-        ? emptyAudio()
-        : Container(
-            // height: 86 * widget.items.length.toDouble(),
-            height: 380, //if i add this its working properly
-            child: Padding(
-              padding: const EdgeInsets.only(top: 14.0),
-              child: Column(
-                children: [
-                  AudioPreviewGenerate(
-                    isHome: true,
-                    items: widget.items,
-                  ),
-                ],
-              ),
+    if (widget.items.isEmpty) return emptyAudio();
+    return Container(
+      // height: 86 * widget.items.length.toDouble(),
+      height: 380, //if i add this its working properly
+      child: Padding(
+        padding: const EdgeInsets.only(top: 14.0),
+        child: Column(
+          children: [
+            AudioPreviewGenerate(
+              isHome: true,
+              items: widget.items,
             ),
-          );
+          ],
+        ),
+      ),
+    );
   }
 
   Widget emptyAudio() {

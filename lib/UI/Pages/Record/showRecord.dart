@@ -81,8 +81,6 @@ class _RecordPageState extends State<RecordPage> {
         SizedBox(
           height: 32,
         ),
-
-        /// Панель
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -107,8 +105,6 @@ class _RecordPageState extends State<RecordPage> {
           ],
         ),
         Spacer(),
-
-        /// Заголовок
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -123,8 +119,6 @@ class _RecordPageState extends State<RecordPage> {
           ],
         ),
         Spacer(),
-
-        /// Полоса мощности
         Container(
           height: 70,
           width: MediaQuery.of(context).size.width,
@@ -169,8 +163,6 @@ class _RecordPageState extends State<RecordPage> {
           ),
         ),
         Spacer(),
-
-        /// Продолжительность записи
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -239,8 +231,6 @@ class _RecordPageState extends State<RecordPage> {
         SizedBox(
           height: 32,
         ),
-
-        /// Панель
         Container(
           width: MediaQuery.of(context).size.width * 0.98,
           child: Row(
@@ -250,14 +240,15 @@ class _RecordPageState extends State<RecordPage> {
                 width: 30,
               ),
               InkWell(
-                  onTap: () async {
-                    await widget.controller.recordController.upload();
-                  },
-                  child: IconSvg(
-                    IconsSvg.cloudStorage,
-                    width: 25,
-                    height: 25,
-                  )),
+                onTap: () async {
+                  await widget.controller.recordController.upload();
+                },
+                child: IconSvg(
+                  IconsSvg.cloudStorage,
+                  width: 25,
+                  height: 25,
+                ),
+              ),
               // Spacer(),
               SizedBox(
                 width: 20,
@@ -265,71 +256,73 @@ class _RecordPageState extends State<RecordPage> {
               // IconSvg(IconsSvg.download, width: 30, height: 30),
               // Spacer(),
               InkWell(
-                  hoverColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  enableFeedback: false,
-                  onTap: () {
-                    showDialogRecorder(
-                        context: context,
-                        title: Text(
-                          "Точно удалить?",
-                          style: TextStyle(
-                            color: cBlack,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 20,
-                            fontFamily: fontFamily,
-                          ),
-                        ),
-                        body: Text(
-                          "Запись будет безвозвратно удалена ",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: cBlack.withOpacity(0.7),
-                            fontFamily: fontFamily,
-                            fontSize: 14,
-                          ),
-                        ),
-                        buttons: [
-                          DialogIntegronButton(
-                              onPressed: () {
-                                closeDialog(context);
-                                closeDialog(context);
-                              },
-                              textButton: Text(
-                                "Удалить",
-                                style: TextStyle(
-                                  color: cBackground,
-                                  fontSize: 16,
-                                  fontFamily: fontFamily,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              background: cRed,
-                              borderColor: cRed),
-                          DialogIntegronButton(
-                            onPressed: () {
-                              closeDialog(context);
-                            },
-                            textButton: Text(
-                              "Нет",
-                              style: TextStyle(
-                                color: cBlueSoso,
-                                fontSize: 16,
-                                fontFamily: fontFamily,
-                                fontWeight: FontWeight.w400,
-                              ),
+                hoverColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                enableFeedback: false,
+                onTap: () {
+                  showDialogRecorder(
+                    context: context,
+                    title: Text(
+                      "Точно удалить?",
+                      style: TextStyle(
+                        color: cBlack,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 20,
+                        fontFamily: fontFamily,
+                      ),
+                    ),
+                    body: Text(
+                      "Запись будет безвозвратно удалена ",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: cBlack.withOpacity(0.7),
+                        fontFamily: fontFamily,
+                        fontSize: 14,
+                      ),
+                    ),
+                    buttons: [
+                      DialogIntegronButton(
+                          onPressed: () {
+                            closeDialog(context);
+                            closeDialog(context);
+                          },
+                          textButton: Text(
+                            "Удалить",
+                            style: TextStyle(
+                              color: cBackground,
+                              fontSize: 16,
+                              fontFamily: fontFamily,
+                              fontWeight: FontWeight.w500,
                             ),
-                            borderColor: cBlueSoso,
                           ),
-                        ]);
-                  },
-                  child: IconSvg(
-                    IconsSvg.delete,
-                    width: 25,
-                    height: 25,
-                  )),
+                          background: cRed,
+                          borderColor: cRed),
+                      DialogIntegronButton(
+                        onPressed: () {
+                          closeDialog(context);
+                        },
+                        textButton: Text(
+                          "Нет",
+                          style: TextStyle(
+                            color: cBlueSoso,
+                            fontSize: 16,
+                            fontFamily: fontFamily,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        borderColor: cBlueSoso,
+                      ),
+                    ],
+                  );
+                },
+                child: IconSvg(
+                  IconsSvg.delete,
+                  width: 25,
+                  height: 25,
+                ),
+              ),
               Spacer(),
               Container(
                 height: 30,

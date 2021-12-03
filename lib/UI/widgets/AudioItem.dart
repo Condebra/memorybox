@@ -3,8 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Controllers/States/PlayerState.dart';
+import 'package:recorder/DB/DB.dart';
 import 'package:recorder/UI/AddToPlaylist.dart';
 import 'package:recorder/UI/EditingAudio.dart';
+import 'package:recorder/Utils/DialogsIntegron/DialogIntegron.dart';
+import 'package:recorder/Utils/DialogsIntegron/DialogRecorder.dart';
 import 'package:recorder/Utils/DropMenu/DropMenuItem.dart';
 import 'package:recorder/Utils/DropMenu/FocusedMenuHolder.dart';
 import 'package:recorder/Utils/time/TimeParse.dart';
@@ -130,14 +133,16 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     enableFeedback: false,
-                    onTap: widget.onSelect != null
-                        ? widget.onSelect()
-                        : () {
+                    onTap: widget.onSelect ??
+                        () {
+                          if (widget.item.isLocalAudio)
                             context
                                 .read<GeneralController>()
                                 .restoreController
                                 .deleteFinal(widget.item);
-                          },
+                          else
+                            AudioProvider.deleteOnCloud(ids: widget.item.idS);
+                        },
                     child: Container(
                       height: 30,
                       width: 30,
@@ -232,6 +237,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
                   .read<GeneralController>()
                   .recordController
                   .uploadAudio(widget.item);
+              context.read<GeneralController>().homeController.load();
             },
             title: Text(
               "Загрузить в облако",
@@ -269,12 +275,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
         if (widget.item.isLocalAudio)
           FocusedMenuItem(
             onPressed: () async {
-              await context
-                  .read<GeneralController>()
-                  .restoreController
-                  .delete(widget.item);
-              context.read<GeneralController>().homeController.load();
-              context.read<GeneralController>().homeController.loadAudios();
+              delete(widget.item);
             },
             title: Text(
               "Удалить с устройства",
@@ -289,12 +290,9 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
         if (!widget.item.isLocalAudio)
           FocusedMenuItem(
             onPressed: () async {
-              await context
-                  .read<GeneralController>()
-                  .restoreController
-                  .delete(widget.item, fromCloud: true);
-              context.read<GeneralController>().homeController.load();
-              context.read<GeneralController>().homeController.loadAudios();
+              delete(widget.item, fromCloud: true);
+              // context.read<GeneralController>().homeController.load();
+              // context.read<GeneralController>().homeController.loadAudios();
             },
             title: Text(
               "Удалить из облака",
@@ -316,4 +314,68 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
       ),
     );
   }
+
+  delete(AudioItem item, {bool fromCloud = false}) async {
+    print("delete attempt ${item.toMap()}");
+    showDialogRecorder(
+      context: context,
+      title: Text(
+        "Точно удалить?",
+        style: TextStyle(
+          color: cBlack,
+          fontWeight: FontWeight.w400,
+          fontSize: 20,
+          fontFamily: fontFamily,
+        ),
+      ),
+      body: Text(
+        "Запись будет помещена в корзину, \n чтобы вы смогли её восстановить",
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: cBlack.withOpacity(0.7),
+          fontFamily: fontFamily,
+          fontSize: 14,
+        ),
+      ),
+      buttons: [
+        DialogIntegronButton(
+          onPressed: () async {
+            if (fromCloud)
+              await AudioProvider.deleteOnCloud(ids: item.idS);
+            else
+              await DBProvider.db.removeAudio(item.id);
+            await context.read<GeneralController>().homeController.load();
+            Navigator.of(context).pop();
+            // closeDialog(AppKeys.scaffoldKey.currentContext);
+          },
+          textButton: Text(
+            "Да",
+            style: TextStyle(
+                color: cBackground,
+                fontSize: 16,
+                fontFamily: fontFamily,
+                fontWeight: FontWeight.w500),
+          ),
+          background: cRed,
+          borderColor: cRed,
+        ),
+        DialogIntegronButton(
+          onPressed: () {
+            // closeDialog(AppKeys.scaffoldKey.currentContext);
+            Navigator.of(context).pop();
+          },
+          textButton: Text(
+            "Нет",
+            style: TextStyle(
+                color: cBlueSoso,
+                fontSize: 16,
+                fontFamily: fontFamily,
+                fontWeight: FontWeight.w400),
+          ),
+          borderColor: cBlueSoso,
+        ),
+      ],
+    );
+  }
+
 }

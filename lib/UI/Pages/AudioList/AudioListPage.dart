@@ -229,7 +229,7 @@ class _AudioListPageState extends State<AudioListPage> {
   }
 
   Widget playlistPreview(List<AudioItem> list, {Color colorPlay}) {
-    context.read<GeneralController>().homeController.loadAudios();
+    // context.read<GeneralController>().homeController.loadAudios();
     return Padding(
       padding: const EdgeInsets.only(left: 20.0, right: 12),
       child: AudioPreviewGenerate(
