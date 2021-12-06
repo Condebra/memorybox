@@ -7,6 +7,7 @@ import 'package:recorder/UI/Pages/Profile/widgets/Name.dart';
 import 'package:recorder/UI/Pages/Profile/widgets/PhoneNumber.dart';
 import 'package:recorder/UI/Pages/Profile/widgets/SubscriptionProgress.dart';
 import 'package:recorder/UI/widgets/Appbar.dart';
+import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:recorder/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
@@ -146,6 +147,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget profileNotEdit(ProfileState state) {
+    print("SUBSTATUS => ${state.subStatus}");
     if (state.profile.anonimus == null || !state.profile.anonimus)
       return Column(
         children: [
@@ -157,19 +159,40 @@ class _ProfilePageState extends State<ProfilePage> {
               imagePath: null,
             ),
           ),
-          ProfileName(isEdit: state.edit, person: state.profile),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ProfileName(isEdit: state.edit, person: state.profile),
+              if (state.subStatus != null && state.subStatus)
+                iconSvg(IconsSvg.heart, height: 15)
+            ],
+          ),
           PhoneNumber(isEdit: state.edit, person: state.profile),
           // changeButton(state),
           Padding(
             padding: const EdgeInsets.only(top: 10),
             child: textSubscription(),
           ),
-          SubscriptionProgress(
-            person: state.profile,
-            onTap: () {
-              context.read<GeneralController>().openSubscribe();
-            },
-          ),
+          if (state.subStatus != null && !state.subStatus)
+            SubscriptionProgress(
+              person: state.profile,
+              onTap: () {
+                context.read<GeneralController>().openSubscribe();
+              },
+            )
+          else
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                "У вас безлимит.\nСпасибо за поддержку!",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w300,
+                  color: cBlack,
+                ),
+              ),
+            ),
           Padding(
             padding: const EdgeInsets.only(top: 35, bottom: 120),
             child: bottomButtons(context),

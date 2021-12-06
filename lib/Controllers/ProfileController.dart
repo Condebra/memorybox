@@ -21,6 +21,8 @@ class ProfileController {
   bool _loading = false;
   ProfileModel _profile;
   String _imagePath;
+  SharedPreferences prefs;
+  bool subStatus = false;
 
   BehaviorSubject _profileController = BehaviorSubject<ProfileState>();
 
@@ -36,8 +38,11 @@ class ProfileController {
   }
 
   load() async {
+    prefs = await SharedPreferences.getInstance();
+    print("prefs status ${prefs.getString("status")}");
+    if (prefs.getString("status") == "premium")
+      subStatus = true;
     _loading = true;
-    setState();
     _profile = await UserProvider.get();
     _loading = false;
     setState();
@@ -105,8 +110,8 @@ class ProfileController {
       buttons: [
         DialogIntegronButton(
           onPressed: () {
-            closeDialog(context);
             deleteProfile(context);
+            closeDialog(context);
           },
           textButton: Text(
             "Удалить",
@@ -154,17 +159,22 @@ class ProfileController {
     print("attempt $attempt");
     if (await UserProvider.delete()) {
       logOut(context);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Пользователь удалён"),
-        ),
-      );
-    } else
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Произошла ошибка удаления"),
-        ),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     content: Text("Пользователь удалён"),
+      //   ),
+      // );
+    } else {
+      print("False");
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     content: Text("Произошла ошибка удаления"),
+      //     behavior: SnackBarBehavior.floating,
+      //     backgroundColor: cBlack,
+      //     onVisible: () {print("SnackBar!");},
+      //   ),
+      // );
+    }
   }
 
   setState() {
@@ -173,6 +183,7 @@ class ProfileController {
       profile: _profile,
       loading: _loading,
       imagePath: _imagePath,
+      subStatus: subStatus,
     );
     _profileController.sink.add(state);
   }

@@ -6,11 +6,13 @@ class ProfileState{
   final bool edit;
   final ProfileModel profile;
   final String imagePath;
+  final bool subStatus;
 
   const ProfileState({
     @required this.loading,
     @required this.edit,
     @required this.profile,
-    @required this.imagePath
+    @required this.imagePath,
+    this.subStatus = false,
   });
 }

@@ -26,7 +26,7 @@ class _SubscriptionProgressState extends State<SubscriptionProgress> {
             height: 20,
           ),
           ProgressBar(
-            usage:  widget.person.free,
+            usage: widget.person.free,
             available: widget.person.max + 7, //+7 because of overflow
             width: MediaQuery.of(context).size.width * 0.74,
             height: MediaQuery.of(context).size.height * 0.03,

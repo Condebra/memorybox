@@ -80,12 +80,16 @@ class UserProvider {
     var dio = Dio();
     dio.options.headers['Authorization'] = 'Bearer $token';
     print(dio.options.headers);
-    Response response = await dio.post(
-      urlQuery,
-    );
-    if (response.statusCode == 200)
-      return true;
-    print(response.statusCode);
+    try {
+      Response response = await dio.post(
+        urlQuery,
+      );
+      if (response.statusCode == 200)
+        return true;
+      print(response.statusCode);
+    } catch (e) {
+      print("DIO error $e");
+    }
     return false;
   }
 }
