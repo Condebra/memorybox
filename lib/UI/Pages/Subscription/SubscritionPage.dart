@@ -51,7 +51,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
       if (purchaserInfo.accessLevels['premium']?.isActive ?? false)
         prefs.setString("status", "premium");
       else
-        prefs.setString("status", "premium");
+        prefs.setString("status", "free");
     } on AdaptyError catch (e) {
       print(e);
     }
