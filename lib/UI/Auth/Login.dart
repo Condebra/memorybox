@@ -257,6 +257,7 @@ class _LoginState extends State<Login> {
                       ]),
                   child: TextField(
                     textAlign: TextAlign.start,
+                    focusNode: controller.codeFocusNode,
                     controller: controller.controllerCode,
                     inputFormatters: [controller.maskFormatterCode],
                     keyboardType: TextInputType.number,

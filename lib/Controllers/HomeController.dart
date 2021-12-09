@@ -72,18 +72,20 @@ class HomeController {
   loadServerAudios() async {
     var remoteAudio = await AudioProvider.getServerAudios();
     List<AudioItem> temp = [];
-    audios.forEach((localItem) {
-      if (localItem.idS != null)
-        remoteAudio.forEach((remoteItem) {
-          if (remoteItem.idS == localItem.idS) temp.add(remoteItem);
-        });
-      else
-        temp.add(localItem);
-    });
-    audios
-      ..clear()
-      ..addAll(temp);
-    onLoadAudios(audios);
+    if (audios != null) {
+      audios.forEach((localItem) {
+        if (localItem.idS != null)
+          remoteAudio.forEach((remoteItem) {
+            if (remoteItem.idS == localItem.idS) temp.add(remoteItem);
+          });
+        else
+          temp.add(localItem);
+      });
+      audios
+        ..clear()
+        ..addAll(temp);
+      onLoadAudios(audios);
+    }
     // _streamController.sink.add(HomeState(
     //   collections: collections,
     //   audios: audios,

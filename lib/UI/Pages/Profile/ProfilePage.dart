@@ -148,7 +148,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget profileNotEdit(ProfileState state) {
     print("SUBSTATUS => ${state.subStatus}");
-    if (state.profile.anonimus == null || !state.profile.anonimus)
+    if (state.profile?.anonimus == null || !state.profile.anonimus)
       return Column(
         children: [
           Padding(

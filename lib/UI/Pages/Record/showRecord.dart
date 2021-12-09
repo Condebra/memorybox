@@ -340,7 +340,6 @@ class _RecordPageState extends State<RecordPage> {
               ),
               GestureDetector(
                 onTap: () async {
-                  // Navigator.pop(AppKeys.scaffoldKey.currentState.context);
                   await widget.controller.recordController.save();
                   await widget.controller.homeController.load();
                 },
@@ -374,7 +373,7 @@ class _RecordPageState extends State<RecordPage> {
                     fontWeight: FontWeight.w400,
                     fontFamily: fontFamily,
                     fontSize: 24),
-                hintText: "Название",
+                hintText: "Введите название",
               ),
               style: TextStyle(
                   color: cBlack,
@@ -396,7 +395,7 @@ class _RecordPageState extends State<RecordPage> {
                     fontWeight: FontWeight.w400,
                     fontFamily: fontFamily,
                     fontSize: 16),
-                hintText: "описание",
+                hintText: "Введите описание",
               ),
               style: TextStyle(
                   color: cBlack.withOpacity(0.5),

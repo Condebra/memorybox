@@ -84,7 +84,7 @@ class _AudioListPageState extends State<AudioListPage> {
                 if (!snapshot.hasData)
                   return Center(
                     child: CircularProgressIndicator(
-                      color: cBlack,
+                      // color: cBlack,
                     ),
                   );
                 if (snapshot.data.audios.isEmpty)

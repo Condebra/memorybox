@@ -117,9 +117,9 @@ class RecordController {
     await recordStop();
     descController.text = "";
     var now = DateTime.now();
-    String out =
-        "Аудиозапись ${now.day}.${now.month}.${now.year} ${now.hour}:${now.minute}:${now.second}";
-    nameController.text = out;
+    // String out =
+    //     "Аудиозапись ${now.day}.${now.month}.${now.year} ${now.hour}:${now.minute}:${now.second}";
+    nameController.text = "";
   }
 
   closeSheet() async {
@@ -258,7 +258,6 @@ class RecordController {
 
   save() async {
     print('-----------------------------------------------save---------------');
-    setState();
     var now = DateTime.now();
     String name = nameController.text.isNotEmpty
         ? nameController.text
@@ -287,13 +286,15 @@ class RecordController {
 
   upload() async {
     if (!_loading && _uploadIndex == null) {
-      setState();
-      String name = nameController.text;
-      String desc = descController.text;
+      var now = DateTime.now();
+      String name = nameController.text.isNotEmpty
+          ? nameController.text
+          : "Аудиозапись ${now.day}.${now.month}.${now.year} ${now.hour}:${now.minute}:${now.second}";
+      String desc = descController.text.isNotEmpty
+          ? descController.text
+          : "Описание отсутсвует";
       String path = _recorder.recording.path;
       int duration = _recorder.recording.duration.inMilliseconds;
-      if (nameController.text.isEmpty) name = "Аудиозапись 1";
-      if (descController.text.isEmpty) desc = "Описание";
       _uploadIndex = await AudioProvider.upload(0,
           audioItem: AudioItem(
               name: name,

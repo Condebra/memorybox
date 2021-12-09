@@ -21,6 +21,7 @@ class LoginController {
       mask: '# # # #', filter: {"#": RegExp(r'[0-9]')});
   TextEditingController controllerNum = TextEditingController();
   TextEditingController controllerCode = TextEditingController();
+  final codeFocusNode = FocusNode();
 
   stepOneTap() {
     controllerPages.animateToPage(1,
@@ -59,6 +60,7 @@ class LoginController {
             behavior: SnackBarBehavior.floating,
           ),
         );
+        codeFocusNode.unfocus();
         controllerCode.text = "";
       }
     } else

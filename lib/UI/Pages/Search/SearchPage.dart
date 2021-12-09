@@ -16,6 +16,7 @@ class _SearchPageState extends State<SearchPage> {
   bool hasFocus = false;
 
   TextEditingController controllerText = TextEditingController();
+  final searchFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +33,7 @@ class _SearchPageState extends State<SearchPage> {
             top: 25,
             height: 90,
             tapLeftButton: (){
+              searchFocusNode.unfocus();
               context.read<GeneralController>().setMenu(true);
             },
             child: Container(
@@ -87,39 +89,33 @@ class _SearchPageState extends State<SearchPage> {
         ),
         child: Padding(
           padding: const EdgeInsets.only(top: 6, right: 6, bottom: 6, left: 18),
-          child: Focus(
-            onFocusChange: (hasFocus){
-              setState(() {
-                this.hasFocus = hasFocus;
-              });
+          child: TextField(
+            focusNode: searchFocusNode,
+            controller: controllerText,
+            onChanged: (str){
+              context.read<GeneralController>().collectionsController.search(str);
             },
-            child: TextField(
-              controller: controllerText,
-              onChanged: (str){
-                context.read<GeneralController>().collectionsController.search(str);
-              },
-              style:TextStyle(
-                color: cBlack.withOpacity(1),
-                fontSize: 20,
-                fontWeight: FontWeight.w400,
-                fontFamily: fontFamily,
-              ) ,
-              decoration: InputDecoration(
-                  suffixIcon: Padding(
-                    padding: const EdgeInsets.only(left: 10.0, right: 10, top: 8, bottom: 10 ),
-                    child: iconSvg(IconsSvg.search, height: 22, width: 22),
-                  ),
-                  // contentPadding: EdgeInsets.all(0),
-                  enabledBorder: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  hintText: "Поиск",
-                  hintStyle: TextStyle(
-                    color: cBlack.withOpacity(0.5),
-                    fontSize: 20,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: fontFamily,
-                  )
-              ),
+            style:TextStyle(
+              color: cBlack.withOpacity(1),
+              fontSize: 20,
+              fontWeight: FontWeight.w400,
+              fontFamily: fontFamily,
+            ) ,
+            decoration: InputDecoration(
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.only(left: 10.0, right: 10, top: 8, bottom: 10 ),
+                  child: iconSvg(IconsSvg.search, height: 22, width: 22),
+                ),
+                // contentPadding: EdgeInsets.all(0),
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                hintText: "Поиск",
+                hintStyle: TextStyle(
+                  color: cBlack.withOpacity(0.5),
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: fontFamily,
+                )
             ),
           ),
         ),

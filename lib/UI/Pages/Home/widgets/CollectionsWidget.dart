@@ -27,7 +27,8 @@ class _CollectionsState extends State<Collections> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 11), //4 better but
-      child: Column(
+      child: widget.items != null ?
+      Column(
         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(
@@ -61,11 +62,12 @@ class _CollectionsState extends State<Collections> {
                 )
               : collectionsPreview()
         ],
-      ),
+      ) : Center(child: CircularProgressIndicator(),),
     );
   }
 
   collectionsPreview() {
+    if (widget.items != null)
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

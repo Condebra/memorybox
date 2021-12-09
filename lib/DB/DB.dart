@@ -74,6 +74,21 @@ class DBProvider {
     );
   }
 
+  Future<bool> deleteDataFromDB() async {
+    final db = await this.database;
+    try {
+      await db.delete(TableUser.table);
+      await db.delete(TableAudio.table);
+      await db.delete(TableCollection.table);
+      print("db delete success");
+      return Future.value(true);
+    } catch (e) {
+      print('db delete error $e');
+      return Future.value(false);
+    }
+  }
+
+
   Future<ProfileModel> profileGet() async {
     final prefs = await SharedPreferences.getInstance();
     String name = prefs.getString(TableUser.name);

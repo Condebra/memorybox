@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:recorder/Controllers/States/ProfileState.dart';
+import 'package:recorder/DB/DB.dart';
 import 'package:recorder/Rest/User/UserProvider.dart';
 import 'package:recorder/Routes.dart';
 import 'package:recorder/Style.dart';
@@ -150,6 +151,7 @@ class ProfileController {
     _profile = null;
     var prefs = await SharedPreferences.getInstance();
     prefs.clear();
+    await DBProvider.db.deleteDataFromDB();
     await tokenDB(token: "null");
     setState();
   }
