@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -426,6 +427,7 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
             .streamCollections,
         builder: (context, snapshot) {
           List<AudioItem> list = snapshot.data?.currentItem?.playlist ?? [];
+          log("length ${list.length} ${list.toList()}", name: "View");
           return list == [] || list.length == 0
               ? Container(
                   width: MediaQuery.of(context).size.width,

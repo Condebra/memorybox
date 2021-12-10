@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
@@ -75,23 +77,6 @@ class CollectionsController {
   }
 
   selectAudio(AudioItem item, int index) {
-    // for (int i = 0; i < audiosAll.length; i++) {
-    //   if (audiosAll[i].id == null
-    //       ? audiosAll[i].idS == item.idS
-    //       : audiosAll[i].id == item.id) {
-    //     if (audiosAll[i].select != null && audiosAll[i].select) {
-    //       audiosAll[i].select = false;
-    //     } else {
-    //       audiosAll[i].select = true;
-    //     }
-    //   }
-    // }
-    // audiosAll.forEach((element) {
-    //   if (element.id == null ? element.idS == item.idS : element.id == item.id)
-    //   if (element.select != null)
-    //     element.select = !element.select;
-    //   else element.select = true;
-    // });
     if (audiosAll[index].select != null)
       audiosAll[index].select = !audiosAll[index].select;
     else audiosAll[index].select = true;
@@ -158,8 +143,11 @@ class CollectionsController {
         audiosAll.forEach((element) {
           if (element.select != null && element.select) _audios.add(element);
         });
-        if (_previousState == CollectionStates.editing)
+        if (_previousState == CollectionStates.editing) {
+          log("${_audios.toList()}", name: "back");
+          _currentItem.playlist.addAll(_audios);
           _state = CollectionStates.editing;
+        }
         if (_previousState == CollectionStates.add)
           _state = CollectionStates.add;
         _previousState = CollectionStates.addAudio;
@@ -248,7 +236,8 @@ class CollectionsController {
   deleteSelectAudio(RestoreController restoreController) async {
     List<AudioItem> selected = [];
     audiosAll.forEach((element) {
-      element.select ? selected.add(element) : null;
+      if (element.select)
+        selected.add(element);
     });
     if (selected.isNotEmpty) {
       await restoreController.deleteSeveral(
@@ -263,7 +252,7 @@ class CollectionsController {
     String c = controllerComment.text;
     String n = controllerHeader.text;
     await PlaylistProvider.edit(_currentItem.id,
-        imagePath: _pathPhoto, desc: c, name: n);
+        imagePath: _pathPhoto, desc: c, name: n, audios: _currentItem.playlist);
     closeDialog(AppKeys.scaffoldKey.currentContext);
     back();
     update();

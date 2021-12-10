@@ -157,8 +157,8 @@ class ProfileController {
   }
 
   deleteProfile(BuildContext context) async {
-    var attempt = await UserProvider.delete();
-    print("attempt $attempt");
+    // var attempt = await UserProvider.delete();
+    // print("attempt $attempt");
     if (await UserProvider.delete()) {
       logOut(context);
       // ScaffoldMessenger.of(context).showSnackBar(

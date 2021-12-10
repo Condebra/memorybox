@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:recorder/DB/DBModel.dart';
@@ -356,22 +357,20 @@ class DBProvider {
         where: "${TableCollection.id} = ?", whereArgs: [id]);
   }
 
-  Future<void> collectionAddAudio(int id, int audioId) async {
+  Future<void> collectionAddAudio(int id, List<int> audioIds) async {
     Database db = await this.database;
-    print("Collection add audio");
     CollectionItem item = await collectionGet(id);
     bool find = false;
-    for (int i = 0; i < item.playlist.length; i++) {
-      if (item.playlist[i].id == audioId) find = true;
-    }
+    // for (int i = 0; i < item.playlist.length; i++) {
+    //   if (item.playlist[i].id == audioId) find = true;
+    // }
     if (!find) {
       List<int> list = [];
-      for (int i = 0; i < item.playlist.length; i++) {
-        list.add(item.playlist[i].id);
-      }
-      list.add(audioId);
-      print(
-          "EDT PLAYLIST AAUDIO ${item.playlist.length}  ${json.encode(list)}");
+      // for (int i = 0; i < item.playlist.length; i++) {
+      //   list.add(item.playlist[i].id);
+      // }
+      list.addAll(audioIds);
+      log("${list.toList()}", name: "add $list");
       await db.update(
           TableCollection.table, {TableCollection.audios: json.encode(list)},
           where: "${TableCollection.id} = ?", whereArgs: [id]);

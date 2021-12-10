@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<String> tokenDB({String token}) async {
@@ -10,6 +12,7 @@ Future<String> tokenDB({String token}) async {
     await futureAuth(state: false);
     await prefs.setString("token", token);
   }
+  log("$token", name: token);
 }
 
 /// check or set(?) auth wtf

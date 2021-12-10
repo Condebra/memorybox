@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 import 'package:recorder/DB/DB.dart';
@@ -117,9 +119,9 @@ class PlaylistProvider {
 
   static Future<Put> addAudio(int idPlaylist, List<int> audio) async {
     if (await futureAuth()) {
-      for (int i = 0; i < audio.length; i++) {
-        await DBProvider.db.collectionAddAudio(idPlaylist, audio[i]);
-      }
+      // for (int i = 0; i < audio.length; i++) {
+        await DBProvider.db.collectionAddAudio(idPlaylist, audio);
+      // }
       return Put(code: 201, message: "ok", isLocal: true);
     } else {
       CollectionItem collectionItem =
@@ -187,10 +189,10 @@ class PlaylistProvider {
       }
     } else {
       if (isLocalAudio) {
-        await DBProvider.db.collectionAddAudio(idPlaylist, idAudio);
+        await DBProvider.db.collectionAddAudio(idPlaylist, [idAudio]);
         return Put(code: 201, message: "ok", isLocal: false);
       } else {
-        print("попИт ка  добавить  аудио на сервере в локальный плейлист ");
+        // print("попИт ка  добавить  аудио на сервере в локальный плейлист ");
         return Put(code: 500, message: "ok", isLocal: false);
 
         ///будут выгружены все аудио
@@ -212,11 +214,22 @@ class PlaylistProvider {
   }
 
   static Future<void> edit(int id,
-      {String name, String desc, String imagePath}) async {
+      {String name, String desc, String imagePath, List<AudioItem> audios}) async {
     if (name != null || desc != null || imagePath != null) {
       // if(await futureAuth()){
       await DBProvider.db
           .collectionEdit(id, name: name, desc: desc, picture: imagePath);
+      if (audios.isNotEmpty) {
+        log(audios.length.toString(), name: "Playlist.Edit");
+        // audios.forEach((element) async {
+        //   await DBProvider.db.collectionAddAudio(id, element.id);
+        // });
+        List<int> ids = [];
+        audios.forEach((element) {
+          ids.add(element.id);
+        });
+        await DBProvider.db.collectionAddAudio(id, ids);
+      }
       // }else {
       //   await DBProvider.db.collectionEdit(id, name: name, desc:desc ,picture: imagePath);
       //   CollectionItem item = await DBProvider.db.collectionGet(id);
@@ -357,7 +370,7 @@ class PlaylistProvider {
                   if (!find1) {
                     AudioItem itemAudio = await DBProvider.db
                         .getAudio(0, idS: S[i].playlist[i1].idS);
-                    DBProvider.db.collectionAddAudio(L[j].id, itemAudio.id);
+                    DBProvider.db.collectionAddAudio(L[j].id, [itemAudio.id]);
                   }
                 }
               }
@@ -399,7 +412,7 @@ class PlaylistProvider {
                       AudioItem itemAudio = await DBProvider.db
                           .getAudio(0, idS: S[i].playlist[i1].idS);
                       // print(itemAudio.toMap());
-                      DBProvider.db.collectionAddAudio(L[j].id, itemAudio.id);
+                      DBProvider.db.collectionAddAudio(L[j].id, [itemAudio.id]);
                     } catch (e) {
                       print(e);
                     }

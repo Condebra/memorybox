@@ -139,6 +139,7 @@ class _LoginState extends State<Login> {
                       controller: controller.controllerNum,
                       inputFormatters: [controller.maskFormatter],
                       keyboardType: TextInputType.number,
+                      focusNode: controller.phoneFocusNode,
                       style: TextStyle(
                         color: cBlack,
                         fontSize: 20,

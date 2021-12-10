@@ -22,6 +22,7 @@ class LoginController {
   TextEditingController controllerNum = TextEditingController();
   TextEditingController controllerCode = TextEditingController();
   final codeFocusNode = FocusNode();
+  final phoneFocusNode = FocusNode();
 
   stepOneTap() {
     controllerPages.animateToPage(1,
@@ -30,6 +31,7 @@ class LoginController {
 
   stepTwoTap(BuildContext context) async {
     if (maskFormatter.getUnmaskedText().length == 10) {
+      phoneFocusNode.unfocus();
       controllerPages.animateToPage(2,
           duration: Duration(milliseconds: 300), curve: Curves.ease);
       getCode();
@@ -44,6 +46,7 @@ class LoginController {
 
   stepThreeTap(BuildContext context) async {
     if (maskFormatterCode.getUnmaskedText().length == 4) {
+      codeFocusNode.unfocus();
       Put response = await AuthProvider.checkCode(
           "7${maskFormatter.getUnmaskedText()}",
           maskFormatterCode.getUnmaskedText());
