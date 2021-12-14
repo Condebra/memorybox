@@ -205,20 +205,20 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
       menuWidth: MediaQuery.of(context).size.width / 2,
       menuOffset: 10,
       menuItems: [
-        FocusedMenuItem(
-          onPressed: () {
-            addToPlaylist([widget.item], context.read<GeneralController>());
-          },
-          title: Text(
-            "Добавить в подборку",
-            style: TextStyle(
-              color: cBlack,
-              fontWeight: FontWeight.w400,
-              fontSize: 14,
-              fontFamily: fontFamily,
-            ),
-          ),
-        ),
+        // FocusedMenuItem(
+        //   onPressed: () {
+        //     addToPlaylist([widget.item], context.read<GeneralController>());
+        //   },
+        //   title: Text(
+        //     "Добавить в подборку",
+        //     style: TextStyle(
+        //       color: cBlack,
+        //       fontWeight: FontWeight.w400,
+        //       fontSize: 14,
+        //       fontFamily: fontFamily,
+        //     ),
+        //   ),
+        // ),
         FocusedMenuItem(
           onPressed: () {
             editAudio(widget.item, context.read<GeneralController>());

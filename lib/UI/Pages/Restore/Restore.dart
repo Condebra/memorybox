@@ -157,18 +157,14 @@ class _RestoreState extends State<Restore> {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: List.generate(state.items.length, (index) {
-          return Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: AudioItemWidget(
-                  colorPlay: cBlue,
-                  selected: false,
-                  delete: true,
-                  item: state.items[index],
-                ),
-              ),
-            ],
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5),
+            child: AudioItemWidget(
+              colorPlay: cBlue,
+              selected: false,
+              delete: true,
+              item: state.items[index],
+            ),
           );
         }),
       ),

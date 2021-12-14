@@ -148,7 +148,7 @@ class PlaylistProvider {
     }
   }
 
-  static Future<Put> addAudioToPlaylist(int idPlaylist, int idAudio,
+  static Future<Put> addAudioToPlaylist(int idPlaylist, List<int> idAudio,
       {bool isLocalPlaylist = true, bool isLocalAudio = true}) async {
     //todo
     if (!isLocalPlaylist) {
@@ -189,7 +189,7 @@ class PlaylistProvider {
       }
     } else {
       if (isLocalAudio) {
-        await DBProvider.db.collectionAddAudio(idPlaylist, [idAudio]);
+        await DBProvider.db.collectionAddAudio(idPlaylist, idAudio);
         return Put(code: 201, message: "ok", isLocal: false);
       } else {
         // print("попИт ка  добавить  аудио на сервере в локальный плейлист ");

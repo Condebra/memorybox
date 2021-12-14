@@ -276,7 +276,7 @@ class RecordController {
     var playlistId = prefs.getInt("playlist");
     print("===playlistId===>$playlistId");
     if (playlistId != null && playlistId != 0) {
-      var resp = await PlaylistProvider.addAudioToPlaylist(playlistId, audioId);
+      var resp = await PlaylistProvider.addAudioToPlaylist(playlistId, [audioId]);
       print(resp);
     }
     setState();

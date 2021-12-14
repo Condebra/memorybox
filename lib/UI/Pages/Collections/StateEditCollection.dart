@@ -302,6 +302,36 @@ class _StateEditCollectionState extends State<StateEditCollection> {
                     );
                   }),
                 ),
+                GestureDetector(
+                  behavior: HitTestBehavior.deferToChild,
+                  onTap: () {
+                    context
+                        .read<GeneralController>()
+                        .collectionsController
+                        .addAudio();
+                    context.read<GeneralController>().createRouteOnEdit(currentPage: 1);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                              width: 1, color: cBlack.withOpacity(0.8)),
+                        ),
+                      ),
+                      child: Text(
+                        "Добавить аудиофайл",
+                        style: TextStyle(
+                          color: cBlack,
+                          fontFamily: fontFamily,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             );
         });

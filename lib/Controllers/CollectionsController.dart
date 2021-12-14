@@ -195,11 +195,15 @@ class CollectionsController {
             controllerHeader.text, controllerComment.text, _pathPhoto);
         _state = CollectionStates.add;
         setState();
-        for (int i = 0; i < _audios.length; i++) {
+        // for (int i = 0; i < _audios.length; i++) {
+        List<int> ids = [];
+        _audios.forEach((element) {
+          ids.add(element.id ?? element.idS);
+        });
           await PlaylistProvider.addAudioToPlaylist(
-              response, _audios[i].id ?? _audios[i].idS,
-              isLocalPlaylist: true, isLocalAudio: _audios[i].id != null);
-        }
+              response, ids,
+              isLocalPlaylist: true);
+        // }
         controllerComment.text = "";
         controllerHeader.text = "";
         _pathPhoto = null;

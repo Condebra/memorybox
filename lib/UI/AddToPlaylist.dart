@@ -61,18 +61,18 @@ class _AddAudioContentState extends State<AddAudioContent> {
     widget.items.forEach((element) async {
       response = await PlaylistProvider.addAudioToPlaylist(
         collectionItem.id ?? collectionItem.idS,
-        element.id ?? element.idS,
+        [element.id] ?? [element.idS],
         isLocalAudio: element.id != null,
         isLocalPlaylist: collectionItem.id != null,
       );
     });
     closeDialog(context);
-    if (response.code == 201) {
+    // if (response.code == 201) {
       showDialogIntegronError(context, "Добавлено");
       widget.controller.homeController.load();
-    } else {
-      showDialogIntegronError(context, "Не удалось добавть");
-    }
+    // } else {
+    //   showDialogIntegronError(context, "Не удалось добавть");
+    // }
   }
 
   @override
