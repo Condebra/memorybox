@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:recorder/Controllers/LoginController.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/widgets/Background.dart';
@@ -115,27 +116,24 @@ class _LoginState extends State<Login> {
               SizedBox(
                 height: 12,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: cBackground,
-                      borderRadius: BorderRadius.all(Radius.circular(41)),
-                      boxShadow: [
-                        BoxShadow(
-                          offset: Offset(0, 4),
-                          blurRadius: 11,
-                          spreadRadius: 0,
-                          color: Color.fromRGBO(0, 0, 0, 0.17),
-                        )
-                      ]),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 4,
-                      horizontal: 62,
-                    ),
+              Container(
+                width: MediaQuery.of(context).size.width - 70,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: cBackground,
+                    borderRadius: BorderRadius.all(Radius.circular(41)),
+                    boxShadow: [
+                      BoxShadow(
+                        offset: Offset(0, 4),
+                        blurRadius: 11,
+                        spreadRadius: 0,
+                        color: Color.fromRGBO(0, 0, 0, 0.17),
+                      )
+                    ]),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 1.6,
                     child: TextField(
-                      textAlign: TextAlign.start,
+                      textAlign: TextAlign.center,
                       controller: controller.controllerNum,
                       inputFormatters: [controller.maskFormatter],
                       keyboardType: TextInputType.number,
@@ -162,7 +160,6 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
-              ),
             ],
           ),
           Column(
@@ -244,7 +241,6 @@ class _LoginState extends State<Login> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 116),
                   decoration: BoxDecoration(
                       color: cBackground,
                       borderRadius: BorderRadius.all(Radius.circular(41)),
@@ -257,7 +253,7 @@ class _LoginState extends State<Login> {
                         )
                       ]),
                   child: TextField(
-                    textAlign: TextAlign.start,
+                    textAlign: TextAlign.center,
                     focusNode: controller.codeFocusNode,
                     controller: controller.controllerCode,
                     inputFormatters: [controller.maskFormatterCode],
