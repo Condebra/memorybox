@@ -10,6 +10,7 @@ import 'package:recorder/models/ProfileModel.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path/path.dart';
 
 class DBProvider {
   DBProvider._();
@@ -27,7 +28,8 @@ class DBProvider {
 
   Future<Database> _initDB() async {
     Directory dir = await getApplicationDocumentsDirectory();
-    String path = dir.path + "base26.db";
+    String path = join(dir.path, "base26.db");
+    // print("=======================path================================\n$path");
     return await openDatabase(path, version: 1, onCreate: _createDB);
   }
 
