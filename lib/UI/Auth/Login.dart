@@ -16,11 +16,28 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   LoginController controller;
+  String phoneHint = "+7 (900) 000-00-00";
+  String codeHint = "Код";
 
   @override
   void initState() {
     super.initState();
     controller = LoginController();
+
+    controller.phoneFocusNode.addListener(() {
+      if (controller.phoneFocusNode.hasFocus)
+        phoneHint = "";
+      else
+        phoneHint = "+7 (900) 000-00-00";
+      setState(() {});
+    });
+    controller.codeFocusNode.addListener(() {
+      if (controller.codeFocusNode.hasFocus)
+        codeHint = "";
+      else
+        codeHint = "Код";
+      setState(() {});
+    });
   }
 
   @override
@@ -62,10 +79,11 @@ class _LoginState extends State<Login> {
             Text(
               S.of(context).hello_new1,
               style: TextStyle(
-                  color: cBlack,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: fontFamily,
-                  fontSize: 24),
+                color: cBlack,
+                fontWeight: FontWeight.w400,
+                fontFamily: fontFamily,
+                fontSize: 24,
+              ),
             ),
             SizedBox(
               height: 12,
@@ -74,10 +92,11 @@ class _LoginState extends State<Login> {
               S.of(context).hello_new2,
               textAlign: TextAlign.center,
               style: TextStyle(
-                  color: cBlack,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: fontFamily,
-                  fontSize: 16),
+                color: cBlack,
+                fontWeight: FontWeight.w400,
+                fontFamily: fontFamily,
+                fontSize: 16,
+              ),
             ),
             SizedBox(
               height: 24,
@@ -108,10 +127,11 @@ class _LoginState extends State<Login> {
               Text(
                 S.of(context).enter_num,
                 style: TextStyle(
-                    color: cBlack,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: fontFamily,
-                    fontSize: 14),
+                  color: cBlack,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: fontFamily,
+                  fontSize: 14,
+                ),
               ),
               SizedBox(
                 height: 12,
@@ -130,36 +150,36 @@ class _LoginState extends State<Login> {
                         color: Color.fromRGBO(0, 0, 0, 0.17),
                       )
                     ]),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width / 1.6,
-                    child: TextField(
-                      textAlign: TextAlign.center,
-                      controller: controller.controllerNum,
-                      inputFormatters: [controller.maskFormatter],
-                      keyboardType: TextInputType.number,
-                      focusNode: controller.phoneFocusNode,
-                      style: TextStyle(
-                        color: cBlack,
+                child: Container(
+                  width: MediaQuery.of(context).size.width / 1.6,
+                  child: TextField(
+                    textAlign: TextAlign.center,
+                    controller: controller.controllerNum,
+                    inputFormatters: [controller.maskFormatter],
+                    keyboardType: TextInputType.number,
+                    focusNode: controller.phoneFocusNode,
+                    style: TextStyle(
+                      color: cBlack,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.normal,
+                    ),
+                    decoration: InputDecoration(
+                      alignLabelWithHint: false,
+                      border: InputBorder.none,
+                      // prefix: Text('+7 '),
+                      filled: true,
+                      hintText: phoneHint,
+                      hintStyle: TextStyle(
+                        color: Colors.black45,
                         fontSize: 20,
                         fontWeight: FontWeight.w400,
                         fontStyle: FontStyle.normal,
                       ),
-                      decoration: InputDecoration(
-                        alignLabelWithHint: false,
-                        border: InputBorder.none,
-                        // prefix: Text('+7 '),
-                        filled: true,
-                        hintText: "+7 (900) 000-00-00",
-                        hintStyle: TextStyle(
-                          color: Colors.black45,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                        ),
-                      ),
                     ),
                   ),
                 ),
+              ),
             ],
           ),
           Column(
@@ -179,10 +199,11 @@ class _LoginState extends State<Login> {
                 child: Text(
                   S.of(context).later,
                   style: TextStyle(
-                      color: cBlack,
-                      fontSize: 24,
-                      fontFamily: fontFamily,
-                      fontWeight: FontWeight.w400),
+                    color: cBlack,
+                    fontSize: 24,
+                    fontFamily: fontFamily,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ),
             ],
@@ -205,10 +226,11 @@ class _LoginState extends State<Login> {
                 S.of(context).desc_register,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    color: cBlack,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: fontFamily,
-                    fontSize: 14),
+                  color: cBlack,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: fontFamily,
+                  fontSize: 14,
+                ),
               ),
             ),
           ),
@@ -269,7 +291,7 @@ class _LoginState extends State<Login> {
                       border: InputBorder.none,
                       // prefix: Text('+7 '),
                       filled: true,
-                      hintText: "Код",
+                      hintText: codeHint,
                       hintStyle: TextStyle(
                         color: Colors.black45,
                         fontSize: 20,
