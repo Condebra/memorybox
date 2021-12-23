@@ -292,7 +292,7 @@ class _StateEditCollectionState extends State<StateEditCollection> {
                         AudioItemWidget(
                           colorPlay: cSwamp,
                           selected: false,
-                          delete: true,
+                          remove: true,
                           item: list[index],
                         ),
                         SizedBox(

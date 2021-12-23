@@ -329,7 +329,8 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
                                           ),
                                         ),
                                         Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10),
                                           child: GestureDetector(
                                             onTap: () {
                                               repeatActive = !repeatActive;
@@ -337,7 +338,9 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
                                             },
                                             child: iconSvg(
                                               IconsSvg.audioRepeat,
-                                              color: repeatActive ? repeatColorActive : repeatColorInActive,
+                                              color: repeatActive
+                                                  ? repeatColorActive
+                                                  : repeatColorInActive,
                                               width: 30,
                                             ),
                                           ),
@@ -363,105 +366,114 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
 
   Widget _desc() {
     return Container(
-        child: StreamBuilder<CollectionsState>(
-            stream: context
-                .read<GeneralController>()
-                .collectionsController
-                .streamCollections,
-            builder: (context, snapshot) {
-              return !openDesc
-                  ? GestureDetector(
-                      behavior: HitTestBehavior.deferToChild,
-                      onTap: () {
-                        openDesc = true;
-                        setState(() {});
-                      },
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                            minHeight: 40,
-                            maxHeight: 100,
-                            minWidth: MediaQuery.of(context).size.width,
-                            maxWidth: MediaQuery.of(context).size.width),
-                        child: Text(
-                          snapshot.data?.currentItem?.description ?? "",
-                          overflow: TextOverflow.fade,
-                          style: TextStyle(
-                              color: cBlack,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14,
-                              fontFamily: fontFamily),
-                        ),
-                      ),
-                    )
-                  : GestureDetector(
-                      behavior: HitTestBehavior.deferToChild,
-                      onTap: () {
-                        openDesc = false;
-                        setState(() {});
-                      },
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                            minHeight: 40,
-                            maxHeight: double.maxFinite,
-                            minWidth: MediaQuery.of(context).size.width,
-                            maxWidth: MediaQuery.of(context).size.width),
-                        child: Text(
-                          snapshot.data.currentItem.description ?? "",
-                          overflow: TextOverflow.fade,
-                          style: TextStyle(
-                              color: cBlack,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14,
-                              fontFamily: fontFamily),
-                        ),
-                      ),
-                    );
-            }));
-  }
-
-  Widget _listAudio() {
-    return StreamBuilder<CollectionsState>(
+      child: StreamBuilder<CollectionsState>(
         stream: context
             .read<GeneralController>()
             .collectionsController
             .streamCollections,
         builder: (context, snapshot) {
-          List<AudioItem> list = snapshot.data?.currentItem?.playlist ?? [];
-          log("length ${list.length} ${list.toList()}", name: "View");
-          return list == [] || list.length == 0
-              ? Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Center(
-                    child: Text(
-                      "Нет аудиозаписей",
-                      style: TextStyle(
-                          color: cBlack.withOpacity(0.4),
-                          fontFamily: fontFamily,
-                          fontSize: 24,
-                          fontWeight: FontWeight.w700),
+          if (!openDesc)
+            return GestureDetector(
+              behavior: HitTestBehavior.deferToChild,
+              onTap: () {
+                openDesc = true;
+                setState(() {});
+              },
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: 40,
+                  maxHeight: 100,
+                  minWidth: MediaQuery.of(context).size.width,
+                  maxWidth: MediaQuery.of(context).size.width,
+                ),
+                child: Text(
+                  snapshot.data?.currentItem?.description ?? "",
+                  overflow: TextOverflow.fade,
+                  style: TextStyle(
+                    color: cBlack,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                    fontFamily: fontFamily,
+                  ),
+                ),
+              ),
+            );
+          return GestureDetector(
+            behavior: HitTestBehavior.deferToChild,
+            onTap: () {
+              openDesc = false;
+              setState(() {});
+            },
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: 40,
+                maxHeight: double.maxFinite,
+                minWidth: MediaQuery.of(context).size.width,
+                maxWidth: MediaQuery.of(context).size.width,
+              ),
+              child: Text(
+                snapshot.data.currentItem.description ?? "",
+                overflow: TextOverflow.fade,
+                style: TextStyle(
+                  color: cBlack,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                  fontFamily: fontFamily,
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _listAudio() {
+    return StreamBuilder<CollectionsState>(
+      stream: context
+          .read<GeneralController>()
+          .collectionsController
+          .streamCollections,
+      builder: (context, snapshot) {
+        List<AudioItem> list = snapshot.data?.currentItem?.playlist ?? [];
+        log("length ${list.length} ${list.toList()}", name: "View");
+        if (list.isEmpty)
+          return Container(
+            width: MediaQuery.of(context).size.width,
+            child: Center(
+              child: Text(
+                "Нет аудиозаписей",
+                style: TextStyle(
+                  color: cBlack.withOpacity(0.4),
+                  fontFamily: fontFamily,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          );
+        return Container(
+          child: Column(
+            children: List.generate(
+              list.length,
+              (index) {
+                return Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      child: AudioItemWidget(
+                        colorPlay: cSwamp,
+                        selected: false,
+                        item: list[index],
+                      ),
                     ),
-                  ),
-                )
-              : Container(
-                  child: Column(
-                  children: List.generate(
-                    list.length,
-                    (index) {
-                      return Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: AudioItemWidget(
-                              colorPlay: cSwamp,
-                              selected: false,
-                              item: list[index],
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ));
-        });
+                  ],
+                );
+              },
+            ),
+          ),
+        );
+      },
+    );
   }
 }

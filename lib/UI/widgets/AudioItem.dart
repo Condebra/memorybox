@@ -1,10 +1,11 @@
+import 'dart:developer';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Controllers/States/PlayerState.dart';
 import 'package:recorder/DB/DB.dart';
-import 'package:recorder/UI/AddToPlaylist.dart';
 import 'package:recorder/UI/EditingAudio.dart';
 import 'package:recorder/Utils/DialogsIntegron/DialogIntegron.dart';
 import 'package:recorder/Utils/DialogsIntegron/DialogRecorder.dart';
@@ -24,6 +25,7 @@ class AudioItemWidget extends StatefulWidget {
   final bool selected;
   final bool delete;
   final Function onSelect;
+  final bool remove;
 
   AudioItemWidget({
     @required this.item,
@@ -31,6 +33,7 @@ class AudioItemWidget extends StatefulWidget {
     this.selected = false,
     this.onSelect,
     this.delete = false,
+    this.remove = false,
   });
 
   @override
@@ -126,72 +129,92 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
                 ),
               ),
             ),
-            widget.delete
-                ? InkWell(
-                    hoverColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    splashColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    enableFeedback: false,
-                    onTap: widget.onSelect ??
-                        () {
-                          if (widget.item.isLocalAudio)
-                            context
-                                .read<GeneralController>()
-                                .restoreController
-                                .deleteFinal(widget.item);
-                          else
-                            context
-                                .read<GeneralController>()
-                                .restoreController
-                                .deleteFinalCloud(ids: widget.item.idS);
-                        },
-                    child: Container(
-                      height: 30,
-                      width: 30,
-                      child: iconSvg(
-                        IconsSvg.delete,
-                        width: 30,
-                        height: 30,
-                        color: cBlack,
-                      ),
-                    ))
-                : !widget.selected
-                    ? openMenu()
-                    : widget.item.select ?? false
-                        ? GestureDetector(
-                            behavior: HitTestBehavior.deferToChild,
-                            onTap: () {
-                              widget.onSelect();
-                              // widget.onSelect == null ? null : widget.onSelect();
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: iconSvg(
-                                IconsSvg.selectedOn,
-                                height: 50,
-                                width: 50,
-                              ),
-                            ))
-                        : GestureDetector(
-                            behavior: HitTestBehavior.deferToChild,
-                            onTap: () {
-                              widget.onSelect();
-                              // widget.onSelect == null ? null : widget.onSelect();
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: iconSvg(
-                                IconsSvg.selectedOff,
-                                height: 50,
-                                width: 50,
-                              ),
-                            ),
-                          ),
+            tailingButton(
+              isDelete: widget.delete,
+              isSelect: widget.selected,
+              isRemove: widget.remove,
+              onSelect: widget.onSelect, //(), ?
+            ),
           ],
         ),
       ),
     );
+  }
+
+  Widget tailingButton({
+    bool isDelete = false,
+    bool isSelect = true,
+    bool isRemove = false,
+    Function onSelect,
+  }) {
+    // log("del: $isDelete, sel: $isSelect, rem: $isRemove, fun: $onSelect",
+    //     name: "tail");
+    if (isDelete) {
+      return IconButton(
+        onPressed: () {
+          if (onSelect != null)
+            onSelect();
+          else if (widget.item.isLocalAudio)
+            context
+                .read<GeneralController>()
+                .restoreController
+                .deleteFinal(widget.item);
+          else
+            context
+                .read<GeneralController>()
+                .restoreController
+                .deleteFinalCloud(ids: widget.item.idS);
+        },
+        icon: iconSvg(
+          IconsSvg.delete,
+          width: 30,
+          height: 30,
+          color: cBlack,
+        ),
+      );
+    }
+    if (isRemove) {
+      return IconButton(
+        onPressed: () {
+          context
+              .read<GeneralController>()
+              .collectionsController
+              .removeAudioFromCollection(widget.item);
+        },
+        icon: iconSvg(IconsSvg.delete, height: 30, color: cBlack),
+      );
+    }
+    if (isSelect) {
+      if (widget.item.select ?? false)
+        return GestureDetector(
+            onTap: () {
+              onSelect();
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: iconSvg(
+                IconsSvg.selectedOn,
+                height: 50,
+                width: 50,
+              ),
+            ));
+      else
+        return GestureDetector(
+          behavior: HitTestBehavior.deferToChild,
+          onTap: () {
+            onSelect();
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: iconSvg(
+              IconsSvg.selectedOff,
+              height: 50,
+              width: 50,
+            ),
+          ),
+        );
+    }
+    return openMenu();
   }
 
   Widget openMenu() {

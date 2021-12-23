@@ -29,12 +29,14 @@ class _StateAddAudioCollectionState extends State<StateAddAudioCollection> {
         buttonDone: true,
         padding: 10,
         top: 25,
-        textRightButton: "Добавить",
         height: 90,
+        childRight: IconButton(
+          onPressed: () {
+            context.read<GeneralController>().collectionsController.back();
+          },
+          icon: Icon(Icons.done),
+        ),
         tapLeftButton: () {
-          context.read<GeneralController>().collectionsController.back();
-        },
-        tapRightButton: () {
           context.read<GeneralController>().collectionsController.back();
         },
         child: Container(
@@ -48,10 +50,11 @@ class _StateAddAudioCollectionState extends State<StateAddAudioCollection> {
                 Text(
                   "Выбрать",
                   style: TextStyle(
-                      fontSize: 36,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: fontFamilyMedium,
-                      letterSpacing: 2),
+                    fontSize: 36,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: fontFamilyMedium,
+                    letterSpacing: 2,
+                  ),
                 ),
               ],
             ),

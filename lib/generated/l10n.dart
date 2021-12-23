@@ -228,7 +228,7 @@ class S {
   /// `Как только ты запишешь аудио, она появится здесь.`
   String get text_of_empty_audios {
     return Intl.message(
-      'Как только ты запишешь аудио, она появится здесь.',
+      'Как только ты запишешь аудио, оно появится здесь.',
       name: 'text_of_empty_audios',
       desc: '',
       args: [],

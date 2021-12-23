@@ -24,12 +24,7 @@ class _HomePageState extends State<HomePage> {
   load() async {
     context.read<GeneralController>().homeController.load();
     setState(() {});
-    // initSize();
   }
-
-  double hAll;
-  double hEmptyView = 48.0 + 58.0 + 38.0 + 105.0 + 24.0;
-  bool isScroll = true;
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +102,6 @@ class _HomePageState extends State<HomePage> {
                 );
               }),
         ),
-        // ),
       ),
     );
   }

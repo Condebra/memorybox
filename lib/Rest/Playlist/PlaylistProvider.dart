@@ -256,6 +256,10 @@ class PlaylistProvider {
     }
   }
 
+  static Future removeAudio(int idAudio, int idCollection) async {
+    await DBProvider.db.collectionDeleteAudio(idCollection, idAudio);
+  }
+
   static Future<Put> deleteS(int idsPlaylist) async {
     String token = await tokenDB();
     String urlQuery =

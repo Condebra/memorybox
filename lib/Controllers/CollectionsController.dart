@@ -106,7 +106,15 @@ class CollectionsController {
 
   addAudio() {
     _audios = [];
+    audiosAll.forEach((element) {element.select = false;});
+    _audiosSearch.forEach((element) {element.select = false;});
     _state = CollectionStates.addAudio;
+    setState();
+  }
+
+  removeAudioFromCollection(AudioItem item) {
+    _currentItem.playlist.remove(item);
+    PlaylistProvider.removeAudio(item.id, _currentItem.id);
     setState();
   }
 
