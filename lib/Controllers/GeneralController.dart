@@ -70,7 +70,7 @@ class GeneralController {
   }
 
   setPage(int index, {bool restore}) async {
-    print(pageHistory);
+    // print(pageHistory);
     if (index != 2 || restore != null) {
       pageController.animateToPage(index,
           duration: Duration(milliseconds: 300), curve: Curves.easeOut);
@@ -98,9 +98,9 @@ class GeneralController {
     if (pageHistory.length == 1 && pageController.page == 0) return true;
     if (pageHistory.isNotEmpty) {
       // print("back $pageHistory");
-      print("${pageHistory.last}, ${pageHistory[pageHistory.length - 2]}");
+      // print("${pageHistory.last}, ${pageHistory[pageHistory.length - 2]}");
       if (pageHistory.last == pageHistory[pageHistory.length - 2]) {
-        print("equals $pageHistory");
+        // print("equals $pageHistory");
         if (pageHistory.last == 1) {
           collectionsController.back();
           pageHistory.removeLast();
@@ -128,7 +128,7 @@ class GeneralController {
   ///Следует вызывать при обработке действий, которые создают новый экран на текущей странице.
   createRouteOnEdit({int currentPage}) {
     pageHistory.add(currentPage);
-    print("createRoute=> $pageHistory");
+    // print("createRoute=> $pageHistory");
   }
 
   // deleteDuplicateRoute() {

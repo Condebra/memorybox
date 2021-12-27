@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/models/CollectionModel.dart';
@@ -71,27 +72,30 @@ class HomeController {
 
   loadServerAudios() async {
     var remoteAudio = await AudioProvider.getServerAudios();
-    List<AudioItem> temp = [];
-    if (audios != null) {
-      audios.forEach((localItem) {
-        if (localItem.idS != null)
-          remoteAudio.forEach((remoteItem) {
-            if (remoteItem.idS == localItem.idS) temp.add(remoteItem);
-          });
-        else
-          temp.add(localItem);
-      });
-      audios
-        ..clear()
-        ..addAll(temp);
-      onLoadAudios(audios);
+    remoteAudio.forEach((element) {
+      // log("${element.toMap()}", name: "server audio");
+    });
+    audios.forEach((element) {
+      // log("${element.toMap()}", name: "local audio");
+    });
+    List<AudioItem> allAudios = [];
+    allAudios
+      ..addAll(audios)
+      ..addAll(remoteAudio.reversed);
+    // List<AudioItem> allAudios = List.from(remoteAudio + audios);
+    Map<String, AudioItem> map = {};
+    for (var item in allAudios) {
+      map[item.name] = item;
     }
-    // _streamController.sink.add(HomeState(
-    //   collections: collections,
-    //   audios: audios,
-    //   loading: false,
-    //   errors: false,
-    // ));
+    var filtered = map.values.toList();
+    filtered.forEach((element) {
+      log("${element.toMap()}", name: "filtered");
+    });
+    // filtered.sort(())
+    audios
+      ..clear()
+      ..addAll(filtered);
+    onLoadAudios(audios);
   }
 
   dispose() {

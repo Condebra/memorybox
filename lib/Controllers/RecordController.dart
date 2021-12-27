@@ -308,8 +308,8 @@ class RecordController {
   }
 
   uploadAudio(AudioItem audio) async {
-    print(audio.toMap());
-    await AudioProvider.upload(0, audioItem: audio);
+    // print(audio.toMap());
+    await AudioProvider.upload(-1, audioItem: audio);
   }
 
   setState() {

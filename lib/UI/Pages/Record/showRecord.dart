@@ -239,20 +239,19 @@ class _RecordPageState extends State<RecordPage> {
               SizedBox(
                 width: 30,
               ),
-              InkWell(
-                onTap: () async {
-                  await widget.controller.recordController.upload();
-                },
-                child: iconSvg(
-                  IconsSvg.cloudStorage,
-                  width: 25,
-                  height: 25,
-                ),
-              ),
-              // Spacer(),
-              SizedBox(
-                width: 20,
-              ),
+              // InkWell(
+              //   onTap: () async {
+              //     await widget.controller.recordController.upload();
+              //   },
+              //   child: iconSvg(
+              //     IconsSvg.cloudStorage,
+              //     width: 25,
+              //     height: 25,
+              //   ),
+              // ),
+              // SizedBox(
+              //   width: 20,
+              // ),
               // IconSvg(IconsSvg.download, width: 30, height: 30),
               // Spacer(),
               InkWell(

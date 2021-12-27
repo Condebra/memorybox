@@ -272,7 +272,7 @@ class _ProfilePageState extends State<ProfilePage> {
               context
                   .read<GeneralController>()
                   .profileController
-                  .logOut(context);
+                  .logOutDialog(context);
             },
             child: Text(
               S.of(context).log_out,

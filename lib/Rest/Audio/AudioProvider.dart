@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -305,7 +307,7 @@ class AudioProvider {
       String token = await tokenDB();
       String urlQuery = urlConstructor(Methods.audio.getUserAudio);
       Map<String, dynamic> body = Map();
-      print("-=-=-=-=-=-" + urlQuery);
+      // print("-=-=-=-=-=-" + urlQuery);
       var response;
       try {
         response = await Rest.post(urlQuery, body, token: token);
@@ -366,7 +368,7 @@ class AudioProvider {
   }
 
   static Future<int> upload(int id, {AudioItem audioItem}) async {
-    print('upload A');
+    // print('upload Audio, ${audioItem.toMap()}');
 
     AudioItem item = audioItem ?? await DBProvider.db.getAudio(id);
 
@@ -375,7 +377,6 @@ class AudioProvider {
     var dio = Dio();
     dio.options.headers['Authorization'] = 'Bearer $token';
 
-    print(urlQuery);
     var formData = FormData.fromMap({
       "name": item.name,
       "description": item.description,
@@ -398,14 +399,23 @@ class AudioProvider {
       urlQuery,
       data: formData,
     );
+    if (audioItem == null)
+      await DBProvider.db.audioEdit(id, ids: response.data['id']);
+    else
+      await DBProvider.db.audioEdit(
+        audioItem.id,
+        ids: response.data['id'],
+        pathAudio: response.data['url'],
+        picture: response.data['picture'],
+        isLocalAudio: false,
+        isLocalPicture: false,
+        uploadAudio: true,
+        uploadPicture: true,
+      );
 
-    print(response.statusCode);
     if (response.statusCode == 201) {
-      print(response.data);
-      //await DBProvider.db.audioEdit(id,ids: response.data['id']);
       return response.data['id'];
     } else {
-      // return Put(error: response.statusCode, mess: "", localError: true);
       return null;
     }
   }

@@ -146,7 +146,6 @@ class DBProvider {
         where: "${idS == null ? TableAudio.id : TableAudio.idS} = ?",
         whereArgs: [idS ?? id]);
     // print("=== AudioGet $idS" + list.toString());
-
     return AudioItem.fromDB(list.first);
   }
 
@@ -222,6 +221,7 @@ class DBProvider {
     String pathAudio,
     bool isLocalAudio,
   }) async {
+    print("-edit-");
     Database db = await this.database;
     if (name != null) {
       await db.update(TableAudio.table, {TableAudio.name: name},

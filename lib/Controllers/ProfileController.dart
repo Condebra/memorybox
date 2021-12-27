@@ -3,6 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:recorder/Controllers/States/ProfileState.dart';
 import 'package:recorder/DB/DB.dart';
+import 'package:recorder/Rest/Audio/AudioProvider.dart';
 import 'package:recorder/Rest/User/UserProvider.dart';
 import 'package:recorder/Routes.dart';
 import 'package:recorder/Style.dart';
@@ -143,6 +144,74 @@ class ProfileController {
         ),
       ],
     );
+  }
+
+  logOutDialog(BuildContext context) {
+    showDialogRecorder(
+      context: context,
+      title: Text(
+        "Вы точно хотите выйти?",
+        style: TextStyle(
+          color: cBlack,
+          fontWeight: FontWeight.w400,
+          fontSize: 20,
+          fontFamily: fontFamily,
+        ),
+      ),
+      body: Text(
+        "У вас есть записи, не загруженные в облако. При выходе они исчезнут.",
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: cBlack.withOpacity(0.7),
+          fontFamily: fontFamily,
+          fontSize: 14,
+        ),
+      ),
+      buttons: [
+        DialogIntegronButton(
+          onPressed: () {
+            uploadAudioAndLogOut(context);
+            closeDialog(context);
+          },
+          textButton: Text(
+            "Загрузить и выйти",
+            style: TextStyle(
+              color: cBlueSoso,
+              fontSize: 13,
+              fontFamily: fontFamily,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          borderColor: cBlueSoso,
+        ),
+        DialogIntegronButton(
+          onPressed: () {
+            logOut(context);
+            // closeDialog(context);
+          },
+          textButton: Text(
+            "Выйти",
+            style: TextStyle(
+              color: cBackground,
+              fontSize: 14,
+              fontFamily: fontFamily,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          background: cRed,
+          borderColor: cRed,
+        ),
+      ],
+    );
+  }
+
+  uploadAudioAndLogOut(context) async {
+    var list = await AudioProvider.getAudios();
+    if (list != null && list.isNotEmpty)
+      list.forEach((element) async {
+        await AudioProvider.upload(-1, audioItem: element);
+      });
+    logOut(context);
   }
 
   logOut(BuildContext context) async {
