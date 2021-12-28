@@ -135,8 +135,8 @@ class CollectionsController {
     setState();
 
     _currentItem = item;
-    print("=============================================="
-        "\n${_currentItem.toMap().toString()}");
+    // print("=============================================="
+    //     "\n${_currentItem.toMap().toString()}");
     if (_currentItem.playlist == null)
       _currentItem.playlist =
           await PlaylistProvider.getAudioFromId(idS: item.idS);
@@ -145,6 +145,9 @@ class CollectionsController {
   }
 
   back() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt("playlist", 0);
+
     switch (_state) {
       case CollectionStates.addAudio:
         _audios.clear();
@@ -152,7 +155,7 @@ class CollectionsController {
           if (element.select != null && element.select) _audios.add(element);
         });
         if (_previousState == CollectionStates.editing) {
-          log("${_audios.toList()}", name: "back");
+          // log("${_audios.toList()}", name: "back");
           _currentItem.playlist.addAll(_audios);
           _state = CollectionStates.editing;
         }
@@ -178,12 +181,10 @@ class CollectionsController {
       case CollectionStates.viewItem:
         _previousState = CollectionStates.viewItem;
         _state = CollectionStates.view;
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setInt("playlist", 0);
         setState();
         break;
       case CollectionStates.select:
-        print("CollectionState.select");
+        // print("CollectionState.select");
         _previousState = CollectionStates.select;
         _state = CollectionStates.viewItem;
         setState();

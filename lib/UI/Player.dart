@@ -63,10 +63,10 @@ class _PlayerPageState extends State<PlayerPage> {
           builder: (context, snapshot) {
             if (!snapshot.hasData || snapshot.data.loading) {
               if (!snapshot.hasData) {
-                print("data empty");
+                // print("data empty");
                 // widget.controller.playerController.openBig();
               } else {
-                print(' loading ${snapshot.data.loading}');
+                // print(' loading ${snapshot.data.loading}');
               }
               return Center(
                 child: CircularProgressIndicator(),
@@ -348,12 +348,12 @@ class _PlayerPageState extends State<PlayerPage> {
                   //context.read<GeneralController>().playerController.pause();
                 },
                 onChanged: (value) {
-                  print("CHANGE ${value.toInt()}");
+                  // print("CHANGE ${value.toInt()}");
                   widget.controller.playerController
                       .setDuration(Duration(milliseconds: value.toInt()));
                 },
                 onChangeEnd: (info) {
-                  print("end");
+                  // print("end");
                   widget.controller.playerController
                       .seek(Duration(milliseconds: info.toInt()));
                 },

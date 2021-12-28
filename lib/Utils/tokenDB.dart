@@ -12,7 +12,7 @@ Future<String> tokenDB({String token}) async {
     await futureAuth(state: false);
     await prefs.setString("token", token);
   }
-  log("$token", name: token);
+  // log("$token", name: token);
 }
 
 /// check or set(?) auth wtf

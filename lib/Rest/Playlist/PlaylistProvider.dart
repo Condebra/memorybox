@@ -189,7 +189,7 @@ class PlaylistProvider {
       }
     } else {
       if (isLocalAudio) {
-        await DBProvider.db.collectionAddAudio(idPlaylist, idAudio);
+        await DBProvider.db.collectionAddAudio(idPlaylist, idAudio, append: true);
         return Put(code: 201, message: "ok", isLocal: false);
       } else {
         // print("попИт ка  добавить  аудио на сервере в локальный плейлист ");
@@ -220,7 +220,7 @@ class PlaylistProvider {
       await DBProvider.db
           .collectionEdit(id, name: name, desc: desc, picture: imagePath);
       if (audios.isNotEmpty) {
-        log(audios.length.toString(), name: "Playlist.Edit");
+        // log(audios.length.toString(), name: "Playlist.Edit");
         // audios.forEach((element) async {
         //   await DBProvider.db.collectionAddAudio(id, element.id);
         // });

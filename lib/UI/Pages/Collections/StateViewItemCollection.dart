@@ -192,7 +192,7 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
           .collectionsController
           .streamCollections,
       builder: (context, snapshot) {
-        print(snapshot.data?.currentItem ?? "No duration :(");
+        // print(snapshot.data?.currentItem ?? "No duration :(");
         return GestureDetector(
           behavior: HitTestBehavior.deferToChild,
           onTap: () {},

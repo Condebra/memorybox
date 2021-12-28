@@ -22,7 +22,7 @@ class DBProvider {
     if (_database != null) return _database;
 
     _database = await _initDB();
-    print("db=============>${_database.toString()}<===========");
+    // print("db=============>${_database.toString()}<===========");
     return _database;
   }
 
@@ -83,21 +83,20 @@ class DBProvider {
       await db.delete(TableUser.table);
       await db.delete(TableAudio.table);
       await db.delete(TableCollection.table);
-      print("db delete success");
+      // print("db delete success");
       return Future.value(true);
     } catch (e) {
-      print('db delete error $e');
+      // print('db delete error $e');
       return Future.value(false);
     }
   }
-
 
   Future<ProfileModel> profileGet() async {
     final prefs = await SharedPreferences.getInstance();
     String name = prefs.getString(TableUser.name);
     String picture = prefs.getString(TableUser.picture);
     bool local = !await uploadProfilePhoto();
-    print('$name $picture');
+    // print('$name $picture');
     return ProfileModel(
         picture: picture,
         name: name,
@@ -109,7 +108,6 @@ class DBProvider {
         updatedAt: null,
         id: null,
         local: local,
-
     );
   }
 
@@ -142,10 +140,12 @@ class DBProvider {
 
   Future<AudioItem> getAudio(int id, {int idS}) async {
     Database db = await this.database;
+    log("id: $id, ids: $idS", name: "get audio");
     final List<Map<String, dynamic>> list = await db.query(TableAudio.table,
         where: "${idS == null ? TableAudio.id : TableAudio.idS} = ?",
         whereArgs: [idS ?? id]);
     // print("=== AudioGet $idS" + list.toString());
+    // if (list != null && list.isNotEmpty)
     return AudioItem.fromDB(list.first);
   }
 
@@ -164,7 +164,7 @@ class DBProvider {
       where: "${TableCollection.id} = ?",
       whereArgs: [id],
     );
-    print("collectionGet " + list.toString());
+    // print("collectionGet " + list.toString());
 
     CollectionItem item = CollectionItem.fromDB(list[0]);
     List<AudioItem> audios = [];
@@ -179,7 +179,7 @@ class DBProvider {
     // audiosIds.forEach((element) async { audios.add(await audioGet(element)); });
 
     item.playlist = audios;
-    print(" === Collection ${item.playlist.length}");
+    // print(" === Collection ${item.playlist.length}");
     item.count = audios.length;
     int time = 0;
     for (int i = 0; i < audios.length; i++) {
@@ -221,7 +221,7 @@ class DBProvider {
     String pathAudio,
     bool isLocalAudio,
   }) async {
-    print("-edit-");
+    // print("-edit-");
     Database db = await this.database;
     if (name != null) {
       await db.update(TableAudio.table, {TableAudio.name: name},
@@ -287,12 +287,16 @@ class DBProvider {
     List<CollectionItem> items = [];
     list.forEach((element) async {
       CollectionItem item = CollectionItem.fromDB(element);
+      // log("$item", name: "item");
       List<AudioItem> audios = [];
       List<int> audiosIds =
           (json.decode(element[TableCollection.audios])).cast<int>();
       for (int i = 0; i < audiosIds.length; i++) {
-        AudioItem a = await getAudio(audiosIds[i]);
-        if (a != null) audios.add(a);
+        // log("ids: $audiosIds, length: ${audiosIds.length}", name: "get collections");
+        if (audiosIds[i] != null) {
+          AudioItem a = await getAudio(audiosIds[i]);
+          if (a != null) audios.add(a);
+        }
       }
       item.playlist = audios;
       item.count = audios.length;
@@ -359,22 +363,29 @@ class DBProvider {
         where: "${TableCollection.id} = ?", whereArgs: [id]);
   }
 
-  Future<void> collectionAddAudio(int id, List<int> audioIds) async {
+  Future<void> collectionAddAudio(int id, List<int> audioIds, {bool append = false}) async {
     Database db = await this.database;
-    CollectionItem item = await collectionGet(id);
-    bool find = false;
+    // CollectionItem item = await collectionGet(id);
     // for (int i = 0; i < item.playlist.length; i++) {
     //   if (item.playlist[i].id == audioId) find = true;
     // }
-    if (!find) {
-      List<int> list = [];
-      // for (int i = 0; i < item.playlist.length; i++) {
-      //   list.add(item.playlist[i].id);
-      // }
-      list.addAll(audioIds);
-      log("${list.toList()}", name: "add $list");
+    if (!append) {
+      audioIds = audioIds.toSet().toList();
+      // log("${audioIds.toList()}", name: "add ids");
       await db.update(
-          TableCollection.table, {TableCollection.audios: json.encode(list)},
+          TableCollection.table, {TableCollection.audios: json.encode(audioIds)},
+          where: "${TableCollection.id} = ?", whereArgs: [id]);
+    }
+    else {
+      log("$audioIds", name: "audioIds");
+      var list = await collectionGet(id);
+      List<int> ids = [];
+      list.playlist.forEach((element) {
+        ids.add(element.id ?? element.idS);
+      });
+      ids.addAll(audioIds);
+      await db.update(
+          TableCollection.table, {TableCollection.audios: json.encode(ids)},
           where: "${TableCollection.id} = ?", whereArgs: [id]);
     }
   }

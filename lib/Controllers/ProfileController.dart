@@ -41,7 +41,7 @@ class ProfileController {
 
   load() async {
     prefs = await SharedPreferences.getInstance();
-    print("prefs status ${prefs.getString("status")}");
+    // print("prefs status ${prefs.getString("status")}");
     if (prefs.getString("status") == "premium")
       subStatus = true;
     _loading = true;
@@ -215,7 +215,7 @@ class ProfileController {
   }
 
   logOut(BuildContext context) async {
-    print('ProfileController => Out');
+    // print('ProfileController => Out');
     Navigator.pushReplacementNamed(context, Routes.welcomeNew);
     _profile = null;
     var prefs = await SharedPreferences.getInstance();
@@ -236,7 +236,7 @@ class ProfileController {
       //   ),
       // );
     } else {
-      print("False");
+      // print("False");
       // ScaffoldMessenger.of(context).showSnackBar(
       //   SnackBar(
       //     content: Text("Произошла ошибка удаления"),

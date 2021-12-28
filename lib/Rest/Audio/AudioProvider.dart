@@ -225,7 +225,8 @@ class AudioProvider {
 
   static Future<Put> editOnlyS(int id,
       {String name, String desc, String imagePath}) async {
-    AudioItem item = await DBProvider.db.getAudio(id);
+    // log("$id", name: "id");
+    AudioItem item = await DBProvider.db.getAudio(-1, idS: id);
     String urlQuery = urlConstructor(Methods.audio.edit);
     String token = await tokenDB();
     Map<String, dynamic> body = Map();
@@ -242,6 +243,7 @@ class AudioProvider {
       urlQuery,
       data: formData,
     );
+    // log("${response.data}", name: "response");
     if (response.statusCode == 200) {
       return Put(code: 200, message: "Ok", isLocal: false);
     } else {
@@ -432,7 +434,7 @@ class AudioProvider {
           isLocalPicture: true,
         );
       } else {
-        await editOnlyS(id);
+        await editOnlyS(id, name: name, desc: desc, imagePath: imagePath);
       }
       return Put(code: 200, message: "ok", isLocal: true);
     }

@@ -109,7 +109,7 @@ class _StateSelectSeveralCollectionState
         if (list == null || list.isEmpty) return SizedBox();
         return Column(
           children: List.generate(list.length, (index) {
-            print(list[index].select);
+            // print(list[index].select);
             return Column(
               children: [
                 AudioItemWidget(

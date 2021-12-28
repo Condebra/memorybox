@@ -61,36 +61,22 @@ class HomeController {
   loadAudios() async {
     audios = await AudioProvider.getAudios();
     onLoadAudios(audios);
-    // _streamController.sink.add(HomeState(
-    //   collections: collections,
-    //   audios: audios,
-    //   loading: false,
-    //   errors: false,
-    // ));
-    // _streamController.close();
   }
 
   loadServerAudios() async {
     var remoteAudio = await AudioProvider.getServerAudios();
-    remoteAudio.forEach((element) {
-      // log("${element.toMap()}", name: "server audio");
-    });
-    audios.forEach((element) {
-      // log("${element.toMap()}", name: "local audio");
-    });
     List<AudioItem> allAudios = [];
     allAudios
       ..addAll(audios)
       ..addAll(remoteAudio.reversed);
-    // List<AudioItem> allAudios = List.from(remoteAudio + audios);
     Map<String, AudioItem> map = {};
     for (var item in allAudios) {
       map[item.name] = item;
     }
     var filtered = map.values.toList();
-    filtered.forEach((element) {
-      log("${element.toMap()}", name: "filtered");
-    });
+    // filtered.forEach((element) {
+    //   log("${element.toMap()}", name: "filtered");
+    // });
     // filtered.sort(())
     audios
       ..clear()

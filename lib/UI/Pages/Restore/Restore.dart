@@ -182,7 +182,7 @@ class _RestoreState extends State<Restore> {
               GestureDetector(
                   behavior: HitTestBehavior.deferToChild,
                   onTap: () {
-                    print("tap");
+                    // print("tap");
                     context
                         .read<GeneralController>()
                         .restoreController

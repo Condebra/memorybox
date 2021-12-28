@@ -10,7 +10,9 @@ import 'package:recorder/Utils/DialogsIntegron/DialogRecorder.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:recorder/Utils/app_keys.dart';
 
+// PersistentBottomSheetController _controller;
 Future<void> showRecord(GeneralController controller) async {
+  // _controller =
   AppKeys.scaffoldKey.currentState.showBottomSheet(
     (context) => RecordPage(controller),
     backgroundColor: Colors.transparent,
@@ -341,6 +343,7 @@ class _RecordPageState extends State<RecordPage> {
                 onTap: () async {
                   await widget.controller.recordController.save();
                   await widget.controller.homeController.load();
+                  // _controller.close();
                 },
                 child: Text(
                   "Сохранить?",
@@ -497,12 +500,12 @@ class _RecordPageState extends State<RecordPage> {
                   //context.read<GeneralController>().playerController.pause();
                 },
                 onChanged: (value) {
-                  print("CHANGE ${value.toInt()}");
+                  // print("CHANGE ${value.toInt()}");
                   widget.controller.recordController
                       .setDuration(Duration(milliseconds: value.toInt()));
                 },
                 onChangeEnd: (info) {
-                  print("end");
+                  // print("end");
                   widget.controller.recordController
                       .seek(Duration(milliseconds: info.toInt()));
                 },

@@ -40,7 +40,7 @@ class PlayerController {
 
     ///Status
     _audioPlayer.onPlayerStateChanged.listen((AudioPlayerState state) async {
-      print(state);
+      // print(state);
       if (state == AudioPlayerState.COMPLETED)
         _currentDuration = _maxDuration;
       // print("CURRENT POSITION => $currentPosition");
@@ -75,7 +75,7 @@ class PlayerController {
     stop();
     queue.clear(); //немного костыльно
     currentPosition = 0;
-    print("LIST LENGTH ${list.length}");
+    // print("LIST LENGTH ${list.length}");
     if (repeat)
       for (int i = 0; i < 10000; i++) //ещё немного костылирования
         queue.addAll(list);

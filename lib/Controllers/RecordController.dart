@@ -59,7 +59,7 @@ class RecordController {
       _powerList.add(0);
     }
 
-    print("RecordStart");
+    // print("RecordStart");
     if (await _init()) {
       await _start();
       _timer = Timer.periodic(Duration(milliseconds: 300), (Timer t) async {
@@ -88,13 +88,13 @@ class RecordController {
   }
 
   recordStop() async {
-    print('===============================================stop initiated=====');
+    // print('===============================================stop initiated=====');
     _recorder.stop();
     _timer.cancel();
     try {
       stop();
     } catch (e) {
-      print("Failed to stop rec -> $e");
+      // print("Failed to stop rec -> $e");
     }
     _current = await _recorder.current(channel: 0);
     _audioPlayer.setUrl(_current.path, isLocal: true);
@@ -190,7 +190,7 @@ class RecordController {
       _maxDuration = d;
       _loadingPLayer = false;
       setState();
-      print("player record max completed ${_maxDuration.inSeconds}");
+      // print("player record max completed ${_maxDuration.inSeconds}");
     });
 
     ///Current
@@ -213,10 +213,10 @@ class RecordController {
   }
 
   play() async {
-    print("play ${_current.path}");
+    // print("play ${_current.path}");
 
-    print("PLAYER RECORD STATE  ====================  " +
-        _audioPlayer.state.toString());
+    // print("PLAYER RECORD STATE  ====================  " +
+    //     _audioPlayer.state.toString());
     if (_audioPlayer.state == AudioPlayerState.PAUSED) {
       int result = await _audioPlayer.play(_current.path, isLocal: true);
       if (result == 1) {
@@ -257,7 +257,7 @@ class RecordController {
   }
 
   save() async {
-    print('-----------------------------------------------save---------------');
+    // print('-----------------------------------------------save---------------');
     var now = DateTime.now();
     String name = nameController.text.isNotEmpty
         ? nameController.text
@@ -271,13 +271,13 @@ class RecordController {
     int res = await AudioProvider.createLocal(name, desc, duration, path,
         ids: _uploadIndex);
     var audioId = await AudioProvider.getId(name);
-    print("===RecordId===>$audioId");
+    // print("===RecordId===>$audioId");
     var prefs = await SharedPreferences.getInstance();
     var playlistId = prefs.getInt("playlist");
     print("===playlistId===>$playlistId");
     if (playlistId != null && playlistId != 0) {
       var resp = await PlaylistProvider.addAudioToPlaylist(playlistId, [audioId]);
-      print(resp);
+      // print(resp);
     }
     setState();
     if (res != null && _open)
@@ -302,7 +302,7 @@ class RecordController {
               duration: Duration(milliseconds: duration),
               pathAudio: path,
               picture: null));
-      print(_uploadIndex);
+      // print(_uploadIndex);
       setState();
     }
   }
