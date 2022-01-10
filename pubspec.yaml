@@ -3,37 +3,36 @@ description: A new Flutter application.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 2.0.15+94
+version: 2.0.15+95
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  adapty_flutter: ^1.0.9
+  audioplayers: 0.17.0
+  connectivity: ^0.4.2
+  cupertino_icons: ^1.0.0
+  dio: ^3.0.9
+  equatable: ^2.0.3
   flutter:
     sdk: flutter
-  intl: ^0.17.0
+  flutter_audio_recorder2: ^0.0.2
   flutter_localizations:
     sdk: flutter
   flutter_svg: ^0.19.1
-  mask_text_input_formatter: ^1.0.6
-  percent_indicator: ^2.1.9+1
   http: ^0.12.0
-  shared_preferences: ^0.5.7
-  dio: ^3.0.9
-  provider: ^5.0.0
-  in_app_purchase: ^0.3.5+1
-  audioplayers: 0.17.0
-  path_provider: ^1.6.22
-  rxdart: ^0.25.0
   image_picker: ^0.6.7+17
+  in_app_purchase: ^0.3.5+1
+  intl: ^0.17.0
+  mask_text_input_formatter: ^1.0.6
+  path_provider: ^1.6.22
+  percent_indicator: ^2.1.9+1
+  provider: ^5.0.0
+  rxdart: ^0.25.0
+  shared_preferences: ^0.5.7
   sqflite: any
-  connectivity: ^0.4.2
   url_launcher: ^6.0.3
-  flutter_audio_recorder2: ^0.0.2
-  equatable: ^2.0.3
-  adapty_flutter: ^1.0.9
-
-  cupertino_icons: ^1.0.0
 
 
 dev_dependencies:
@@ -43,22 +42,20 @@ dev_dependencies:
 
 
 flutter:
-
   uses-material-design: true
-
   assets:
     - assets/images/
   #   - images/a_dot_ham.jpeg
 
   fonts:
-   - family: TT
-     fonts:
+    - family: TT
+      fonts:
         - asset: assets/fonts/TT-Regular.ttf
-   - family: TTmedium
-     fonts:
-        - asset: assets/fonts/TT-Medium.ttf     
-          
-  
+    - family: TTmedium
+      fonts:
+        - asset: assets/fonts/TT-Medium.ttf
+
+
 flutter_intl:
   enabled: true
 
