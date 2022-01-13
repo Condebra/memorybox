@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:audioplayers/audioplayers.dart';
@@ -18,6 +19,7 @@ import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:provider/provider.dart';
 import 'ButtonPlay.dart';
 import 'package:recorder/Rest/Audio/AudioProvider.dart';
+import 'package:share/share.dart';
 
 class AudioItemWidget extends StatefulWidget {
   final AudioItem item;
@@ -275,17 +277,22 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
               ),
             ),
           ),
-        // FocusedMenuItem(
-        //   onPressed: null,
-        //   title: Text(
-        //     "Поделиться",
-        //     style: TextStyle(
-        //         color: cBlack,
-        //         fontWeight: FontWeight.w400,
-        //         fontSize: 14,
-        //         fontFamily: fontFamily),
-        //   ),
-        // ),
+        if (!widget.item.isLocalAudio)
+          FocusedMenuItem(
+            onPressed: () {
+              var audioId = widget.item.idS;
+              var encodedId = base64.encode(utf8.encode(audioId.toString()));
+              Share.share("Послушай мою аудиосказку: https://memorybox.ru/audio/$encodedId");
+            },
+            title: Text(
+              "Поделиться",
+              style: TextStyle(
+                  color: cBlack,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                  fontFamily: fontFamily),
+            ),
+          ),
         // FocusedMenuItem(
         //   onPressed: null,
         //   title: Text(

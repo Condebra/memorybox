@@ -1,7 +1,12 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_recorder2/flutter_audio_recorder2.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Controllers/States/PlayerState.dart';
+import 'package:recorder/Rest/Audio/AudioProvider.dart';
 import 'package:recorder/UI/Pages/Collections/CollectionsPage.dart';
 import 'package:recorder/UI/Pages/Search/SearchPage.dart';
 import 'package:recorder/UI/Pages/Restore/Restore.dart';
@@ -15,6 +20,7 @@ import 'package:recorder/UI/widgets/MainPanel.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:provider/provider.dart';
 import 'package:recorder/Utils/app_keys.dart';
+import 'package:uni_links/uni_links.dart';
 
 import 'Pages/Home/HomePage.dart';
 
@@ -29,10 +35,51 @@ class _GeneralState extends State<General> {
 
   GeneralController controller;
 
+  Uri _initialUri;
+  Uri _latestUri;
+  StreamSubscription _sub;
+
+  void _handleLinks() async {
+    _sub = getUriLinksStream().listen((Uri uri) {
+      if (!mounted) return;
+      if (uri != null)
+        setState(() {
+          _latestUri = uri;
+        });
+      log("$_latestUri", name: "latestUri");
+    }, onError: (err) {
+      log("$err", name: "error handle");
+    });
+
+    getUriLinksStream().listen((Uri uri) {
+      log("Gotcha link ${uri.path}", name: "Gotcha");
+    }, onError: (err) {
+      log("$err", name: "Error");
+    });
+
+    try {
+      _initialUri = await getInitialUri();
+      if (_initialUri != null) {
+        var id = _initialUri
+            .toString()
+            .split("/")
+            .last;
+        // log("Initial link! $id", name: "initial");
+        var decodedId = int.parse(utf8.decode(base64.decode(id)));
+        // log("$decodedId", name: "decoded id");
+        var audio = await AudioProvider.getFromServer(decodedId);
+        controller.playerController.tapButton(audio);
+      }
+    } catch (err) {
+      log("$err", name: "Error!");
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     controller = GeneralController();
+    _handleLinks();
   }
 
   @override

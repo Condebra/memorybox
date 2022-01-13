@@ -456,12 +456,8 @@ class AudioProvider {
       }
       return null;
     } else {
-      List<AudioItem> listS =
-          response.map((i) => AudioItem.fromMap(i)).toList().cast<AudioItem>();
-      if (listS == null) {
-        listS = [];
-      }
-      return listS.length > 0 ? listS[0] : null;
+      // log("${AudioItem.fromMap(response).toMap()}", name: "145");
+      return AudioItem.fromMap(response);
     }
   }
 }

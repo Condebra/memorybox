@@ -6,7 +6,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 2.0.15+95
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.10.5 <3.0.0"
 
 dependencies:
   adapty_flutter: ^1.0.9
@@ -30,8 +30,10 @@ dependencies:
   percent_indicator: ^2.1.9+1
   provider: ^5.0.0
   rxdart: ^0.25.0
+  share: 2.0.4
   shared_preferences: ^0.5.7
   sqflite: any
+  uni_links: 0.4.0
   url_launcher: ^6.0.3
 
 

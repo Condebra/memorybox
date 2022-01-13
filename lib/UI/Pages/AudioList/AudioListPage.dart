@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Controllers/HomeController.dart';
@@ -18,6 +20,7 @@ class _AudioListPageState extends State<AudioListPage> {
   var repeatColorActive = Color.fromRGBO(255, 255, 255, 1);
   var repeatColorInActive = Color.fromRGBO(0, 0, 0, 1.0);
   bool repeatActive = false;
+  // List<AudioItem> _allAudios = [];
 
   @override
   void initState() {
@@ -81,11 +84,14 @@ class _AudioListPageState extends State<AudioListPage> {
           body: StreamBuilder<HomeState>(
               stream: context.read<GeneralController>().homeController.stream,
               builder: (context, snapshot) {
+                // if (snapshot.connectionState == ConnectionState.active &&
+                //     snapshot.hasData &&
+                //     snapshot.data.audios.isNotEmpty)
+                //   _allAudios.addAll(snapshot.data.audios);
+                // log("${_allAudios}", name: "stream");
                 if (!snapshot.hasData)
                   return Center(
-                    child: CircularProgressIndicator(
-                      // color: cBlack,
-                    ),
+                    child: CircularProgressIndicator(),
                   );
                 if (snapshot.data.audios.isEmpty)
                   return Center(
