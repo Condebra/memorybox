@@ -12,7 +12,7 @@ class PlayerController {
   Duration _maxDuration;
 
   bool _finding;
-  BehaviorSubject _streamControllerAudioState = BehaviorSubject<PlayerState>();
+  BehaviorSubject _streamControllerAudioState = BehaviorSubject<AppPlayerState>();
 
   Stream get playerStream => _streamControllerAudioState.stream;
   AudioItem _currentItem;
@@ -167,7 +167,7 @@ class PlayerController {
   }
 
   setState() {
-    PlayerState state = PlayerState(
+    AppPlayerState state = AppPlayerState(
       max: _maxDuration,
       loading: _loading,
       playing: playing,

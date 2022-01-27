@@ -24,12 +24,12 @@ import 'package:uni_links/uni_links.dart';
 
 import 'Pages/Home/HomePage.dart';
 
-class General extends StatefulWidget {
+class Home extends StatefulWidget {
   @override
-  _GeneralState createState() => _GeneralState();
+  _HomeState createState() => _HomeState();
 }
 
-class _GeneralState extends State<General> {
+class _HomeState extends State<Home> {
   Color colorActive = cBlue;
   Color colorInactive = cBlack.withOpacity(0.8);
 
@@ -90,7 +90,7 @@ class _GeneralState extends State<General> {
         children: [
           Scaffold(
             key: AppKeys.scaffoldKey,
-            body: StreamBuilder<PlayerState>(
+            body: StreamBuilder<AppPlayerState>(
                 stream: controller.playerController.playerStream,
                 builder: (context, snapshot) {
                   return Container(

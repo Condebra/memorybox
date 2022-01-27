@@ -274,7 +274,7 @@ class RecordController {
     // print("===RecordId===>$audioId");
     var prefs = await SharedPreferences.getInstance();
     var playlistId = prefs.getInt("playlist");
-    print("===playlistId===>$playlistId");
+    // print("===playlistId===>$playlistId");
     if (playlistId != null && playlistId != 0) {
       var resp = await PlaylistProvider.addAudioToPlaylist(playlistId, [audioId]);
       // print(resp);
@@ -320,7 +320,7 @@ class RecordController {
         _current.duration,
         maxPower,
         loading: _loading,
-        playerState: PlayerState(
+        playerState: AppPlayerState(
           item: null,
           state: _playerState,
           playing: true,

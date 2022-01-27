@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:recorder/DB/DB.dart';
 import 'package:recorder/Utils/checkConnection.dart';
@@ -209,6 +210,25 @@ class PlaylistProvider {
         // File file = new File(pathImage);
         // file.writeAsBytesSync(response.bodyBytes);
 
+      }
+    }
+  }
+
+  static addAudioToServerPlaylist({@required int audio, @required int playlist}) async {
+    if (audio != null && playlist != null) {
+      final _dio = Dio();
+      String token = await tokenDB();
+      var url = urlConstructor(Methods.playlist.addTo);
+      var body = {"audio": audio, "id": playlist};
+      _dio.options.headers['Authorization'] = 'Bearer $token';
+      Response response;
+      try {
+        response = await _dio.post(url, data: body);
+        // if (response.statusCode != 200)
+        //   log("${response.statusCode} - ${response.data}",
+        //       name: "add audio to playlist");
+      } catch (e) {
+        log("Error $e", name: "add audio to playlist");
       }
     }
   }

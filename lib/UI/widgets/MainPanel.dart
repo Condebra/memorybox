@@ -57,7 +57,7 @@ class _MainPanelState extends State<MainPanel> {
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
-      child: StreamBuilder<PlayerState>(
+      child: StreamBuilder<AppPlayerState>(
         stream: widget.audioStream,
         builder: (context, snapshot) {
           double editHeight = 0;
@@ -301,7 +301,7 @@ class _MainPanelState extends State<MainPanel> {
     );
   }
 
-  Widget player(PlayerState state) {
+  Widget player(AppPlayerState state) {
     String time(Duration duration) {
       String nullCheck(int c) {
         if (c < 10) {
@@ -501,7 +501,7 @@ class _MainPanelState extends State<MainPanel> {
     );
   }
 
-  Widget buttonPlay(PlayerState state, {Function onTap}) {
+  Widget buttonPlay(AppPlayerState state, {Function onTap}) {
     return GestureDetector(
       behavior: HitTestBehavior.deferToChild,
       onTap: () {

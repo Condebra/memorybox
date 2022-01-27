@@ -18,7 +18,7 @@ class RestoreController {
 
   get streamRestore => _controllerRestore.stream;
 
-  List<AudioItem> _items;
+  List<AudioItem> _items = [];
   bool _loading = false;
   bool _select = false;
 
@@ -33,7 +33,11 @@ class RestoreController {
     setState();
     // _items = await AudioProvider.deleted();
     _items = await DBProvider.db.getAudios(removed: true);
-    _items.addAll(await AudioProvider.deleted());
+    try {
+      _items.addAll(await AudioProvider.deleted());
+    } catch (e) {
+      
+    }
     _loading = false;
     setState();
   }

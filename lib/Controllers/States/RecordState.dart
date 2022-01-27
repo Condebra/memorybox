@@ -15,6 +15,6 @@ class RecordState{
   int maxPower;
   AudioItem audio;
   Duration duration;
-  PlayerState playerState;
+  AppPlayerState playerState;
   RecordState(this.status, this.power, this.duration, this.maxPower, {this.audio, this.playerState, this.loading});
 }

@@ -24,8 +24,8 @@ class HomeController {
   Function(List<CollectionItem> list) onLoadCollections;
   Function(List<AudioItem> list) onLoadAudios;
 
-  List<CollectionItem> collections;
-  List<AudioItem> audios;
+  List<CollectionItem> collections = [];
+  List<AudioItem> audios = [];
 
   final BehaviorSubject _streamController = BehaviorSubject<HomeState>();
 

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:recorder/Routes.dart';
 import 'package:recorder/Utils/tokenDB.dart';
+import 'package:get/get.dart';
 
 class Splash extends StatefulWidget {
   @override
@@ -12,9 +13,11 @@ class _SplashState extends State<Splash> {
   initHome() async {
     String token = await tokenDB();
     if(token == "null" && !await futureAuth()){
-      Navigator.pushNamedAndRemoveUntil(context, Routes.welcomeNew,(Route<dynamic> route) => false);
+      Get.offAllNamed('/login');
+      // Navigator.pushNamedAndRemoveUntil(context, Routes.welcomeNew,(Route<dynamic> route) => false);
     } else {
-      Navigator.pushNamedAndRemoveUntil(context, Routes.welcomeOld,(Route<dynamic> route) => false);
+      Get.offAllNamed('/old');
+      // Navigator.pushNamedAndRemoveUntil(context, Routes.welcomeOld,(Route<dynamic> route) => false);
     }
   }
 

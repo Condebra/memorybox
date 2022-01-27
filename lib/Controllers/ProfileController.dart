@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:recorder/Controllers/States/ProfileState.dart';
@@ -21,7 +24,7 @@ class ProfileController {
 
   bool _edit = false;
   bool _loading = false;
-  ProfileModel _profile;
+  ProfileModel profile;
   String _imagePath;
   SharedPreferences prefs;
   bool subStatus = false;
@@ -45,7 +48,7 @@ class ProfileController {
     if (prefs.getString("status") == "premium")
       subStatus = true;
     _loading = true;
-    _profile = await UserProvider.get();
+    profile = await UserProvider.get();
     _loading = false;
     setState();
   }
@@ -61,8 +64,8 @@ class ProfileController {
   }
 
   editProfile() {
-    controllerNum.text = maskFormatter.maskText(_profile.phone);
-    controllerName.text = _profile.name;
+    controllerNum.text = maskFormatter.maskText(profile.phone);
+    controllerName.text = profile.name;
     _edit = true;
     setState();
   }
@@ -77,9 +80,9 @@ class ProfileController {
     showDialogLoading(AppKeys.scaffoldKey.currentContext);
     String n;
     String p;
-    if (controllerName.text != _profile.name && controllerName.text != "")
+    if (controllerName.text != profile.name && controllerName.text != "")
       n = controllerName.text;
-    if (maskFormatter.getUnmaskedText() != _profile.phone &&
+    if (maskFormatter.getUnmaskedText() != profile.phone &&
         maskFormatter.getUnmaskedText().length == 10)
       p = maskFormatter.getUnmaskedText();
     await UserProvider.edit(name: n, phone: p, imagePath: _imagePath);
@@ -216,8 +219,10 @@ class ProfileController {
 
   logOut(BuildContext context) async {
     // print('ProfileController => Out');
-    Navigator.pushReplacementNamed(context, Routes.welcomeNew);
-    _profile = null;
+    // Navigator.pushReplacementNamed(context, Routes.welcomeNew);
+    Get.snackbar("logout", "u r no longer logged in");
+    Get.offAllNamed("/login");
+    profile = null;
     var prefs = await SharedPreferences.getInstance();
     prefs.clear();
     await DBProvider.db.deleteDataFromDB();
@@ -251,7 +256,7 @@ class ProfileController {
   setState() {
     ProfileState state = ProfileState(
       edit: _edit,
-      profile: _profile,
+      profile: profile,
       loading: _loading,
       imagePath: _imagePath,
       subStatus: subStatus,

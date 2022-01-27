@@ -2,13 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Routes.dart';
 import 'package:recorder/Utils/tokenDB.dart';
 import 'package:recorder/models/Put.dart';
 import 'package:recorder/Rest/Auth/AuthProvider.dart';
-import 'package:recorder/UI/General.dart';
+import 'package:recorder/UI/Home.dart';
 import 'package:recorder/Utils/app_keys.dart';
 
 class LoginController {
@@ -85,7 +86,8 @@ class LoginController {
 
   transitionToHome() async {
     await Future.delayed(Duration(milliseconds: 800));
-    pushHome(AppKeys.scaffoldKeyAuthOld.currentContext);
+    Get.offAllNamed('/home');
+    // pushHome(AppKeys.scaffoldKeyAuthOld.currentContext);
   }
 
   getCode() async {
@@ -102,7 +104,7 @@ class LoginController {
 
     return PageRouteBuilder(
       transitionDuration: Duration(milliseconds: 400),
-      pageBuilder: (context, animation, secondaryAnimation) => General(),
+      pageBuilder: (context, animation, secondaryAnimation) => Home(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         var begin = Offset(0.0, 1.0);
         var end = Offset.zero;

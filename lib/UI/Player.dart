@@ -58,7 +58,7 @@ class _PlayerPageState extends State<PlayerPage> {
       decoration: BoxDecoration(
           color: cBackground,
           borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
-      child: StreamBuilder<PlayerState>(
+      child: StreamBuilder<AppPlayerState>(
           stream: widget.controller.playerController.playerStream,
           builder: (context, snapshot) {
             if (!snapshot.hasData || snapshot.data.loading) {
@@ -78,7 +78,7 @@ class _PlayerPageState extends State<PlayerPage> {
     );
   }
 
-  Widget contentPlayer(PlayerState state) {
+  Widget contentPlayer(AppPlayerState state) {
     return Padding(
       padding: const EdgeInsets.only(left: 10, top: 6, right: 10, bottom: 24),
       child: Container(
@@ -189,7 +189,7 @@ class _PlayerPageState extends State<PlayerPage> {
     );
   }
 
-  Widget _image(PlayerState state) {
+  Widget _image(AppPlayerState state) {
     return ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(25)),
       child: GestureDetector(
@@ -245,7 +245,7 @@ class _PlayerPageState extends State<PlayerPage> {
     );
   }
 
-  Widget nameAndDesc(PlayerState state) {
+  Widget nameAndDesc(AppPlayerState state) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Column(
@@ -279,7 +279,7 @@ class _PlayerPageState extends State<PlayerPage> {
     );
   }
 
-  Widget _buttonPlay(PlayerState state, {Function onTap}) {
+  Widget _buttonPlay(AppPlayerState state, {Function onTap}) {
     return GestureDetector(
       behavior: HitTestBehavior.deferToChild,
       onTap: () {
@@ -308,7 +308,7 @@ class _PlayerPageState extends State<PlayerPage> {
     );
   }
 
-  _progress(PlayerState state) {
+  _progress(AppPlayerState state) {
     return Container(
       width: MediaQuery
           .of(context)
@@ -393,7 +393,7 @@ class _PlayerPageState extends State<PlayerPage> {
     );
   }
 
-  Widget showMenu(PlayerState state) {
+  Widget showMenu(AppPlayerState state) {
     return GestureDetector(
       behavior: HitTestBehavior.deferToChild,
       onTap: () {},

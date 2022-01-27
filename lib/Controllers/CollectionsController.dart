@@ -1,10 +1,12 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Controllers/RestoreController.dart';
 import 'package:recorder/Controllers/States/CollectionsState.dart';
+import 'package:recorder/Rest/Audio/AudioProvider.dart';
 import 'package:recorder/Rest/Playlist/PlaylistProvider.dart';
 import 'package:recorder/UI/AddToPlaylist.dart';
 import 'package:recorder/Utils/DialogsIntegron/DialogIntegron.dart';
@@ -264,6 +266,19 @@ class CollectionsController {
     showDialogLoading(AppKeys.scaffoldKey.currentContext);
     String c = controllerComment.text;
     String n = controllerHeader.text;
+    if (_currentItem.idS != null) {
+      _currentItem.playlist.forEach((element) async {
+        // log("${element.idS}", name: "ids");
+        if (element.idS != null) {
+          PlaylistProvider.addAudioToServerPlaylist(audio: element.idS,
+              playlist: _currentItem.idS);
+        } else {
+          var id = await AudioProvider.upload(-1, audioItem: element);
+          PlaylistProvider.addAudioToServerPlaylist(audio: id,
+              playlist: _currentItem.idS);
+        }
+      });
+    }
     await PlaylistProvider.edit(_currentItem.id,
         imagePath: _pathPhoto, desc: c, name: n, audios: _currentItem.playlist);
     closeDialog(AppKeys.scaffoldKey.currentContext);

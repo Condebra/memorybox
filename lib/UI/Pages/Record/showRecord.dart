@@ -227,7 +227,7 @@ class _RecordPageState extends State<RecordPage> {
     );
   }
 
-  Widget _contentListening(PlayerState state) {
+  Widget _contentListening(AppPlayerState state) {
     return Column(
       children: [
         SizedBox(
@@ -466,7 +466,7 @@ class _RecordPageState extends State<RecordPage> {
     );
   }
 
-  Widget _slider(PlayerState state) {
+  Widget _slider(AppPlayerState state) {
     return Container(
       width: MediaQuery.of(context).size.width,
       child: Column(

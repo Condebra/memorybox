@@ -12,34 +12,27 @@ class _AuthMethods{
   String get checkCode => "auth";
 }
 class _AudioMethods{
-  String get  upload => "upload";
-  String get  get => "audio";
-  String get  getUserAudio => "audios";
-  String get  delete => "audio/delete";
-  String get  deleted => "audios/deleted";
-  String get  restore => "audio/restore";
-  String get  edit => "audio/change";
+  String get upload => "upload";
+  String get get => "audio";
+  String get getUserAudio => "audios";
+  String get delete => "audio/delete";
+  String get deleted => "audios/deleted";
+  String get restore => "audio/restore";
+  String get edit => "audio/change";
 }
 
 class _PlaylistMethods{
-  String get  get => "playlists";
-  String get  create => "playlist/create";
-  String get  edit => "playlist/change";
+  String get get => "playlists";
+  String get create => "playlist/create";
+  String get edit => "playlist/change";
   String getAudioFromPlaylist(int idPlaylist) => "playlist/$idPlaylist";
-  String get  deleteAudio => "playlist/delete";
+  String get deleteAudio => "playlist/delete";
   String get addTo => "playlist/add";
   String deletePlaylist(int idPlaylist) => "playlist/$idPlaylist/delete";
 }
 
 class _UserMethods{
-  String get  get => "user";
-  String get  edit => "change";
+  String get get => "user";
+  String get edit => "change";
   String get delete => "delete";
-  //TODO /logout & /delete
 }
-
-
-
-
-
-

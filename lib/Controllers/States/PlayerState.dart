@@ -2,7 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:recorder/models/AudioItem.dart';
 
-class PlayerState{
+class AppPlayerState{
   final bool playing;
   final bool playerBig;
   final Duration max;
@@ -11,7 +11,7 @@ class PlayerState{
   final AudioItem item;
   final AudioPlayerState state;
 
-  PlayerState( {@required this.playing,@required  this.max, @required this.current, @required this.loading, @required this.item, @required this.state, @required this.playerBig,});
+  AppPlayerState( {@required this.playing,@required  this.max, @required this.current, @required this.loading, @required this.item, @required this.state, @required this.playerBig,});
 
   @override
   String toString() {

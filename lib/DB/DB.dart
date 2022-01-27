@@ -274,7 +274,8 @@ class DBProvider {
     item.updateAt = DateTime.now();
     item.pathAudio = item.pathAudio.replaceAll(".temp", "");
 
-    return (await db.insert(TableAudio.table, item.toMap()));
+    return (await db.insert(TableAudio.table, item.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace));
   }
 
   Future<List<CollectionItem>> getCollections() async {
