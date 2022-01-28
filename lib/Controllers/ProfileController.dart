@@ -91,6 +91,13 @@ class ProfileController {
     load();
   }
 
+  bool checkLogin() {
+    log("${profile.anonimus}", name: "check login");
+    if (profile?.anonimus == true)
+      return false;
+    return true;
+  }
+
   deleteAccount(BuildContext context) {
     showDialogRecorder(
       context: context,

@@ -135,6 +135,7 @@ class DBProvider {
     list.forEach((element) {
       listAudio.add(AudioItem.fromDB(element));
     });
+    // log("${listAudio}", name: "list audio");
     return listAudio;
   }
 
@@ -198,8 +199,9 @@ class DBProvider {
   Future<void> removeAudio(int id) async {
     Database db = await this.database;
     int deleted = 1;
-    await db.update(TableAudio.table, {TableAudio.deleted: deleted},
+    var number = await db.update(TableAudio.table, {TableAudio.deleted: deleted},
         where: "${TableAudio.id} = ?", whereArgs: [id]);
+    // log("$number", name: "remove");
   }
 
   Future<void> restoreAudio(int id) async {

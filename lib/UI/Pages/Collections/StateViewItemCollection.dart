@@ -1,8 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Controllers/States/CollectionsState.dart';
 import 'package:recorder/Style.dart';
@@ -465,6 +463,7 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
                         colorPlay: cSwamp,
                         selected: false,
                         item: list[index],
+                        userLogged: context.read<GeneralController>().profileController.checkLogin(),
                       ),
                     ),
                   ],

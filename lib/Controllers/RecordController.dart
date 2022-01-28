@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io' as io;
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
@@ -273,11 +274,19 @@ class RecordController {
     var audioId = await AudioProvider.getId(name);
     // print("===RecordId===>$audioId");
     var prefs = await SharedPreferences.getInstance();
-    var playlistId = prefs.getInt("playlist");
-    // print("===playlistId===>$playlistId");
+    int playlistId = prefs.getInt("playlist");
+    int cloudId = prefs.getInt("playlist_s");
+    // if (prefs.getInt("playlist") != null)
+    log("$playlistId, $cloudId", name: "playlist id");
     if (playlistId != null && playlistId != 0) {
       var resp = await PlaylistProvider.addAudioToPlaylist(playlistId, [audioId]);
       // print(resp);
+    }
+    if (cloudId != null && cloudId != 0) {
+      var id = await AudioProvider.upload(audioId);
+      PlaylistProvider.addAudioToServerPlaylist(audio: id,
+          playlist: cloudId);
+      // await
     }
     setState();
     if (res != null && _open)

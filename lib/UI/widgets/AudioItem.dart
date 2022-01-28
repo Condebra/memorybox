@@ -28,6 +28,7 @@ class AudioItemWidget extends StatefulWidget {
   final bool delete;
   final Function onSelect;
   final bool remove;
+  final bool userLogged;
 
   AudioItemWidget({
     @required this.item,
@@ -36,6 +37,7 @@ class AudioItemWidget extends StatefulWidget {
     this.onSelect,
     this.delete = false,
     this.remove = false,
+    this.userLogged = false,
   });
 
   @override
@@ -62,7 +64,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
               child: Container(
                 width: 50,
                 height: 50,
-                child: StreamBuilder<PlayerState>(
+                child: StreamBuilder<AppPlayerState>(
                     stream: context
                         .read<GeneralController>()
                         .playerController
@@ -135,7 +137,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
               isDelete: widget.delete,
               isSelect: widget.selected,
               isRemove: widget.remove,
-              onSelect: widget.onSelect, //(), ?
+              onSelect: widget.onSelect,
             ),
           ],
         ),
@@ -258,7 +260,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
             ),
           ),
         ),
-        if (widget.item.isLocalAudio)
+        if (widget.userLogged && widget.item.isLocalAudio) //
           FocusedMenuItem(
             onPressed: () {
               context
@@ -375,8 +377,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
           onPressed: () async {
             if (fromCloud)
               await AudioProvider.deleteOnCloud(ids: item.idS);
-            else
-              await DBProvider.db.removeAudio(item.id);
+            await DBProvider.db.removeAudio(item.id);
             await context.read<GeneralController>().homeController.load();
             Navigator.of(context).pop();
             // closeDialog(AppKeys.scaffoldKey.currentContext);

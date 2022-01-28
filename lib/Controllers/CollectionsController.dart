@@ -132,6 +132,8 @@ class CollectionsController {
   view(CollectionItem item) async {
     // print(item.toString());
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    // log("$item", name: "view item");
+    await prefs.setInt("playlist_s", item.idS);
     await prefs.setInt("playlist", item.id);
     _state = CollectionStates.loading;
     setState();
@@ -149,6 +151,7 @@ class CollectionsController {
   back() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setInt("playlist", 0);
+    await prefs.setInt("playlist_s", 0);
 
     switch (_state) {
       case CollectionStates.addAudio:

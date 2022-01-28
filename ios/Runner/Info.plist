@@ -43,6 +43,8 @@
 	<string>Чтобы добавить фото нужен доступ к галерее</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Для корректной работы нужен доступ к геоданным</string>
+	<key>UIBackgroundModes</key>
+	<string>For background audio</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

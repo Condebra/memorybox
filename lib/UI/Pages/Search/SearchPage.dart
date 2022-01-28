@@ -191,6 +191,7 @@ class _SearchPageState extends State<SearchPage> {
                     child: AudioItemWidget(
                       item: snapshot.data.results[index],
                       colorPlay: cBlueSoso,
+                      userLogged: true,
                     ));
               }),
             );

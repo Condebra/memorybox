@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/UI/widgets/AudioItem.dart';
+import 'package:recorder/Controllers/GeneralController.dart';
+import 'package:provider/provider.dart';
 
 class AudioPreviewGenerate extends StatefulWidget {
   final List<AudioItem> items;
@@ -30,6 +32,7 @@ class _AudioPreviewGenerateState extends State<AudioPreviewGenerate> {
             child: AudioItemWidget(
               item: widget.items[index],
               colorPlay: widget.colorPlay,
+              userLogged: context.read<GeneralController>().profileController.checkLogin(),
             ));
       }),
     );
