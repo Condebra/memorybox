@@ -3,7 +3,7 @@ description: A new Flutter application.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 2.0.15+96
+version: 2.0.16+96
 
 environment:
   sdk: ">=2.10.5 <3.0.0"
@@ -11,7 +11,7 @@ environment:
 dependencies:
   adapty_flutter: ^1.0.9
   audioplayers: 0.17.0
-  audio_service: 0.16.2
+  # audio_service: 0.16.2
   connectivity: ^0.4.2
   cupertino_icons: ^1.0.0
   dio: ^3.0.9
