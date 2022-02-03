@@ -9,8 +9,8 @@ import 'package:recorder/Controllers/States/CollectionsState.dart';
 import 'package:recorder/Rest/Audio/AudioProvider.dart';
 import 'package:recorder/Rest/Playlist/PlaylistProvider.dart';
 import 'package:recorder/UI/AddToPlaylist.dart';
-import 'package:recorder/Utils/DialogsIntegron/DialogIntegron.dart';
-import 'package:recorder/Utils/DialogsIntegron/DialogLoading.dart';
+import 'package:recorder/Utils/MemoryDialogs/MemoryDialog.dart';
+import 'package:recorder/Utils/MemoryDialogs/DialogLoading.dart';
 import 'package:recorder/Utils/app_keys.dart';
 import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/models/CollectionModel.dart';
@@ -228,7 +228,7 @@ class CollectionsController {
       //       "Некорректное описание плейлиста");
       // }
     } else {
-      showDialogIntegronError(AppKeys.scaffoldKey.currentContext,
+      showMemoryDialogError(AppKeys.scaffoldKey.currentContext,
           "Некорректное название плейлиста");
     }
   }

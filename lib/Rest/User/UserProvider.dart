@@ -6,13 +6,13 @@ import 'package:recorder/Utils/checkConnection.dart';
 import 'package:recorder/Utils/tokenDB.dart';
 import 'package:recorder/models/ProfileModel.dart';
 import 'package:recorder/models/Put.dart';
+import 'dart:developer';
 
 class UserProvider {
   static Future<dynamic> get() async {
     ProfileModel profile = await DBProvider.db.profileGet();
     if (await futureAuth() || !await checkConnection()) {
-      if (await futureAuth() == true)
-        profile.anonimus = true;
+      if (await futureAuth() == true) profile.anonimus = true;
       return profile;
     } else {
       String urlQuery = urlConstructor(Methods.user.get);
@@ -21,7 +21,7 @@ class UserProvider {
       var response;
       response = await Rest.post(urlQuery, body, token: token);
       if (response is Put) {
-        return response;
+        // return response;
       } else {
         ProfileModel profileS = ProfileModel.fromMap(response);
         if (profileS.name != profile.name) {
@@ -84,8 +84,7 @@ class UserProvider {
       Response response = await dio.post(
         urlQuery,
       );
-      if (response.statusCode == 200)
-        return true;
+      if (response.statusCode == 200) return true;
       print(response.statusCode);
     } catch (e) {
       print("DIO error $e");

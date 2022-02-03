@@ -10,9 +10,9 @@ import 'package:recorder/Rest/Audio/AudioProvider.dart';
 import 'package:recorder/Rest/User/UserProvider.dart';
 import 'package:recorder/Routes.dart';
 import 'package:recorder/Style.dart';
-import 'package:recorder/Utils/DialogsIntegron/DialogIntegron.dart';
-import 'package:recorder/Utils/DialogsIntegron/DialogLoading.dart';
-import 'package:recorder/Utils/DialogsIntegron/DialogRecorder.dart';
+import 'package:recorder/Utils/MemoryDialogs/MemoryDialog.dart';
+import 'package:recorder/Utils/MemoryDialogs/DialogLoading.dart';
+import 'package:recorder/Utils/MemoryDialogs/DialogRecorder.dart';
 import 'package:recorder/Utils/app_keys.dart';
 import 'package:recorder/Utils/tokenDB.dart';
 import 'package:recorder/models/ProfileModel.dart';
@@ -47,6 +47,9 @@ class ProfileController {
     // print("prefs status ${prefs.getString("status")}");
     if (prefs.getString("status") == "premium")
       subStatus = true;
+    else
+      prefs.setString("status", "free");
+    log("${prefs.getString("status")}", name: "sub");
     _loading = true;
     profile = await UserProvider.get();
     _loading = false;
@@ -93,8 +96,7 @@ class ProfileController {
 
   bool checkLogin() {
     log("${profile.anonimus}", name: "check login");
-    if (profile?.anonimus == true)
-      return false;
+    if (profile?.anonimus == true) return false;
     return true;
   }
 
@@ -120,7 +122,7 @@ class ProfileController {
         ),
       ),
       buttons: [
-        DialogIntegronButton(
+        MemoryDialogButton(
           onPressed: () {
             deleteProfile(context);
             closeDialog(context);
@@ -137,7 +139,7 @@ class ProfileController {
           background: cRed,
           borderColor: cRed,
         ),
-        DialogIntegronButton(
+        MemoryDialogButton(
           onPressed: () {
             closeDialog(context);
           },
@@ -156,7 +158,7 @@ class ProfileController {
     );
   }
 
-  logOutDialog(BuildContext context) {
+  logOutDialog(BuildContext context, {bool auth = true}) {
     showDialogRecorder(
       context: context,
       title: Text(
@@ -178,23 +180,25 @@ class ProfileController {
         ),
       ),
       buttons: [
-        DialogIntegronButton(
-          onPressed: () {
-            uploadAudioAndLogOut(context);
-            closeDialog(context);
-          },
-          textButton: Text(
-            "Загрузить и выйти",
-            style: TextStyle(
-              color: cBlueSoso,
-              fontSize: 13,
-              fontFamily: fontFamily,
-              fontWeight: FontWeight.w500,
+        if (auth)
+          MemoryDialogButton(
+            onPressed: () {
+              uploadAudioAndLogOut(context);
+              closeDialog(context);
+            },
+            textButton: Text(
+              "Загрузить и выйти",
+              style: TextStyle(
+                color: cBlueSoso,
+                fontSize: 13,
+                fontFamily: fontFamily,
+                fontWeight: FontWeight.w500,
+              ),
             ),
+            borderColor: cBlueSoso,
           ),
-          borderColor: cBlueSoso,
-        ),
-        DialogIntegronButton(
+        // else SizedBox(),
+        MemoryDialogButton(
           onPressed: () {
             logOut(context);
             // closeDialog(context);

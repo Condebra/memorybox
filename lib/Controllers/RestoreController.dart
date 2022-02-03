@@ -5,9 +5,9 @@ import 'package:recorder/Controllers/States/RestoreState.dart';
 import 'package:recorder/DB/DB.dart';
 import 'package:recorder/Rest/Audio/AudioProvider.dart';
 import 'package:recorder/Style.dart';
-import 'package:recorder/Utils/DialogsIntegron/DialogIntegron.dart';
-import 'package:recorder/Utils/DialogsIntegron/DialogLoading.dart';
-import 'package:recorder/Utils/DialogsIntegron/DialogRecorder.dart';
+import 'package:recorder/Utils/MemoryDialogs/MemoryDialog.dart';
+import 'package:recorder/Utils/MemoryDialogs/DialogLoading.dart';
+import 'package:recorder/Utils/MemoryDialogs/DialogRecorder.dart';
 import 'package:recorder/Utils/app_keys.dart';
 import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/models/Put.dart';
@@ -72,7 +72,7 @@ class RestoreController {
 
     closeDialog(AppKeys.scaffoldKey.currentContext);
     if (error != null) {
-      showDialogIntegronError(AppKeys.scaffoldKey.currentContext,
+      showMemoryDialogError(AppKeys.scaffoldKey.currentContext,
           "Во время удаления были  непредвиденные ошибки, попробуйте еще раз, если ошибка повторяется - обратитесь в тех поддержку");
     }
   }
@@ -92,7 +92,7 @@ class RestoreController {
 
     closeDialog(AppKeys.scaffoldKey.currentContext);
     if (error != null) {
-      showDialogIntegronError(AppKeys.scaffoldKey.currentContext,
+      showMemoryDialogError(AppKeys.scaffoldKey.currentContext,
           "Во время удаления были  непредвиденные ошибки, попробуйте еще раз, если ошибка повторяется - обратитесь в тех поддержку");
     }
   }
@@ -108,7 +108,7 @@ class RestoreController {
     closeDialog(AppKeys.scaffoldKey.currentContext);
 
     if (error != null) {
-      showDialogIntegronError(AppKeys.scaffoldKey.currentContext,
+      showMemoryDialogError(AppKeys.scaffoldKey.currentContext,
           "Во время удаления были  непредвиденные ошибки, попробуйте еще раз, если ошибка повторяется - обратитесь в тех поддержку");
     }
   }
@@ -125,7 +125,7 @@ class RestoreController {
     closeDialog(AppKeys.scaffoldKey.currentContext);
 
     if (error != null) {
-      showDialogIntegronError(AppKeys.scaffoldKey.currentContext,
+      showMemoryDialogError(AppKeys.scaffoldKey.currentContext,
           "Во время удаления были  непредвиденные ошибки, попробуйте еще раз, если ошибка повторяется - обратитесь в тех поддержку");
     }
   }
@@ -174,7 +174,7 @@ class RestoreController {
         ),
       ),
       buttons: [
-        DialogIntegronButton(
+        MemoryDialogButton(
           onPressed: () async {
             if (fromCloud)
               await AudioProvider.deleteOnCloud(ids: item.idS);
@@ -193,7 +193,7 @@ class RestoreController {
           background: cRed,
           borderColor: cRed,
         ),
-        DialogIntegronButton(
+        MemoryDialogButton(
           onPressed: () {
             closeDialog(AppKeys.scaffoldKey.currentContext);
             return;
@@ -239,7 +239,7 @@ class RestoreController {
           ),
         ),
         buttons: [
-          DialogIntegronButton(
+          MemoryDialogButton(
             onPressed: () async {
               closeDialog(AppKeys.scaffoldKey.currentContext);
               showDialogLoading(AppKeys.scaffoldKey.currentContext);
@@ -256,7 +256,7 @@ class RestoreController {
                 await DBProvider.db.removeAudio(element.id);
               });
               closeDialog(AppKeys.scaffoldKey.currentContext);
-              showDialogIntegronError(
+              showMemoryDialogError(
                   AppKeys.scaffoldKey.currentContext, "Удалено");
             },
             textButton: Text(
@@ -271,7 +271,7 @@ class RestoreController {
             background: cRed,
             borderColor: cRed,
           ),
-          DialogIntegronButton(
+          MemoryDialogButton(
               onPressed: () {
                 closeDialog(AppKeys.scaffoldKey.currentContext);
               },

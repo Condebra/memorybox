@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Rest/Audio/AudioProvider.dart';
 import 'package:recorder/Style.dart';
-import 'package:recorder/Utils/DialogsIntegron/DialogLoading.dart';
+import 'package:recorder/Utils/MemoryDialogs/DialogLoading.dart';
 import 'package:recorder/Utils/app_keys.dart';
 import 'package:recorder/models/AudioItem.dart';
 

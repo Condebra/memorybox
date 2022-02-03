@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 import 'package:adapty_flutter/adapty_flutter.dart';
 import 'package:adapty_flutter/models/adapty_error.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:developer';
 
 class SubscriptionPage extends StatefulWidget {
   @override
@@ -28,39 +29,44 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
   AdaptyProduct productYearly;
   SharedPreferences prefs;
   AdaptyPurchaserInfo purchaserInfo;
+  bool isPremium = false;
 
   void init() async {
     prefs = await SharedPreferences.getInstance();
+    if (prefs.getString("status") == "premium") isPremium = true;
     // TODO make a server request to check subscription status
     try {
       Adapty.activate();
     } on AdaptyError catch (adaptyErr) {
-      print("Adapty ERROR $adaptyErr");
+      log("$adaptyErr", name: "Adapty error");
     } catch (e) {
-      print("ERROR $e");
+      log("$e", name: "Error");
     }
     try {
       var getPaywallsResult = await Adapty.getPaywalls();
       paywalls = getPaywallsResult.paywalls;
     } catch (e) {
-      print(e);
+      log("$e", name: "Error");
     }
     try {
       purchaserInfo = await Adapty.getPurchaserInfo();
-      print("Info $purchaserInfo");
-      if (purchaserInfo.accessLevels['premium']?.isActive ?? false)
+      // print("Info $purchaserInfo");
+      if (purchaserInfo.accessLevels['premium']?.isActive ?? false) {
         prefs.setString("status", "premium");
-      else
+        isPremium = true;
+      } else {
         prefs.setString("status", "free");
+        isPremium = false;
+      }
     } on AdaptyError catch (e) {
-      print(e);
+      log("$e", name: "Adapty error");
     }
     // print(paywalls.length);
     // print(paywalls.first.products.length);
     this.productMonthly = paywalls.first.products.first;
     this.productYearly = paywalls.last.products.first;
     setState(() {});
-    print(prefs.getString("status"));
+    // print(prefs.getString("status"));
   }
 
   makePurchase({int id}) async {
@@ -69,10 +75,11 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
       var purchaseResult = await Adapty.makePurchase(products[id]);
       if (purchaseResult.purchaserInfo.accessLevels['premium'].isActive) {
         await prefs.setString("status", "premium");
-        print("===== You are PREMIUM user =====");
+        isPremium = true;
+        log("===== You are PREMIUM user =====", name: "make purchase");
       }
     } on AdaptyError catch (adaptyErr) {
-      print("ADAPTY ERROR $adaptyErr");
+      log("$adaptyErr", name: "Adapty error");
     }
   }
 
@@ -153,7 +160,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                         )
                       ],
                     ),
-                    child: prefs.getString("status") != "premium"
+                    child: !isPremium
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [

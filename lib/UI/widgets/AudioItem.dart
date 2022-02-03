@@ -8,8 +8,8 @@ import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Controllers/States/PlayerState.dart';
 import 'package:recorder/DB/DB.dart';
 import 'package:recorder/UI/EditingAudio.dart';
-import 'package:recorder/Utils/DialogsIntegron/DialogIntegron.dart';
-import 'package:recorder/Utils/DialogsIntegron/DialogRecorder.dart';
+import 'package:recorder/Utils/MemoryDialogs/MemoryDialog.dart';
+import 'package:recorder/Utils/MemoryDialogs/DialogRecorder.dart';
 import 'package:recorder/Utils/DropMenu/DropMenuItem.dart';
 import 'package:recorder/Utils/DropMenu/FocusedMenuHolder.dart';
 import 'package:recorder/Utils/time/TimeParse.dart';
@@ -373,7 +373,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
         ),
       ),
       buttons: [
-        DialogIntegronButton(
+        MemoryDialogButton(
           onPressed: () async {
             if (fromCloud)
               await AudioProvider.deleteOnCloud(ids: item.idS);
@@ -393,7 +393,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
           background: cRed,
           borderColor: cRed,
         ),
-        DialogIntegronButton(
+        MemoryDialogButton(
           onPressed: () {
             // closeDialog(AppKeys.scaffoldKey.currentContext);
             Navigator.of(context).pop();

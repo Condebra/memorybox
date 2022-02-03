@@ -3,8 +3,8 @@ import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Rest/Playlist/PlaylistProvider.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/Pages/Home/widgets/CollectionItemOne.dart';
-import 'package:recorder/Utils/DialogsIntegron/DialogIntegron.dart';
-import 'package:recorder/Utils/DialogsIntegron/DialogLoading.dart';
+import 'package:recorder/Utils/MemoryDialogs/MemoryDialog.dart';
+import 'package:recorder/Utils/MemoryDialogs/DialogLoading.dart';
 import 'package:recorder/Utils/app_keys.dart';
 import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/models/CollectionModel.dart';
@@ -68,7 +68,7 @@ class _AddAudioContentState extends State<AddAudioContent> {
     });
     closeDialog(context);
     // if (response.code == 201) {
-      showDialogIntegronError(context, "Добавлено");
+      showMemoryDialogError(context, "Добавлено");
       widget.controller.homeController.load();
     // } else {
     //   showDialogIntegronError(context, "Не удалось добавть");

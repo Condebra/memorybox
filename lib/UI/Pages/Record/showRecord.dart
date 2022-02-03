@@ -4,9 +4,9 @@ import 'package:flutter_audio_recorder2/flutter_audio_recorder2.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Controllers/States/PlayerState.dart';
 import 'package:recorder/Style.dart';
-import 'package:recorder/Utils/DialogsIntegron/DialogIntegron.dart';
-import 'package:recorder/Utils/DialogsIntegron/DialogLoading.dart';
-import 'package:recorder/Utils/DialogsIntegron/DialogRecorder.dart';
+import 'package:recorder/Utils/MemoryDialogs/MemoryDialog.dart';
+import 'package:recorder/Utils/MemoryDialogs/DialogLoading.dart';
+import 'package:recorder/Utils/MemoryDialogs/DialogRecorder.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:recorder/Utils/app_keys.dart';
 
@@ -284,7 +284,7 @@ class _RecordPageState extends State<RecordPage> {
                       ),
                     ),
                     buttons: [
-                      DialogIntegronButton(
+                      MemoryDialogButton(
                           onPressed: () {
                             closeDialog(context);
                             closeDialog(context);
@@ -300,7 +300,7 @@ class _RecordPageState extends State<RecordPage> {
                           ),
                           background: cRed,
                           borderColor: cRed),
-                      DialogIntegronButton(
+                      MemoryDialogButton(
                         onPressed: () {
                           closeDialog(context);
                         },

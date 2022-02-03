@@ -228,7 +228,7 @@ class _ProfilePageState extends State<ProfilePage> {
               context
                   .read<GeneralController>()
                   .profileController
-                  .logOut(context);
+                  .logOutDialog(context, auth: false);
             },
             child: Text(
               "Войти в приложение",

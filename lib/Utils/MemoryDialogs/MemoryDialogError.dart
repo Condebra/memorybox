@@ -1,7 +1,7 @@
-part of 'DialogIntegron.dart';
+part of 'MemoryDialog.dart';
 
-showDialogIntegronError(BuildContext context, String text) async {
-  await showDialogIntegron(
+showMemoryDialogError(BuildContext context, String text) async {
+  await showMemoryDialog(
     context: context,
     title: Text(
       "Сообщение",
