@@ -20,6 +20,7 @@ import 'package:provider/provider.dart';
 import 'ButtonPlay.dart';
 import 'package:recorder/Rest/Audio/AudioProvider.dart';
 import 'package:share/share.dart';
+import 'package:recorder/generated/l10n.dart';
 
 class AudioItemWidget extends StatefulWidget {
   final AudioItem item;
@@ -251,7 +252,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
             editAudio(widget.item, context.read<GeneralController>());
           },
           title: Text(
-            "Редактировать",
+            S.current.edit,
             style: TextStyle(
               color: cBlack,
               fontWeight: FontWeight.w400,
@@ -270,7 +271,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
               context.read<GeneralController>().homeController.load();
             },
             title: Text(
-              "Загрузить в облако",
+              S.current.upload_to_cloud,
               style: TextStyle(
                 color: cBlack,
                 fontWeight: FontWeight.w400,
@@ -284,10 +285,10 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
             onPressed: () {
               var audioId = widget.item.idS;
               var encodedId = base64.encode(utf8.encode(audioId.toString()));
-              Share.share("Послушай мою аудиосказку: https://memorybox.ru/audio/$encodedId");
+              Share.share("${S.current.share_msg}: https://memorybox.ru/audio/$encodedId");
             },
             title: Text(
-              "Поделиться",
+              S.current.share,
               style: TextStyle(
                   color: cBlack,
                   fontWeight: FontWeight.w400,
@@ -298,7 +299,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
         // FocusedMenuItem(
         //   onPressed: null,
         //   title: Text(
-        //     "Скачать",
+        //     S.current.download,
         //     style: TextStyle(
         //       color: cBlack,
         //       fontWeight: FontWeight.w400,
@@ -313,7 +314,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
               delete(widget.item);
             },
             title: Text(
-              "Удалить с устройства",
+              S.current.delete_local,
               style: TextStyle(
                 color: cBlack,
                 fontWeight: FontWeight.w400,
@@ -330,7 +331,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
               // context.read<GeneralController>().homeController.loadAudios();
             },
             title: Text(
-              "Удалить из облака",
+              S.current.delete_cloud,
               style: TextStyle(
                 color: cBlack,
                 fontWeight: FontWeight.w400,
@@ -355,7 +356,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
     showDialogRecorder(
       context: context,
       title: Text(
-        "Точно удалить?",
+        S.current.sure,
         style: TextStyle(
           color: cBlack,
           fontWeight: FontWeight.w400,
@@ -364,7 +365,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
         ),
       ),
       body: Text(
-        "Запись будет помещена в корзину, \n чтобы вы смогли её восстановить",
+        S.current.delete_to_trash,
         textAlign: TextAlign.center,
         style: TextStyle(
           color: cBlack.withOpacity(0.7),
@@ -383,7 +384,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
             // closeDialog(AppKeys.scaffoldKey.currentContext);
           },
           textButton: Text(
-            "Да",
+            S.current.yes,
             style: TextStyle(
                 color: cBackground,
                 fontSize: 16,
@@ -399,7 +400,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
             Navigator.of(context).pop();
           },
           textButton: Text(
-            "Нет",
+            S.current.no,
             style: TextStyle(
                 color: cBlueSoso,
                 fontSize: 16,

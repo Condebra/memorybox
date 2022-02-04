@@ -8,6 +8,7 @@ import 'package:recorder/Style.dart';
 import 'package:recorder/Utils/MemoryDialogs/DialogLoading.dart';
 import 'package:recorder/Utils/app_keys.dart';
 import 'package:recorder/models/AudioItem.dart';
+import 'package:recorder/generated/l10n.dart';
 
 editAudio(AudioItem item, GeneralController controller) {
   showModalBottomSheet(
@@ -101,7 +102,7 @@ class _EditAudioContentState extends State<EditAudioContent> {
                   widget.controller.homeController.load();
                 },
                 child: Text(
-                  "Сохранить",
+                  S.current.save,
                   style: TextStyle(
                       color: cBlack,
                       fontWeight: FontWeight.w400,
@@ -163,7 +164,7 @@ class _EditAudioContentState extends State<EditAudioContent> {
                     fontWeight: FontWeight.w400,
                     fontFamily: fontFamily,
                     fontSize: 24),
-                hintText: "Название",
+                hintText: S.current.name,
               ),
               style: TextStyle(
                   color: cBlack,
@@ -185,7 +186,7 @@ class _EditAudioContentState extends State<EditAudioContent> {
                     fontWeight: FontWeight.w400,
                     fontFamily: fontFamily,
                     fontSize: 20),
-                hintText: "Описание",
+                hintText: S.current.description,
               ),
               style: TextStyle(
                   color: cBlack,
@@ -197,7 +198,7 @@ class _EditAudioContentState extends State<EditAudioContent> {
           Padding(
             padding: EdgeInsets.symmetric(vertical: 6),
             child: Text(
-              "Длительность: ${widget.item.duration.toString().split(".").first.padLeft(8, "0")}",
+              "${S.current.length}: ${widget.item.duration.toString().split(".").first.padLeft(8, "0")}",
               style: TextStyle(
                 color: cBlack.withOpacity(.8),
                 fontWeight: FontWeight.w400,
@@ -209,7 +210,7 @@ class _EditAudioContentState extends State<EditAudioContent> {
           Padding(
             padding: EdgeInsets.symmetric(vertical: 6),
             child: Text(
-              "Создано: $createdDate в $createdTime",
+              "${S.current.created_at}: $createdDate в $createdTime",
               style: TextStyle(
                 color: cBlack.withOpacity(.8),
                 fontWeight: FontWeight.w400,
@@ -223,7 +224,7 @@ class _EditAudioContentState extends State<EditAudioContent> {
             child: Row(
               children: [
                 Text(
-                  "Загружено в облако: ",
+                  "${S.current.upload_to_cloud}: ",
                   style: TextStyle(
                     color: cBlack.withOpacity(.8),
                     fontWeight: FontWeight.w400,
@@ -232,7 +233,7 @@ class _EditAudioContentState extends State<EditAudioContent> {
                   ),
                 ),
                 Text(
-                  widget.item.uploadAudio ? "Да" : "Нет",
+                  widget.item.uploadAudio ? S.current.yes : S.current.no,
                   style: TextStyle(
                     color: cBlack.withOpacity(.8),
                     fontWeight: FontWeight.w400,
@@ -243,7 +244,6 @@ class _EditAudioContentState extends State<EditAudioContent> {
               ],
             ),
           ),
-          // Text("${widget.item.toMap()}", style: TextStyle(color: Colors.black),),
         ],
       ),
     );

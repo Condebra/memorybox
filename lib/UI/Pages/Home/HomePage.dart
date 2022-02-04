@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:recorder/Controllers/HomeController.dart';
@@ -58,6 +60,7 @@ class _HomePageState extends State<HomePage> {
               builder: (context, snapshot) {
                 if (!snapshot.hasData)
                   return Center(child: CircularProgressIndicator());
+                log("${snapshot.data.collections}", name: "collections");
                 return SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   padding: EdgeInsets.symmetric(horizontal: 5),

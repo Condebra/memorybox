@@ -3,6 +3,8 @@ import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/models/ProfileModel.dart';
 import 'package:recorder/Style.dart';
 import 'package:provider/provider.dart';
+import 'package:recorder/generated/l10n.dart';
+
 class ProfileName extends StatefulWidget {
   final bool isEdit;
   final ProfileModel person;
@@ -18,7 +20,7 @@ class _ProfileNameState extends State<ProfileName> {
     return widget.isEdit
         ? nameIsEdit(context)
         : Text(
-            '${widget.person.name??"Анонимус"}',
+            '${widget.person.name ?? S.current.anonymous}',
             style: nameTextStyle,
           );
   }
@@ -37,7 +39,7 @@ class _ProfileNameState extends State<ProfileName> {
         style: nameTextStyle,
         decoration: InputDecoration(
           border: InputBorder.none,
-          hintText: widget.person.name ?? "Иван Иванов",
+          hintText: widget.person.name ?? S.current.fake_name,
           hintStyle: TextStyle(color: cBlack.withOpacity(.4)),
           // hintStyle: nameTextStyle,
         ),

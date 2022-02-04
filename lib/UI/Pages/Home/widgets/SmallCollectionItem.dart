@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/models/CollectionModel.dart';
+import 'package:recorder/generated/l10n.dart';
 
 class SmallCollectionItem extends StatefulWidget {
   String img;
@@ -159,11 +160,11 @@ class _SmallCollectionItemState extends State<SmallCollectionItem> {
                                     SizedBox(
                                       height: 15,
                                     ),
-                                    Text("${widget.audioQuantity} аудио",
+                                    Text("${widget.audioQuantity} ${S.current.audio}",
                                         style: TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400)),
-                                    Text("${widget.item.duration.inHours} часа",
+                                    Text("${widget.item.duration.inHours} ${S.current.hours}",
                                         style: TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400)),

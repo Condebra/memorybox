@@ -61,11 +61,11 @@ class _CollectionPhotoWidgetState extends State<CollectionPhotoWidget> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('${widget.item.count} аудио',
+                                Text('${widget.item.count} ${S.current.audio.toLowerCase()}',
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400)),
-                                Text('${widget.item.duration} минут',
+                                Text('${widget.item.duration} ${S.current.minutes}',
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400))
@@ -97,7 +97,7 @@ class _CollectionPhotoWidgetState extends State<CollectionPhotoWidget> {
                                           Color.fromRGBO(255, 255, 255, 0.8)),
                                   SizedBox(width: 7),
                                   Text(
-                                    S.of(context).play_all,
+                                    S.current.play_all,
                                     style: TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400),

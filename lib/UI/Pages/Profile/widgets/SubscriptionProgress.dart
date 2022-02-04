@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:recorder/models/ProfileModel.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/Pages/Profile/widgets/ProgressBar.dart';
+import 'package:recorder/generated/l10n.dart';
 
 class SubscriptionProgress extends StatefulWidget {
   final ProfileModel person;
@@ -34,7 +35,7 @@ class _SubscriptionProgressState extends State<SubscriptionProgress> {
           SizedBox(
             height: 8,
           ),
-          Text('Использовано места в облаке: \n${widget.person.max - widget.person.free}/${widget.person.max} мб',
+          Text('${S.current.used_cloud_space}: \n${widget.person.max - widget.person.free}/${widget.person.max} ${S.current.mb}',
               style: subscriptionTextStyle, textAlign: TextAlign.center,)
         ],
       ),

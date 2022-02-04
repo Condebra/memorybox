@@ -77,7 +77,7 @@ class _LoginState extends State<Login> {
         Column(
           children: [
             Text(
-              S.of(context).hello_new1,
+              S.current.hello_new1,
               style: TextStyle(
                 color: cBlack,
                 fontWeight: FontWeight.w400,
@@ -89,7 +89,7 @@ class _LoginState extends State<Login> {
               height: 12,
             ),
             Text(
-              S.of(context).hello_new2,
+              S.current.hello_new2,
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: cBlack,
@@ -107,7 +107,7 @@ class _LoginState extends State<Login> {
           onTap: () {
             controller.stepOneTap();
           },
-          text: S.of(context).btn_next,
+          text: S.current.btn_next,
         ),
         SizedBox(),
         SizedBox(),
@@ -125,7 +125,7 @@ class _LoginState extends State<Login> {
           Column(
             children: [
               Text(
-                S.of(context).enter_num,
+                S.current.enter_num,
                 style: TextStyle(
                   color: cBlack,
                   fontWeight: FontWeight.w400,
@@ -188,7 +188,7 @@ class _LoginState extends State<Login> {
                   onTap: () {
                     controller.stepTwoTap(context);
                   },
-                  text: S.of(context).btn_next),
+                  text: S.current.btn_next),
               SizedBox(
                 height: 24,
               ),
@@ -197,7 +197,7 @@ class _LoginState extends State<Login> {
                   controller.futureAuthSet(true, restartContext: context);
                 },
                 child: Text(
-                  S.of(context).later,
+                  S.current.later,
                   style: TextStyle(
                     color: cBlack,
                     fontSize: 24,
@@ -223,7 +223,7 @@ class _LoginState extends State<Login> {
             child: Padding(
               padding: const EdgeInsets.all(25.0),
               child: Text(
-                S.of(context).desc_register,
+                S.current.desc_register,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: cBlack,
@@ -249,7 +249,7 @@ class _LoginState extends State<Login> {
           Column(
             children: [
               Text(
-                S.of(context).enter_code,
+                S.current.enter_code,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: cBlack,
@@ -310,7 +310,7 @@ class _LoginState extends State<Login> {
                   onTap: () {
                     controller.stepThreeTap(context);
                   },
-                  text: S.of(context).btn_next),
+                  text: S.current.btn_next),
               Text(
                 "",
                 style: TextStyle(
@@ -336,7 +336,7 @@ class _LoginState extends State<Login> {
             child: Padding(
               padding: const EdgeInsets.all(25.0),
               child: Text(
-                S.of(context).desc_register,
+                S.current.desc_register,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: cBlack,
@@ -370,7 +370,7 @@ class _LoginState extends State<Login> {
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
             child: Text(
-              S.of(context).hello_old,
+              S.current.hello_old,
               style: TextStyle(
                   color: cBlack,
                   fontSize: 24,
@@ -399,7 +399,7 @@ class _LoginState extends State<Login> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 75, vertical: 16),
           child: Text(
-            S.of(context).btn_next,
+            S.current.btn_next,
             style: TextStyle(
               color: cBackground,
               fontSize: 18,

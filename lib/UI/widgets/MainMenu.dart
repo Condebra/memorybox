@@ -3,6 +3,7 @@ import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:provider/provider.dart';
+import 'package:recorder/generated/l10n.dart';
 
 class MainMenu extends StatefulWidget {
   @override
@@ -64,35 +65,35 @@ class _MainMenuState extends State<MainMenu> {
                     item(
                         iconSvg(IconsSvg.home,
                             height: 30, width: 30, color: cBlack),
-                        "Главная", onTap: () {
+                        S.current.main, onTap: () {
                       context.read<GeneralController>().setPage(0);
                       context.read<GeneralController>().setMenu(false);
                     }),
                     item(
                         iconSvg(IconsSvg.profile,
                             height: 30, width: 30, color: cBlack),
-                        "Профиль", onTap: () {
+                        S.current.profile, onTap: () {
                       context.read<GeneralController>().setPage(4);
                       context.read<GeneralController>().setMenu(false);
                     }),
                     item(
                         iconSvg(IconsSvg.category,
                             height: 30, width: 30, color: cBlack),
-                        "Подборки", onTap: () {
+                        S.current.playlists, onTap: () {
                       context.read<GeneralController>().setPage(1);
                       context.read<GeneralController>().setMenu(false);
                     }),
                     item(
                         iconSvg(IconsSvg.paper,
                             height: 30, width: 30, color: cBlack),
-                        "Все аудиофайлы", onTap: () {
+                        "${S.current.all} ${S.current.audio_appbar.toLowerCase()}", onTap: () {
                       context.read<GeneralController>().setPage(3);
                       context.read<GeneralController>().setMenu(false);
                     }),
                     item(
                         iconSvg(IconsSvg.search,
                             height: 30, width: 30, color: cBlack),
-                        "Поиск", onTap: () {
+                        S.current.search, onTap: () {
                       context
                           .read<GeneralController>()
                           .setPage(5, restore: true);
@@ -100,7 +101,7 @@ class _MainMenuState extends State<MainMenu> {
                     item(
                         iconSvg(IconsSvg.delete,
                             height: 30, width: 30, color: cBlack),
-                        "Недавно удаленные", onTap: () {
+                        S.current.recently_deleted, onTap: () {
                       context
                           .read<GeneralController>()
                           .setPage(2, restore: true);
@@ -110,7 +111,7 @@ class _MainMenuState extends State<MainMenu> {
                     item(
                         iconSvg(IconsSvg.wallet,
                             height: 30, width: 30, color: cBlack),
-                        "Подписка", onTap: () {
+                        S.current.subscription, onTap: () {
                       context.read<GeneralController>().openSubscribe();
                       context.read<GeneralController>().setMenu(false);
                     }),
@@ -126,7 +127,7 @@ class _MainMenuState extends State<MainMenu> {
                           color: cBlack,
                           size: 30,
                         ),
-                        "Написать в поддержку", onTap: () {
+                        S.current.support, onTap: () {
                       context.read<GeneralController>().support();
                     }),
                   ],

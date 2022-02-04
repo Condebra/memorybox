@@ -9,6 +9,7 @@ import 'package:recorder/Utils/MemoryDialogs/DialogLoading.dart';
 import 'package:recorder/Utils/MemoryDialogs/DialogRecorder.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:recorder/Utils/app_keys.dart';
+import 'package:recorder/generated/l10n.dart';
 
 // PersistentBottomSheetController _controller;
 Future<void> showRecord(GeneralController controller) async {
@@ -93,7 +94,7 @@ class _RecordPageState extends State<RecordPage> {
                 Navigator.pop(context);
               },
               child: Text(
-                "Отменить",
+                S.current.cancel,
                 style: TextStyle(
                     color: cBlack,
                     fontSize: 16,
@@ -111,12 +112,13 @@ class _RecordPageState extends State<RecordPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Запись",
+              S.current.record,
               style: TextStyle(
-                  color: cBlack,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: fontFamily,
-                  fontSize: 24),
+                color: cBlack,
+                fontWeight: FontWeight.w400,
+                fontFamily: fontFamily,
+                fontSize: 24,
+              ),
             )
           ],
         ),
@@ -201,9 +203,6 @@ class _RecordPageState extends State<RecordPage> {
                   onTap: () async {
                     widget.controller.recordController
                         .tapPause(widget.controller.collectionsController);
-                    // ==========================================================================stop!
-                    // Put res = await widget.controller.recordController.save();
-                    // await widget.controller.homeController.load();
                   },
                   child: Container(
                     height: 80,
@@ -266,7 +265,7 @@ class _RecordPageState extends State<RecordPage> {
                   showDialogRecorder(
                     context: context,
                     title: Text(
-                      "Точно удалить?",
+                      S.current.sure,
                       style: TextStyle(
                         color: cBlack,
                         fontWeight: FontWeight.w400,
@@ -275,7 +274,7 @@ class _RecordPageState extends State<RecordPage> {
                       ),
                     ),
                     body: Text(
-                      "Запись будет безвозвратно удалена ",
+                      S.current.delete_record,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: cBlack.withOpacity(0.7),
@@ -290,7 +289,7 @@ class _RecordPageState extends State<RecordPage> {
                             closeDialog(context);
                           },
                           textButton: Text(
-                            "Удалить",
+                            S.current.delete,
                             style: TextStyle(
                               color: cBackground,
                               fontSize: 16,
@@ -305,7 +304,7 @@ class _RecordPageState extends State<RecordPage> {
                           closeDialog(context);
                         },
                         textButton: Text(
-                          "Нет",
+                          S.current.no,
                           style: TextStyle(
                             color: cBlueSoso,
                             fontSize: 16,
@@ -346,7 +345,7 @@ class _RecordPageState extends State<RecordPage> {
                   // _controller.close();
                 },
                 child: Text(
-                  "Сохранить?",
+                  "${S.current.save}?",
                   style: TextStyle(
                     color: cBlack,
                     fontSize: 16,
@@ -375,7 +374,7 @@ class _RecordPageState extends State<RecordPage> {
                     fontWeight: FontWeight.w400,
                     fontFamily: fontFamily,
                     fontSize: 24),
-                hintText: "Введите название",
+                hintText: S.current.enter_name,
               ),
               style: TextStyle(
                   color: cBlack,
@@ -397,7 +396,7 @@ class _RecordPageState extends State<RecordPage> {
                     fontWeight: FontWeight.w400,
                     fontFamily: fontFamily,
                     fontSize: 16),
-                hintText: "Введите описание",
+                hintText: S.current.enter_description,
               ),
               style: TextStyle(
                   color: cBlack.withOpacity(0.5),

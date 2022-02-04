@@ -43,7 +43,7 @@ class _AudioPreviewState extends State<AudioPreview> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    S.of(context).audios,
+                    S.current.audios,
                     style: TextStyle(
                         color: cBlack,
                         fontSize: 24,
@@ -54,7 +54,7 @@ class _AudioPreviewState extends State<AudioPreview> {
                       context.read<GeneralController>().setPage(3);
                     },
                     child: Text(
-                      S.of(context).open_all,
+                      S.current.open_all,
                       style: TextStyle(
                           color: cBlack,
                           fontSize: 14,
@@ -99,7 +99,7 @@ class _AudioPreviewState extends State<AudioPreview> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Text(
-            S.of(context).text_of_empty_audios,
+            S.current.text_of_empty_audios,
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 20,

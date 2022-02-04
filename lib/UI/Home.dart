@@ -21,6 +21,7 @@ import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:provider/provider.dart';
 import 'package:recorder/Utils/app_keys.dart';
 import 'package:uni_links/uni_links.dart';
+import 'package:recorder/generated/l10n.dart';
 
 import 'Pages/Home/HomePage.dart';
 
@@ -147,7 +148,7 @@ class _HomeState extends State<Home> {
                         iconInactive: iconSvg(IconsSvg.home,
                             color: colorInactive, width: 24, height: 24),
                         text: Text(
-                          "Главная",
+                          S.current.main,
                           style: TextStyle(color: cBlue, fontSize: 10),
                         ),
                       ),
@@ -157,7 +158,7 @@ class _HomeState extends State<Home> {
                         iconInactive: iconSvg(IconsSvg.category,
                             width: 24, height: 24, color: colorInactive),
                         text: Text(
-                          "Подборки",
+                          S.current.playlists,
                           style: TextStyle(color: cBlue, fontSize: 10),
                         ),
                       ),
@@ -218,7 +219,7 @@ class _HomeState extends State<Home> {
                               );
                             }),
                         text: Text(
-                          "Запись",
+                          S.current.record,
                           style: TextStyle(color: cBlue, fontSize: 10),
                         ),
                       ),
@@ -228,7 +229,7 @@ class _HomeState extends State<Home> {
                         iconInactive: iconSvg(IconsSvg.paper,
                             width: 24, height: 24, color: colorInactive),
                         text: Text(
-                          "Аудиозаписи",
+                          S.current.audios,
                           style: TextStyle(color: cBlue, fontSize: 10),
                         ),
                       ),
@@ -238,7 +239,7 @@ class _HomeState extends State<Home> {
                         iconInactive: iconSvg(IconsSvg.profile,
                             width: 24, height: 24, color: colorInactive),
                         text: Text(
-                          "Профиль",
+                          S.current.profile,
                           style: TextStyle(color: cBlue, fontSize: 10),
                         ),
                       ),

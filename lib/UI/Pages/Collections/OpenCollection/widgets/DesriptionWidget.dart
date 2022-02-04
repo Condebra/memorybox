@@ -23,7 +23,7 @@ class _DescriptionWidgetState extends State<DescriptionWidget> {
           ),
           SizedBox(height: 9),
           Text(
-            S.of(context).more_detailed,
+            S.current.more_detailed,
             style: TextStyle(
                 color: cBlack.withOpacity(0.5),
                 fontSize: 13,

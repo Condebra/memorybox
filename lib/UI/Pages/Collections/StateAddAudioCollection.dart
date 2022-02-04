@@ -7,6 +7,7 @@ import 'package:recorder/UI/widgets/Appbar.dart';
 import 'package:recorder/UI/widgets/AudioItem.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:recorder/models/AudioItem.dart';
+import 'package:recorder/generated/l10n.dart';
 
 class StateAddAudioCollection extends StatefulWidget {
   @override
@@ -48,7 +49,7 @@ class _StateAddAudioCollectionState extends State<StateAddAudioCollection> {
             child: Column(
               children: [
                 Text(
-                  "Выбрать",
+                  S.current.choose,
                   style: TextStyle(
                     fontSize: 36,
                     fontWeight: FontWeight.w700,
@@ -150,7 +151,7 @@ class _StateAddAudioCollectionState extends State<StateAddAudioCollection> {
         }
         if (list == null || list.isEmpty)
           return Center(
-            child: Text("Нет аудиозаписей"),
+            child: Text(S.current.no_audio),
           );
         return Column(
           children: List.generate(list.length, (index) {

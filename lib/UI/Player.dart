@@ -15,6 +15,7 @@ import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:recorder/Utils/app_keys.dart';
 import 'package:recorder/Utils/time/TimeParse.dart';
 import 'package:provider/provider.dart';
+import 'package:recorder/generated/l10n.dart';
 
 Future<void> showPlayer(GeneralController controller) async {
   // await AppKeys.scaffoldKey.currentState.showBottomSheet(
@@ -39,7 +40,6 @@ class PlayerPage extends StatefulWidget {
 }
 
 class _PlayerPageState extends State<PlayerPage> {
-
   @override
   void initState() {
     super.initState();
@@ -122,9 +122,8 @@ class _PlayerPageState extends State<PlayerPage> {
                       onTap: () {
                         try {
                           if (state.current.inSeconds > 15)
-                            widget.controller.playerController.seek(
-                                Duration(
-                                    seconds: state.current.inSeconds - 15));
+                            widget.controller.playerController.seek(Duration(
+                                seconds: state.current.inSeconds - 15));
                           else
                             widget.controller.playerController
                                 .seek(Duration(seconds: 0));
@@ -175,9 +174,11 @@ class _PlayerPageState extends State<PlayerPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding( //there will be repeat button
+                  Padding(
+                    //there will be repeat button
                     padding: const EdgeInsets.all(4.0),
-                    child: iconSvg(IconsSvg.audioRepeat, color: Colors.transparent),
+                    child: iconSvg(IconsSvg.audioRepeat,
+                        color: Colors.transparent),
                   ),
                   showMenu(state),
                 ],
@@ -208,32 +209,32 @@ class _PlayerPageState extends State<PlayerPage> {
                 width: 300,
                 child: !state.item.isLocalPicture
                     ? Image.network(
-                  state.item.picture,
-                  fit: BoxFit.cover,
-                )
+                        state.item.picture,
+                        fit: BoxFit.cover,
+                      )
                     : state.item.picture == null
-                    ? Image.asset(
-                  "assets/images/play.png",
-                  fit: BoxFit.cover,
-                )
-                    : Image.file(
-                  File(state.item.picture),
-                  fit: BoxFit.cover,
-                ),
+                        ? Image.asset(
+                            "assets/images/play.png",
+                            fit: BoxFit.cover,
+                          )
+                        : Image.file(
+                            File(state.item.picture),
+                            fit: BoxFit.cover,
+                          ),
               ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [
-                          Color.fromRGBO(0, 0, 0, 0),
-                          Color.fromRGBO(69, 69, 69, .08),
-                          Color.fromRGBO(69, 69, 69, .5),
-                        ],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                      )),
+                    colors: [
+                      Color.fromRGBO(0, 0, 0, 0),
+                      Color.fromRGBO(69, 69, 69, .08),
+                      Color.fromRGBO(69, 69, 69, .5),
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  )),
                   height: 300,
                   width: 300,
                 ),
@@ -292,28 +293,25 @@ class _PlayerPageState extends State<PlayerPage> {
         height: 60,
         child: state == null || state.loading == null || state.loading
             ? Container(
-          decoration: BoxDecoration(
-            color: cBackground,
-            borderRadius: BorderRadius.all(Radius.circular(100)),
-          ),
-          child: Center(
-            child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(cBlueSoso)),
-          ),
-        )
+                decoration: BoxDecoration(
+                  color: cBackground,
+                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                ),
+                child: Center(
+                  child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(cBlueSoso)),
+                ),
+              )
             : state.state == AudioPlayerState.PLAYING
-            ? iconSvg(IconsSvg.pause, color: cOrange, width: 80, height: 80)
-            : iconSvg(IconsSvg.play, color: cOrange, width: 50, height: 50),
+                ? iconSvg(IconsSvg.pause, color: cOrange, width: 80, height: 80)
+                : iconSvg(IconsSvg.play, color: cOrange, width: 50, height: 50),
       ),
     );
   }
 
   _progress(AppPlayerState state) {
     return Container(
-      width: MediaQuery
-          .of(context)
-          .size
-          .width,
+      width: MediaQuery.of(context).size.width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -337,13 +335,13 @@ class _PlayerPageState extends State<PlayerPage> {
                     ? 1.toDouble()
                     : state.max.inMilliseconds.toDouble()),
                 value: (state == null || state.current == null
-                    ? 0.toDouble()
-                    : state.current.inMilliseconds.toDouble())
+                        ? 0.toDouble()
+                        : state.current.inMilliseconds.toDouble())
                     .clamp(
-                    0,
-                    (state == null || state.max == null
-                        ? 1.toDouble()
-                        : state.max.inMilliseconds.toDouble())),
+                        0,
+                        (state == null || state.max == null
+                            ? 1.toDouble()
+                            : state.max.inMilliseconds.toDouble())),
                 onChangeStart: (info) {
                   //context.read<GeneralController>().playerController.pause();
                 },
@@ -367,8 +365,7 @@ class _PlayerPageState extends State<PlayerPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "${time(
-                      state == null ? Duration(seconds: 0) : state.current)}",
+                  "${time(state == null ? Duration(seconds: 0) : state.current)}",
                   style: TextStyle(
                     color: cBlack,
                     fontSize: 12,
@@ -403,82 +400,77 @@ class _PlayerPageState extends State<PlayerPage> {
         duration: Duration(milliseconds: 50),
         menuBoxDecoration: BoxDecoration(
             color: Colors.white,
-            borderRadius:
-            BorderRadius.all(Radius.circular(15))),
-        menuWidth: MediaQuery
-            .of(context)
-            .size
-            .width / 2,
+            borderRadius: BorderRadius.all(Radius.circular(15))),
+        menuWidth: MediaQuery.of(context).size.width / 2,
         menuOffset: 10,
         menuItems: [
           FocusedMenuItem(
             onPressed: () {
-              addToPlaylist([state.item],
-                  context.read<GeneralController>());
+              addToPlaylist([state.item], context.read<GeneralController>());
             },
             title: Text(
-              "Добавить в подборку",
+              S.current.add_to_playlist,
               style: TextStyle(
-                  color: cBlack,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 14,
-                  fontFamily: fontFamily),
+                color: cBlack,
+                fontWeight: FontWeight.w400,
+                fontSize: 14,
+                fontFamily: fontFamily,
+              ),
             ),
           ),
           FocusedMenuItem(
             onPressed: () {
-              editAudio(state.item,
-                  context.read<GeneralController>());
+              editAudio(state.item, context.read<GeneralController>());
             },
             title: Text(
-              "Редактировать",
+              S.current.edit,
               style: TextStyle(
-                  color: cBlack,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 14,
-                  fontFamily: fontFamily),
+                color: cBlack,
+                fontWeight: FontWeight.w400,
+                fontSize: 14,
+                fontFamily: fontFamily,
+              ),
             ),
           ),
           FocusedMenuItem(
             onPressed: null,
             title: Text(
-              "Поделиться",
+              S.current.share,
               style: TextStyle(
-                  color: cBlack,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 14,
-                  fontFamily: fontFamily),
+                color: cBlack,
+                fontWeight: FontWeight.w400,
+                fontSize: 14,
+                fontFamily: fontFamily,
+              ),
             ),
           ),
-          FocusedMenuItem(
-            onPressed: null,
-            title: Text(
-              "Скачать",
-              style: TextStyle(
-                  color: cBlack,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 14,
-                  fontFamily: fontFamily),
-            ),
-          ),
+          // FocusedMenuItem(
+          //   onPressed: null,
+          //   title: Text(
+          //     S.current.download,
+          //     style: TextStyle(
+          //         color: cBlack,
+          //         fontWeight: FontWeight.w400,
+          //         fontSize: 14,
+          //         fontFamily: fontFamily),
+          //   ),
+          // ),
           FocusedMenuItem(
             onPressed: () async {
               await context
                   .read<GeneralController>()
                   .restoreController
                   .delete(state.item);
-              context
-                  .read<GeneralController>()
-                  .homeController
-                  .load();
+              context.read<GeneralController>().homeController.load();
             },
             title: Text(
-              "Удалить",
+              S.current.delete,
               style: TextStyle(
-                  color: cBlack,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 14,
-                  fontFamily: fontFamily),
+                color: cBlack,
+                fontWeight: FontWeight.w400,
+                fontSize: 14,
+                fontFamily: fontFamily,
+              ),
             ),
           ),
         ],

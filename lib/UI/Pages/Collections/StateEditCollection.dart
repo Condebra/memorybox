@@ -8,6 +8,7 @@ import 'package:recorder/UI/widgets/Appbar.dart';
 import 'package:recorder/UI/widgets/AudioItem.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:recorder/models/AudioItem.dart';
+import 'package:recorder/generated/l10n.dart';
 
 class StateEditCollection extends StatefulWidget {
   @override
@@ -241,7 +242,7 @@ class _StateEditCollectionState extends State<StateEditCollection> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Нет аудиозаписей",
+                      S.current.no_audio,
                       style: TextStyle(
                           color: cBlack.withOpacity(0.4),
                           fontFamily: fontFamily,
@@ -267,7 +268,7 @@ class _StateEditCollectionState extends State<StateEditCollection> {
                             ),
                           ),
                           child: Text(
-                            "Добавить аудиофайл",
+                            "${S.current.add} ${S.current.audio.toLowerCase()}",
                             style: TextStyle(
                               color: cBlack,
                               fontFamily: fontFamily,
@@ -321,7 +322,7 @@ class _StateEditCollectionState extends State<StateEditCollection> {
                         ),
                       ),
                       child: Text(
-                        "Добавить аудиофайл",
+                        "${S.current.add} ${S.current.audio.toLowerCase()}",
                         style: TextStyle(
                           color: cBlack,
                           fontFamily: fontFamily,

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Controllers/States/RestoreState.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/widgets/Appbar.dart';
-import 'package:provider/provider.dart';
 import 'package:recorder/UI/widgets/AudioItem.dart';
 import 'package:recorder/Utils/DropMenu/DropMenuItem.dart';
 import 'package:recorder/Utils/DropMenu/FocusedMenuHolder.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
+import 'package:recorder/generated/l10n.dart';
 
 class Restore extends StatefulWidget {
   @override
@@ -53,7 +54,7 @@ class _RestoreState extends State<Restore> {
                         .setSelect(true);
                   },
                   title: Text(
-                    "Выбрать несколько",
+                    S.current.select_several,
                     style: TextStyle(
                         color: cBlack,
                         fontWeight: FontWeight.w400,
@@ -69,7 +70,7 @@ class _RestoreState extends State<Restore> {
                         .deleteAll();
                   },
                   title: Text(
-                    "Удалить все",
+                    "${S.current.delete} ${S.current.all}",
                     style: TextStyle(
                         color: cBlack,
                         fontWeight: FontWeight.w400,
@@ -85,7 +86,7 @@ class _RestoreState extends State<Restore> {
                         .restoreAll();
                   },
                   title: Text(
-                    "Восстановить все",
+                    "${S.current.restore} ${S.current.all}",
                     style: TextStyle(
                         color: cBlack,
                         fontWeight: FontWeight.w400,
@@ -114,7 +115,8 @@ class _RestoreState extends State<Restore> {
               child: Column(
                 children: [
                   Text(
-                    "Недавно\nудаленные",
+                    "${S.current.recently_deleted.split(" ").first}\n"
+                        "${S.current.recently_deleted.split(" ").last}",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 36,
@@ -189,7 +191,7 @@ class _RestoreState extends State<Restore> {
                         .setSelect(false);
                   },
                   child: Text(
-                    "Отменить",
+                    S.current.cancel,
                     style: TextStyle(
                         color: cBackground,
                         fontFamily: fontFamily,
@@ -231,7 +233,7 @@ class _RestoreState extends State<Restore> {
   Widget _empty() {
     return Center(
       child: Text(
-        'Тут пусто',
+        S.current.empty,
         style: TextStyle(
             color: cBlack.withOpacity(0.7),
             fontWeight: FontWeight.w700,

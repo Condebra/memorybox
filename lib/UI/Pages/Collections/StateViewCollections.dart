@@ -6,6 +6,7 @@ import 'package:recorder/Style.dart';
 import 'package:recorder/UI/Pages/Home/widgets/CollectionItemOne.dart';
 import 'package:recorder/UI/widgets/Appbar.dart';
 import 'package:provider/provider.dart';
+import 'package:recorder/generated/l10n.dart';
 
 class StateViewCollection extends StatefulWidget {
 
@@ -47,7 +48,7 @@ class _StateViewCollectionState extends State<StateViewCollection> {
           child: Column(
             children: [
               Text(
-                "Подборки",
+                S.current.playlists,
                 style: TextStyle(
                     fontSize: 36,
                     fontWeight: FontWeight.w700,
@@ -58,7 +59,7 @@ class _StateViewCollectionState extends State<StateViewCollection> {
                 height: 4,
               ),
               Text(
-                "Все в одном месте",
+                S.current.all_in_one_place,
                 style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
@@ -79,7 +80,7 @@ class _StateViewCollectionState extends State<StateViewCollection> {
           if (snapshot.data.items == null || snapshot.data.items.isEmpty)
             return Center(
               child: Text(
-                'Тут пусто',
+                S.current.empty,
                 style: TextStyle(
                     color: cBlack.withOpacity(0.7),
                     fontWeight: FontWeight.w700,

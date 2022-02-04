@@ -66,7 +66,7 @@ class _OldPersonState extends State<OldPerson> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 21),
             child: Text(
-              S.of(context).hello_old,
+              S.current.hello_old,
               style: TextStyle(
                   fontWeight: FontWeight.w400,
                   fontFamily: fontFamily,
@@ -92,7 +92,7 @@ class _OldPersonState extends State<OldPerson> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 21),
             child: Text(
-              S.of(context).hello_old_desc,
+              S.current.hello_old_desc,
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontWeight: FontWeight.w400,

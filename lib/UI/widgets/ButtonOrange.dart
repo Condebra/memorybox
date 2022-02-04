@@ -58,7 +58,7 @@ class _ButtonOrangeState extends State<ButtonOrange> {
                 vertical: 16 - (longTap ? 1 : 0).toDouble()),
             child: Text(
               widget.text,
-              // S.of(context).btn_next,
+              // S.current.btn_next,
               style: TextStyle(
                 color: cBackground,
                 fontSize: 18,

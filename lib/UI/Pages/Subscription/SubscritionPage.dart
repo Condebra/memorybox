@@ -115,7 +115,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                 child: Column(
                   children: [
                     Text(
-                      S.of(context).subscription,
+                      S.current.subscription,
                       style: TextStyle(
                         fontSize: 36,
                         fontWeight: FontWeight.w700,
@@ -127,7 +127,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                       height: 4,
                     ),
                     Text(
-                      S.of(context).more_opportunity,
+                      S.current.more_opportunity,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
@@ -168,7 +168,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 34),
                                 child: Text(
-                                  S.of(context).choose_subscription,
+                                  S.current.choose_subscription,
                                   style: TextStyle(
                                     fontFamily: fontFamilyMedium,
                                     color: cBlack,
@@ -190,13 +190,13 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                   items: [
                                     SubscriptionPrice(
                                       price:
-                                          "${this.productMonthly?.localizedPrice ?? S.of(context).price_for_month}",
-                                      timeDuration: S.of(context).for_month,
+                                          "${this.productMonthly?.localizedPrice ?? S.current.price_for_month}",
+                                      timeDuration: S.current.for_month,
                                     ),
                                     SubscriptionPrice(
                                       price:
-                                          "${this.productYearly?.localizedPrice ?? S.of(context).price_for_year}",
-                                      timeDuration: S.of(context).for_year,
+                                          "${this.productYearly?.localizedPrice ?? S.current.price_for_year}",
+                                      timeDuration: S.current.for_year,
                                     )
                                   ],
                                 ),
@@ -216,7 +216,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                         padding:
                                             const EdgeInsets.only(bottom: 20),
                                         child: Text(
-                                          S.of(context).subscription_preference,
+                                          S.current.subscription_preference,
                                           style: TextStyle(
                                             fontFamily: fontFamilyMedium,
                                             color: cBlack,
@@ -227,17 +227,17 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                       ),
                                       buildRow(
                                         context,
-                                        S.of(context).no_limit_memory,
+                                        S.current.no_limit_memory,
                                         IconsSvg.infinity,
                                       ),
                                       buildRow(
                                         context,
-                                        S.of(context).cloud_storage,
+                                        S.current.cloud_storage,
                                         IconsSvg.cloudStorage,
                                       ),
                                       buildRow(
                                         context,
-                                        S.of(context).no_limit_downloads,
+                                        S.current.no_limit_downloads,
                                         IconsSvg.download,
                                       ),
                                     ],
@@ -255,8 +255,8 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                     makePurchase(id: currentIndex);
                                   },
                                   text: currentIndex == 0
-                                      ? S.of(context).subscription_for_month
-                                      : S.of(context).subscription_for_year,
+                                      ? S.current.subscription_for_month
+                                      : S.current.subscription_for_year,
                                 ),
                               ),
                             ],
@@ -279,7 +279,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                 ),
                                 SizedBox(height: 6),
                                 Text(
-                                  "Спасибо за поддержку!",
+                                  S.current.premium_thanks,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 18,
@@ -288,15 +288,15 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                   ),
                                 ),
                                 SizedBox(height: 6),
-                                Text(
-                                  "Следующий платёж: ??",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w300,
-                                    color: cBlack,
-                                  ),
-                                ),
+                                // Text(
+                                //   "Следующий платёж: ??",
+                                //   textAlign: TextAlign.center,
+                                //   style: TextStyle(
+                                //     fontSize: 18,
+                                //     fontWeight: FontWeight.w300,
+                                //     color: cBlack,
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),

@@ -54,7 +54,7 @@ class _CollectionItemOneState extends State<CollectionItemOne> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      S.of(context).titleOfEmptyCollection,
+                      S.current.titleOfEmptyCollection,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w400,
@@ -70,7 +70,7 @@ class _CollectionItemOneState extends State<CollectionItemOne> {
                                 bottom:
                                     BorderSide(color: cBackground, width: 1))),
                         child: Text(
-                          S.of(context).add,
+                          S.current.add,
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
@@ -190,11 +190,11 @@ class _CollectionItemOneState extends State<CollectionItemOne> {
                                     SizedBox(
                                       height: 15,
                                     ),
-                                    Text("${widget.item.count} аудио",
+                                    Text("${widget.item.count} ${S.current.audio.toLowerCase()}",
                                         style: TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400)),
-                                    Text("${widget.item.duration.inHours} часа",
+                                    Text("${widget.item.duration.inHours} ${S.current.hours}",
                                         style: TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400)),

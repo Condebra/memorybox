@@ -9,6 +9,7 @@ import 'package:recorder/UI/widgets/Appbar.dart';
 import 'package:recorder/UI/widgets/AudioItem.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:recorder/models/AudioItem.dart';
+import 'package:recorder/generated/l10n.dart';
 
 class StateSelectSeveralCollection extends StatefulWidget {
   @override
@@ -32,7 +33,7 @@ class _StateSelectSeveralCollectionState
         buttonDone: true,
         padding: 10,
         top: 25,
-        textRightButton: "отменить",
+        textRightButton: S.current.cancel,
         height: 90,
         tapLeftButton: () {
           context.read<GeneralController>().collectionsController.back();
@@ -49,7 +50,7 @@ class _StateSelectSeveralCollectionState
             child: Column(
               children: [
                 Text(
-                  "Выбрать",
+                  S.current.choose,
                   style: TextStyle(
                     fontSize: 36,
                     fontWeight: FontWeight.w700,
@@ -144,7 +145,7 @@ class _StateSelectSeveralCollectionState
         if (!snapshot.hasData)
           return Center(child: CircularProgressIndicator());
         return Text(
-          snapshot.data?.currentItem?.name ?? "Подборка",
+          snapshot.data?.currentItem?.name ?? S.current.playlist,
           style: TextStyle(
             color: cBackground,
             fontSize: 24,
@@ -248,7 +249,7 @@ class _StateSelectSeveralCollectionState
                       padding: const EdgeInsets.symmetric(
                           vertical: 16, horizontal: 30),
                       child: Text(
-                        "${snapshot.data?.currentItem?.count} аудио\n${timeInfo(snapshot.data?.currentItem?.duration)}",
+                        "${snapshot.data?.currentItem?.count} ${S.current.audio}\n${timeInfo(snapshot.data?.currentItem?.duration)}",
                         style: TextStyle(
                           color: cBackground,
                           fontWeight: FontWeight.w400,
@@ -301,7 +302,7 @@ class _StateSelectSeveralCollectionState
                                         width: 10,
                                       ),
                                       Text(
-                                        "Запустить все",
+                                        S.current.play_all,
                                         style: TextStyle(
                                           color: cBackground,
                                           fontFamily: fontFamily,

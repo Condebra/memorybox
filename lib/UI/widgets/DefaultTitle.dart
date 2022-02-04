@@ -12,14 +12,14 @@ class _DefaultTitleState extends State<DefaultTitle> {
   Widget build(BuildContext context) {
     return RichText(
       text: TextSpan(
-          text: S.of(context).app_name,
+          text: S.current.app_name,
           style: TextStyle(
               fontSize: 48,
               fontFamily: fontFamily,
               fontWeight: FontWeight.w700),
           children: [
             TextSpan(
-                text: "\n${S.of(context).slogan}",
+                text: "\n${S.current.slogan}",
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: fontFamily,

@@ -20,6 +20,7 @@ class _AudioListPageState extends State<AudioListPage> {
   var repeatColorActive = Color.fromRGBO(255, 255, 255, 1);
   var repeatColorInActive = Color.fromRGBO(0, 0, 0, 1.0);
   bool repeatActive = false;
+
   // List<AudioItem> _allAudios = [];
 
   @override
@@ -59,23 +60,25 @@ class _AudioListPageState extends State<AudioListPage> {
               child: Column(
                 children: [
                   Text(
-                    S.of(context).audio_appbar,
+                    S.current.audio_appbar,
                     style: TextStyle(
-                        fontSize: 36,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: fontFamilyMedium,
-                        letterSpacing: 2),
+                      fontSize: 36,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: fontFamilyMedium,
+                      letterSpacing: 2,
+                    ),
                   ),
                   SizedBox(
                     height: 4,
                   ),
                   Text(
-                    S.of(context).audio_appbar_subtitle,
+                    S.current.audio_appbar_subtitle,
                     style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: fontFamilyMedium,
-                        letterSpacing: 2),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: fontFamilyMedium,
+                      letterSpacing: 2,
+                    ),
                   )
                 ],
               ),
@@ -96,12 +99,12 @@ class _AudioListPageState extends State<AudioListPage> {
                 if (snapshot.data.audios.isEmpty)
                   return Center(
                     child: Text(
-                      'Тут пусто',
+                      S.current.empty,
                       style: TextStyle(
                           color: cBlack.withOpacity(0.7),
                           fontWeight: FontWeight.w700,
                           fontSize: 20,
-                          fontFamily: fontFamily),
+                          fontFamily: fontFamily,),
                     ),
                   );
                 return SingleChildScrollView(
@@ -116,7 +119,7 @@ class _AudioListPageState extends State<AudioListPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             playlistInfo(snapshot.data),
-                            playlistButton(snapshot.data.audios)
+                            playlistButton(snapshot.data.audios),
                           ],
                         ),
                       ),
@@ -164,7 +167,7 @@ class _AudioListPageState extends State<AudioListPage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 7),
                     child: Text(
-                      S.of(context).play_all,
+                      S.current.play_all,
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
@@ -213,7 +216,7 @@ class _AudioListPageState extends State<AudioListPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '${state.audios.length} ${S.of(context).audio}',
+          '${state.audios.length} ${S.current.audio}',
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w400,

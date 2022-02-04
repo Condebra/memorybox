@@ -18,6 +18,7 @@ import 'package:recorder/Utils/tokenDB.dart';
 import 'package:recorder/models/ProfileModel.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:recorder/generated/l10n.dart';
 
 class ProfileController {
   final _picker = ImagePicker();
@@ -104,7 +105,7 @@ class ProfileController {
     showDialogRecorder(
       context: context,
       title: Text(
-        "Точно удалить?",
+        S.current.sure,
         style: TextStyle(
           color: cBlack,
           fontWeight: FontWeight.w400,
@@ -113,7 +114,7 @@ class ProfileController {
         ),
       ),
       body: Text(
-        "Все аудиофайлы исчезнут и восстановить аккаунт будет невозможно",
+        S.current.delete_account_body,
         textAlign: TextAlign.center,
         style: TextStyle(
           color: cBlack.withOpacity(0.7),
@@ -128,7 +129,7 @@ class ProfileController {
             closeDialog(context);
           },
           textButton: Text(
-            "Удалить",
+            S.current.delete,
             style: TextStyle(
               color: cBackground,
               fontSize: 16,
@@ -144,7 +145,7 @@ class ProfileController {
             closeDialog(context);
           },
           textButton: Text(
-            "Нет",
+            S.current.no,
             style: TextStyle(
               color: cBlueSoso,
               fontSize: 16,
@@ -162,7 +163,7 @@ class ProfileController {
     showDialogRecorder(
       context: context,
       title: Text(
-        "Вы точно хотите выйти?",
+        S.current.sure,
         style: TextStyle(
           color: cBlack,
           fontWeight: FontWeight.w400,
@@ -171,7 +172,7 @@ class ProfileController {
         ),
       ),
       body: Text(
-        "У вас есть записи, не загруженные в облако. При выходе они исчезнут.",
+        S.current.not_uploaded_audio,
         textAlign: TextAlign.center,
         style: TextStyle(
           color: cBlack.withOpacity(0.7),
@@ -187,7 +188,7 @@ class ProfileController {
               closeDialog(context);
             },
             textButton: Text(
-              "Загрузить и выйти",
+              S.current.upload_exit,
               style: TextStyle(
                 color: cBlueSoso,
                 fontSize: 13,
@@ -204,7 +205,7 @@ class ProfileController {
             // closeDialog(context);
           },
           textButton: Text(
-            "Выйти",
+            S.current.exit,
             style: TextStyle(
               color: cBackground,
               fontSize: 14,
@@ -231,7 +232,7 @@ class ProfileController {
   logOut(BuildContext context) async {
     // print('ProfileController => Out');
     // Navigator.pushReplacementNamed(context, Routes.welcomeNew);
-    Get.snackbar("logout", "u r no longer logged in");
+    // Get.snackbar("logout", "u r no longer logged in");
     Get.offAllNamed("/login");
     profile = null;
     var prefs = await SharedPreferences.getInstance();
@@ -246,21 +247,15 @@ class ProfileController {
     // print("attempt $attempt");
     if (await UserProvider.delete()) {
       logOut(context);
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     content: Text("Пользователь удалён"),
-      //   ),
-      // );
+      Get.snackbar(
+        S.current.delete_profile,
+        S.current.delete_account_success,
+      );
     } else {
-      // print("False");
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     content: Text("Произошла ошибка удаления"),
-      //     behavior: SnackBarBehavior.floating,
-      //     backgroundColor: cBlack,
-      //     onVisible: () {print("SnackBar!");},
-      //   ),
-      // );
+      Get.snackbar(
+        S.current.delete_profile,
+        S.current.delete_account_error,
+      );
     }
   }
 

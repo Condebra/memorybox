@@ -77,7 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: Column(
                     children: [
                       Text(
-                        "Профиль",
+                        S.current.profile,
                         style: TextStyle(
                           fontSize: 36,
                           fontWeight: FontWeight.w700,
@@ -89,7 +89,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         height: 4,
                       ),
                       Text(
-                        "Твоя частичка",
+                        S.current.your_particle,
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
@@ -184,7 +184,7 @@ class _ProfilePageState extends State<ProfilePage> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                "У вас безлимит.\nСпасибо за поддержку!",
+                "${S.current.you_unlimited}\n${S.current.premium_thanks}",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 18,
@@ -214,7 +214,7 @@ class _ProfilePageState extends State<ProfilePage> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              "Войдите в приложение, чтобы использовать все его функции!",
+              S.current.login_perks,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 20,
@@ -231,7 +231,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   .logOutDialog(context, auth: false);
             },
             child: Text(
-              "Войти в приложение",
+              S.current.login,
               style: bottomProfileTextStyle(isLogOut: true),
             ),
           ),
@@ -252,9 +252,9 @@ class _ProfilePageState extends State<ProfilePage> {
           context.read<GeneralController>().profileController.editProfile();
       },
       child: state.edit
-          ? Text(S.of(context).save, style: phoneTextStyle(isPhone: false))
+          ? Text(S.current.save, style: phoneTextStyle(isPhone: false))
           : Text(
-              S.of(context).edit_number,
+              S.current.edit,
               style: TextStyle(
                   fontSize: 14, fontWeight: FontWeight.w400, color: cBlack),
             ),
@@ -275,7 +275,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   .logOutDialog(context);
             },
             child: Text(
-              S.of(context).log_out,
+              S.current.log_out,
               style: bottomProfileTextStyle(isLogOut: true),
             ),
           ),
@@ -287,7 +287,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   .deleteAccount(context);
             },
             child: Text(
-              S.of(context).delete_profile,
+              S.current.delete_profile,
               style: bottomProfileTextStyle(isLogOut: false),
             ),
           ),
@@ -306,7 +306,7 @@ class _ProfilePageState extends State<ProfilePage> {
         padding: EdgeInsets.only(bottom: 1),
         decoration: BoxDecoration(
             border: Border(bottom: BorderSide(color: cBlack, width: 1))),
-        child: Text(S.of(context).subscription, style: subscriptionTextStyle),
+        child: Text(S.current.subscription, style: subscriptionTextStyle),
       ),
     );
   }

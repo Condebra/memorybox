@@ -7,6 +7,8 @@ import 'package:recorder/UI/widgets/Appbar.dart';
 import 'package:provider/provider.dart';
 import 'package:recorder/UI/widgets/AudioItem.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
+import 'package:recorder/generated/l10n.dart';
+
 class SearchPage extends StatefulWidget {
   @override
   _SearchPageState createState() => _SearchPageState();
@@ -40,7 +42,7 @@ class _SearchPageState extends State<SearchPage> {
               child: Column(
                 children: [
                   Text(
-                    "Поиск",
+                    S.current.search,
                     style: TextStyle(
                         fontSize: 36,
                         fontWeight: FontWeight.w700,
@@ -51,7 +53,7 @@ class _SearchPageState extends State<SearchPage> {
                     height: 4,
                   ),
                   Text(
-                    "Найди потеряшку",
+                    S.current.find_lost,
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
@@ -109,7 +111,7 @@ class _SearchPageState extends State<SearchPage> {
                 // contentPadding: EdgeInsets.all(0),
                 enabledBorder: InputBorder.none,
                 focusedBorder: InputBorder.none,
-                hintText: "Поиск",
+                hintText: S.current.search,
                 hintStyle: TextStyle(
                   color: cBlack.withOpacity(0.5),
                   fontSize: 20,

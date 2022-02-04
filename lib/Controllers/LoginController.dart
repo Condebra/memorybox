@@ -11,6 +11,7 @@ import 'package:recorder/models/Put.dart';
 import 'package:recorder/Rest/Auth/AuthProvider.dart';
 import 'package:recorder/UI/Home.dart';
 import 'package:recorder/Utils/app_keys.dart';
+import 'package:recorder/generated/l10n.dart';
 
 class LoginController {
   PageController controllerPages = PageController(initialPage: 0);
@@ -39,7 +40,7 @@ class LoginController {
     } else
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text("Номер телефона слишком короткий"),
+          content: Text(S.current.short_number),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -60,7 +61,7 @@ class LoginController {
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text("Неправильный код"),
+            content: Text(S.current.wrong_code),
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -70,7 +71,7 @@ class LoginController {
     } else
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text("Код слишком короткий"),
+          content: Text(S.current.short_code),
           behavior: SnackBarBehavior.floating,
         ),
       );

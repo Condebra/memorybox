@@ -36,7 +36,7 @@ class _CollectionsState extends State<Collections> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(S.of(context).collections,
+                Text(S.current.collections,
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w400,
@@ -47,7 +47,7 @@ class _CollectionsState extends State<Collections> {
                   onTap: () {
                     context.read<GeneralController>().setPage(1);
                   },
-                  child: Text(S.of(context).open_all,
+                  child: Text(S.current.open_all,
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
@@ -104,10 +104,10 @@ class _CollectionsState extends State<Collections> {
                       widget.items.length > 1 ? widget.items[1].count : null,
                   img: widget.items.length > 1 ? widget.items[1].picture : null,
                   text: widget.items.length == 0
-                      ? S.of(context).here
+                      ? S.current.here
                       : widget.items.length > 1
                           ? null
-                          : S.of(context).add,
+                          : S.current.add,
                   length: widget.items.length,
                   contColor: Color.fromRGBO(241, 180, 136, 0.8),
                   onTap: () {
@@ -132,10 +132,10 @@ class _CollectionsState extends State<Collections> {
                   audioQuantity:
                       widget.items.length > 2 ? widget.items[2].count : null,
                   text: widget.items.length == 0
-                      ? S.of(context).and_here
+                      ? S.current.and_here
                       : widget.items.length > 2
                           ? null
-                          : S.of(context).add,
+                          : S.current.add,
                   length: widget.items.length - 1,
                   contColor: Color.fromRGBO(103, 139, 210, 0.8),
                   onTap: () {

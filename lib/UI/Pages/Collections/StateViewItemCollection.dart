@@ -11,6 +11,7 @@ import 'package:recorder/Utils/DropMenu/DropMenuItem.dart';
 import 'package:recorder/Utils/DropMenu/FocusedMenuHolder.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:recorder/models/AudioItem.dart';
+import 'package:recorder/generated/l10n.dart';
 
 class StateViewItemCollection extends StatefulWidget {
   @override
@@ -36,7 +37,7 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
         buttonDone: false,
         padding: 10,
         top: 25,
-        textRightButton: "Добавить",
+        textRightButton: S.current.add,
         height: 90,
         tapLeftButton: () {
           context.read<GeneralController>().collectionsController.back();
@@ -65,7 +66,7 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
                       .createRouteOnEdit(currentPage: 1);
                 },
                 title: Text(
-                  "Редактировать",
+                  S.current.edit,
                   style: TextStyle(
                       color: cBlack,
                       fontWeight: FontWeight.w400,
@@ -81,7 +82,7 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
                       .selectSeveral();
                 },
                 title: Text(
-                  "Выбрать несколько",
+                  S.current.select_several,
                   style: TextStyle(
                       color: cBlack,
                       fontWeight: FontWeight.w400,
@@ -97,7 +98,7 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
                       .deleteCurrent();
                 },
                 title: Text(
-                  "Удалить подборку",
+                  S.current.delete_playlist,
                   style: TextStyle(
                       color: cBlack,
                       fontWeight: FontWeight.w400,
@@ -108,7 +109,7 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
               FocusedMenuItem(
                 onPressed: () {}, //TODO share not written
                 title: Text(
-                  "Поделиться",
+                  S.current.share,
                   style: TextStyle(
                       color: cBlack,
                       fontWeight: FontWeight.w400,
@@ -167,7 +168,7 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
             .streamCollections,
         builder: (context, snapshot) {
           return Text(
-            snapshot.data?.currentItem?.name ?? "Подборка",
+            snapshot.data?.currentItem?.name ?? S.current.playlist,
             style: TextStyle(
               color: cBackground,
               fontSize: 24,
@@ -266,7 +267,7 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
                         padding: const EdgeInsets.symmetric(
                             vertical: 16, horizontal: 30),
                         child: Text(
-                          "${snapshot.data?.currentItem?.count} аудио\n${timeInfo(snapshot.data?.currentItem?.duration)}",
+                          "${snapshot.data?.currentItem?.count} ${S.current.audio}\n${timeInfo(snapshot.data?.currentItem?.duration)}",
                           style: TextStyle(
                               color: cBackground,
                               fontWeight: FontWeight.w400,
@@ -318,7 +319,7 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
                                           width: 10,
                                         ),
                                         Text(
-                                          "Запустить все",
+                                          S.current.play_all,
                                           style: TextStyle(
                                             color: cBackground,
                                             fontFamily: fontFamily,
@@ -440,7 +441,7 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
             width: MediaQuery.of(context).size.width,
             child: Center(
               child: Text(
-                "Нет аудиозаписей",
+                S.current.no_audio,
                 style: TextStyle(
                   color: cBlack.withOpacity(0.4),
                   fontFamily: fontFamily,

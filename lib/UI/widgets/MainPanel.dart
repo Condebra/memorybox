@@ -8,6 +8,7 @@ import 'package:recorder/Controllers/States/RestoreState.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:provider/provider.dart';
+import 'package:recorder/generated/l10n.dart';
 
 class ItemMainPanel {
   final Widget icon;
@@ -61,242 +62,451 @@ class _MainPanelState extends State<MainPanel> {
         stream: widget.audioStream,
         builder: (context, snapshot) {
           double editHeight = 0;
-          if(snapshot.hasData){
-            if(snapshot.data.playing && !snapshot.data.playerBig){
+          if (snapshot.hasData) {
+            if (snapshot.data.playing && !snapshot.data.playerBig) {
               editHeight = 75;
             }
           }
           return AnimatedContainer(
             duration: Duration(milliseconds: 200),
             width: MediaQuery.of(context).size.width,
-            height: (widget.height ?? 100)+editHeight,
+            height: (widget.height ?? 100) + editHeight,
             child: Stack(
               children: [
                 AnimatedPadding(
                   duration: Duration(milliseconds: 400),
-                  padding:  EdgeInsets.only(bottom: (snapshot.hasData && snapshot.data.playing)?(widget.height ?? 100):0),
+                  padding: EdgeInsets.only(
+                      bottom: (snapshot.hasData && snapshot.data.playing)
+                          ? (widget.height ?? 100)
+                          : 0),
                   child: player(snapshot.data),
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Container(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-                        boxShadow: [
-                          BoxShadow(
-                            offset: Offset(0, 4),
-                            blurRadius: 50,
-                            spreadRadius: 10,
-                            color: Color.fromRGBO(0, 0, 0, 0.15),
-                          )
-                        ],
-                        color: widget.backgroundColor),
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(20)),
+                      boxShadow: [
+                        BoxShadow(
+                          offset: Offset(0, 4),
+                          blurRadius: 50,
+                          spreadRadius: 10,
+                          color: Color.fromRGBO(0, 0, 0, 0.15),
+                        )
+                      ],
+                      color: widget.backgroundColor,
+                    ),
                     width: MediaQuery.of(context).size.width,
                     height: (widget.height ?? 100),
                     child: StreamBuilder<RestoreState>(
-                      stream: context.read<GeneralController>().restoreController.streamRestore,
+                      stream: context
+                          .read<GeneralController>()
+                          .restoreController
+                          .streamRestore,
                       builder: (context, snapshot) {
                         return StreamBuilder<int>(
-                          stream: context.read<GeneralController>().streamCurrentPage,
+                          stream: context
+                              .read<GeneralController>()
+                              .streamCurrentPage,
                           builder: (context, snapshotPage) {
                             return StreamBuilder<CollectionsState>(
-                              stream: context.read<GeneralController>().collectionsController.streamCollections,
+                              stream: context
+                                  .read<GeneralController>()
+                                  .collectionsController
+                                  .streamCollections,
                               builder: (context, snapshotCollections) {
                                 return Stack(
                                   children: [
                                     AnimatedPositioned(
-                                      left: (snapshotCollections.hasData && snapshotCollections.data.stateSelect == CollectionStates.select)?0.0:(!snapshot.hasData)||!(snapshot.data.select??false)|| snapshotPage.data != 2?-MediaQuery.of(context).size.width*2:-MediaQuery.of(context).size.width,
+                                      left: (snapshotCollections.hasData &&
+                                              snapshotCollections.data.stateSelect ==
+                                                  CollectionStates.select)
+                                          ? 0.0
+                                          : (!snapshot.hasData) ||
+                                                  !(snapshot.data.select ??
+                                                      false) ||
+                                                  snapshotPage.data != 2
+                                              ? -MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  2
+                                              : -MediaQuery.of(context)
+                                                  .size
+                                                  .width,
                                       duration: Duration(milliseconds: 200),
                                       child: Row(
                                         children: [
                                           Container(
                                             height: (widget.height ?? 100),
-                                            width: MediaQuery.of(context).size.width,
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
                                               children: [
                                                 InkWell(
-                                                  onTap: (){
-                                                    context.read<GeneralController>().collectionsController.addToPlaylistSelect(context.read<GeneralController>());
-                                                    },
-                                                  child: Column(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-                                                      Container(
-                                                        height: 30,
-                                                        width: 30,
-                                                        child: iconSvg(IconsSvg.addOutline, width: 30,height: 30),
-                                                      ),
-                                                      SizedBox(height: 8,),
-                                                      Text("Добавить", style: TextStyle(color: cBlack, fontFamily: fontFamily, fontSize: 10, fontWeight: FontWeight.w400, ),),
-                                                    ],
-                                                  ),
-                                                ),
-                                                InkWell(
-                                                  onTap: (){
-                                                    //todo
+                                                  onTap: () {
+                                                    context
+                                                        .read<
+                                                            GeneralController>()
+                                                        .collectionsController
+                                                        .addToPlaylistSelect(
+                                                            context.read<
+                                                                GeneralController>());
                                                   },
                                                   child: Column(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
                                                     children: [
                                                       Container(
                                                         height: 30,
                                                         width: 30,
-                                                        child: iconSvg(IconsSvg.upload, width: 30,height: 30),
-                                                      ),
-                                                      SizedBox(height: 8,),
-                                                      Text("Поделиться", style: TextStyle(color: cBlack, fontFamily: fontFamily, fontSize: 10, fontWeight: FontWeight.w400, ),),
-                                                    ],
-                                                  ),
-                                                ),
-                                                InkWell(
-                                                  onTap: (){
-                                                    //todo
-                                                  },
-                                                  child: Column(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-                                                      Container(
-                                                        height: 30,
-                                                        width: 30,
-                                                        child: iconSvg(IconsSvg.download, width: 30,height: 30),
-                                                      ),
-                                                      SizedBox(height: 8,),
-                                                      Text("Скачать", style: TextStyle(color: cBlack, fontFamily: fontFamily, fontSize: 10, fontWeight: FontWeight.w400, ),),
-                                                    ],
-                                                  ),
-                                                ),
-                                                InkWell(
-                                                  onTap: (){
-                                                    context.read<GeneralController>().collectionsController.deleteSelectAudio(context.read<GeneralController>().restoreController);
-
-                                                  },
-                                                  child: Column(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-                                                      Container(
-                                                        height: 30,
-                                                        width: 30,
-                                                        child: iconSvg(IconsSvg.delete, width: 30,height: 30),
-                                                      ),
-                                                      SizedBox(height: 8,),
-                                                      Text("Удалить", style: TextStyle(color: cBlack, fontFamily: fontFamily, fontSize: 10, fontWeight: FontWeight.w400, ),),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Container(
-                                            height: (widget.height ?? 100),
-                                            width: MediaQuery.of(context).size.width,
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                InkWell(
-                                                  onTap: (){
-                                                    context.read<GeneralController>().restoreController.restoreSelect();
-                                                  },
-                                                  child: Column(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-                                                      Container(
-                                                        height: 30,
-                                                        width: 30,
-                                                        child: iconSvg(IconsSvg.swap, width: 30,height: 30),
-                                                      ),
-                                                      SizedBox(height: 8,),
-                                                      Text("Восстановить", style: TextStyle(color: cBlack, fontFamily: fontFamily, fontSize: 10, fontWeight: FontWeight.w400, ),),
-                                                    ],
-                                                  ),
-                                                ),
-                                                InkWell(
-                                                  onTap: (){
-                                                    context.read<GeneralController>().restoreController.deleteSelect();
-                                                  },
-                                                  child: Column(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-                                                      Container(
-                                                        height: 30,
-                                                        width: 30,
-                                                        child: iconSvg(IconsSvg.delete, width: 30,height: 30),
-                                                      ),
-                                                      SizedBox(height: 8,),
-                                                      Text("Удалить", style: TextStyle(color: cBlack, fontFamily: fontFamily, fontSize: 10, fontWeight: FontWeight.w400, ),),
-                                                    ],
-                                                  ),
-                                                ),
-
-                                              ],
-                                            ),
-                                          ),
-                                          Container(
-                                            height: (widget.height ?? 100),
-                                            width: MediaQuery.of(context).size.width,
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                              children: List.generate(widget.items.length, (index) {
-                                                Text text = widget.items[index].text;
-                                                if(widget.items[index].text != null)
-                                                  text.style.copyWith(fontSize: 16);
-
-                                                return Container(
-                                                  width:
-                                                  MediaQuery.of(context).size.width / widget.items.length,
-                                                  child: InkWell(
-                                                    onTap: () {
-                                                      widget.items[index].onTap != null
-                                                          ? widget.items[index].onTap()
-                                                          : null;
-                                                      widget.onChange != null ? widget.onChange(index) : null;
-                                                    },
-                                                    child: Column(
-                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                      children: [
-                                                        index == widget.currentIndex
-                                                            ? widget.items[index].icon
-                                                            : widget.items[index].iconInactive ??
-                                                            widget.items[index].icon,
-                                                        SizedBox(
-                                                          height: 12,
+                                                        child: iconSvg(
+                                                          IconsSvg.addOutline,
+                                                          width: 30,
+                                                          height: 30,
                                                         ),
-                                                        text == null?SizedBox():Text(
-                                                          text.data,
-                                                          style: text.style.copyWith(
-                                                              color: index == widget.currentIndex
-                                                                  ? widget.items[index].colorActive
-                                                                  : widget.items[index].colorInactive),
-                                                        )
-                                                      ],
-                                                    ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 8,
+                                                      ),
+                                                      Text(
+                                                        S.current.add,
+                                                        style: TextStyle(
+                                                          color: cBlack,
+                                                          fontFamily:
+                                                              fontFamily,
+                                                          fontSize: 10,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                );
-                                              }),
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    //todo
+                                                  },
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Container(
+                                                        height: 30,
+                                                        width: 30,
+                                                        child: iconSvg(
+                                                          IconsSvg.upload,
+                                                          width: 30,
+                                                          height: 30,
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 8,
+                                                      ),
+                                                      Text(
+                                                        S.current.share,
+                                                        style: TextStyle(
+                                                          color: cBlack,
+                                                          fontFamily:
+                                                              fontFamily,
+                                                          fontSize: 10,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    //todo
+                                                  },
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Container(
+                                                        height: 30,
+                                                        width: 30,
+                                                        child: iconSvg(
+                                                          IconsSvg.download,
+                                                          width: 30,
+                                                          height: 30,
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 8,
+                                                      ),
+                                                      Text(
+                                                        S.current.download,
+                                                        style: TextStyle(
+                                                          color: cBlack,
+                                                          fontFamily:
+                                                              fontFamily,
+                                                          fontSize: 10,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    context
+                                                        .read<
+                                                            GeneralController>()
+                                                        .collectionsController
+                                                        .deleteSelectAudio(context
+                                                            .read<
+                                                                GeneralController>()
+                                                            .restoreController);
+                                                  },
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Container(
+                                                        height: 30,
+                                                        width: 30,
+                                                        child: iconSvg(
+                                                          IconsSvg.delete,
+                                                          width: 30,
+                                                          height: 30,
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 8,
+                                                      ),
+                                                      Text(
+                                                        S.current.delete,
+                                                        style: TextStyle(
+                                                          color: cBlack,
+                                                          fontFamily:
+                                                              fontFamily,
+                                                          fontSize: 10,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            height: (widget.height ?? 100),
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                InkWell(
+                                                  onTap: () {
+                                                    context
+                                                        .read<
+                                                            GeneralController>()
+                                                        .restoreController
+                                                        .restoreSelect();
+                                                  },
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Container(
+                                                        height: 30,
+                                                        width: 30,
+                                                        child: iconSvg(
+                                                          IconsSvg.swap,
+                                                          width: 30,
+                                                          height: 30,
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 8,
+                                                      ),
+                                                      Text(
+                                                        S.current.restore,
+                                                        style: TextStyle(
+                                                          color: cBlack,
+                                                          fontFamily:
+                                                              fontFamily,
+                                                          fontSize: 10,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    context
+                                                        .read<
+                                                            GeneralController>()
+                                                        .restoreController
+                                                        .deleteSelect();
+                                                  },
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Container(
+                                                        height: 30,
+                                                        width: 30,
+                                                        child: iconSvg(
+                                                          IconsSvg.delete,
+                                                          width: 30,
+                                                          height: 30,
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 8,
+                                                      ),
+                                                      Text(
+                                                        S.current.delete,
+                                                        style: TextStyle(
+                                                          color: cBlack,
+                                                          fontFamily:
+                                                              fontFamily,
+                                                          fontSize: 10,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            height: (widget.height ?? 100),
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: List.generate(
+                                                widget.items.length,
+                                                (index) {
+                                                  Text text =
+                                                      widget.items[index].text;
+                                                  if (widget
+                                                          .items[index].text !=
+                                                      null)
+                                                    text.style
+                                                        .copyWith(fontSize: 16);
+
+                                                  return Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width /
+                                                            widget.items.length,
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        widget.items[index]
+                                                                    .onTap !=
+                                                                null
+                                                            ? widget
+                                                                .items[index]
+                                                                .onTap()
+                                                            : null;
+                                                        widget.onChange != null
+                                                            ? widget
+                                                                .onChange(index)
+                                                            : null;
+                                                      },
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          index ==
+                                                                  widget
+                                                                      .currentIndex
+                                                              ? widget
+                                                                  .items[index]
+                                                                  .icon
+                                                              : widget
+                                                                      .items[
+                                                                          index]
+                                                                      .iconInactive ??
+                                                                  widget
+                                                                      .items[
+                                                                          index]
+                                                                      .icon,
+                                                          SizedBox(
+                                                            height: 12,
+                                                          ),
+                                                          text == null
+                                                              ? SizedBox()
+                                                              : Text(
+                                                                  text.data,
+                                                                  style: text
+                                                                      .style
+                                                                      .copyWith(
+                                                                    color: index ==
+                                                                            widget
+                                                                                .currentIndex
+                                                                        ? widget
+                                                                            .items[
+                                                                                index]
+                                                                            .colorActive
+                                                                        : widget
+                                                                            .items[index]
+                                                                            .colorInactive,
+                                                                  ),
+                                                                ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                              ),
                                             ),
                                           )
                                         ],
                                       ),
                                     ),
                                     AnimatedPositioned(
-                                      left: (!snapshot.hasData)||!(snapshot.data.select??false)|| snapshotPage.data != 2?0.0:MediaQuery.of(context).size.width,
+                                      left: (!snapshot.hasData) ||
+                                              !(snapshot.data.select ??
+                                                  false) ||
+                                              snapshotPage.data != 2
+                                          ? 0.0
+                                          : MediaQuery.of(context).size.width,
                                       duration: Duration(milliseconds: 200),
                                       child: SizedBox(),
                                     ),
                                   ],
                                 );
-                              }
+                              },
                             );
-                          }
+                          },
                         );
-                      }
+                      },
                     ),
                   ),
                 ),
               ],
             ),
           );
-        }
+        },
       ),
     );
   }
@@ -344,15 +554,15 @@ class _MainPanelState extends State<MainPanel> {
         width: MediaQuery.of(context).size.width,
         height: 70,
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color.fromRGBO(140, 132, 226, 1),
-                Color.fromRGBO(108, 104, 159, 1)
-              ],
-              begin: Alignment.centerRight,
-              end: Alignment.centerLeft,
-            ),
-            borderRadius: BorderRadius.all(Radius.circular(50)),
+          gradient: LinearGradient(
+            colors: [
+              Color.fromRGBO(140, 132, 226, 1),
+              Color.fromRGBO(108, 104, 159, 1)
+            ],
+            begin: Alignment.centerRight,
+            end: Alignment.centerLeft,
+          ),
+          borderRadius: BorderRadius.all(Radius.circular(50)),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -413,11 +623,11 @@ class _MainPanelState extends State<MainPanel> {
                               trackShape: RoundedRectSliderTrackShape(),
                               trackHeight: 1.5,
                               thumbColor: cBackground,
-                              thumbShape:
-                              RoundSliderThumbShape(enabledThumbRadius: 6.0),
+                              thumbShape: RoundSliderThumbShape(
+                                  enabledThumbRadius: 6.0),
                               overlayColor: cBackground.withOpacity(0.32),
                               overlayShape:
-                              RoundSliderOverlayShape(overlayRadius: 10.0),
+                                  RoundSliderOverlayShape(overlayRadius: 10.0),
                             ),
                             child: Slider(
                               min: 0,
@@ -425,13 +635,14 @@ class _MainPanelState extends State<MainPanel> {
                                   ? 1.toDouble()
                                   : state.max.inMilliseconds.toDouble()),
                               value: (state == null || state.current == null
-                                  ? 0.toDouble()
-                                  : state.current.inMilliseconds.toDouble())
+                                      ? 0.toDouble()
+                                      : state.current.inMilliseconds.toDouble())
                                   .clamp(
-                                  0,
-                                  (state == null || state.max == null
-                                      ? 1.toDouble()
-                                      : state.max.inMilliseconds.toDouble())),
+                                      0,
+                                      (state == null || state.max == null
+                                          ? 1.toDouble()
+                                          : state.max.inMilliseconds
+                                              .toDouble())),
                               onChangeStart: (info) {
                                 //context.read<GeneralController>().playerController.pause();
                               },
@@ -441,7 +652,7 @@ class _MainPanelState extends State<MainPanel> {
                                     .read<GeneralController>()
                                     .playerController
                                     .setDuration(
-                                    Duration(milliseconds: value.toInt()));
+                                        Duration(milliseconds: value.toInt()));
                               },
                               onChangeEnd: (info) {
                                 print("end");
