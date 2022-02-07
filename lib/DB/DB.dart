@@ -1,16 +1,17 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+
+import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:recorder/DB/DBModel.dart';
 import 'package:recorder/Utils/tokenDB.dart';
 import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/models/CollectionModel.dart';
 import 'package:recorder/models/ProfileModel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:path/path.dart';
 
 class DBProvider {
   DBProvider._();
@@ -22,14 +23,12 @@ class DBProvider {
     if (_database != null) return _database;
 
     _database = await _initDB();
-    // print("db=============>${_database.toString()}<===========");
     return _database;
   }
 
   Future<Database> _initDB() async {
     Directory dir = await getApplicationDocumentsDirectory();
     String path = join(dir.path, "base26.db");
-    // print("=======================path================================\n$path");
     return await openDatabase(path, version: 1, onCreate: _createDB);
   }
 
@@ -139,15 +138,16 @@ class DBProvider {
     return listAudio;
   }
 
-  Future<AudioItem> getAudio(int id, {int idS}) async {
+  Future<AudioItem> getAudio(int id, {int idS, bool removed = false}) async {
     Database db = await this.database;
-    log("id: $id, ids: $idS", name: "get audio");
+    var columnName = idS == null ? TableAudio.id : TableAudio.idS;
+    int deleted = removed ? 1: 0;
     final List<Map<String, dynamic>> list = await db.query(TableAudio.table,
-        where: "${idS == null ? TableAudio.id : TableAudio.idS} = ?",
-        whereArgs: [idS ?? id]);
-    // print("=== AudioGet $idS" + list.toString());
-    // if (list != null && list.isNotEmpty)
-    return AudioItem.fromDB(list.first);
+        where: "$columnName = ? AND ${TableAudio.deleted} = ?",
+        whereArgs: [idS ?? id, deleted]);
+    // log("${list}", name: "getAudio $id, $idS");
+    if (list != null && list.isNotEmpty)
+      return AudioItem.fromDB(list.first);
   }
 
   Future<int> getIdByName(String name) async {
@@ -199,7 +199,7 @@ class DBProvider {
   Future<void> removeAudio(int id) async {
     Database db = await this.database;
     int deleted = 1;
-    var number = await db.update(TableAudio.table, {TableAudio.deleted: deleted},
+    await db.update(TableAudio.table, {TableAudio.deleted: deleted},
         where: "${TableAudio.id} = ?", whereArgs: [id]);
     // log("$number", name: "remove");
   }

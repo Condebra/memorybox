@@ -1,19 +1,17 @@
-// import 'package:adapty_flutter/models/adapty_error.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get/get.dart';
 import 'package:recorder/Controllers/ProfileController.dart';
-import 'package:recorder/Routes.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/Auth/Login.dart';
 import 'package:recorder/UI/Auth/OldPerson.dart';
 import 'package:recorder/UI/Home.dart';
 import 'package:recorder/UI/Pages/Splash.dart';
+
 import 'generated/l10n.dart';
-import 'package:get/get.dart';
 
 void main() {
-  // InAppPurchaseConnection.enablePendingPurchases();
   WidgetsFlutterBinding.ensureInitialized();
   Get.put(ProfileController());
   SystemChrome.setSystemUIOverlayStyle(

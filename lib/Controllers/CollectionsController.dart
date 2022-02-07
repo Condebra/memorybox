@@ -1,7 +1,5 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Controllers/RestoreController.dart';
@@ -9,8 +7,8 @@ import 'package:recorder/Controllers/States/CollectionsState.dart';
 import 'package:recorder/Rest/Audio/AudioProvider.dart';
 import 'package:recorder/Rest/Playlist/PlaylistProvider.dart';
 import 'package:recorder/UI/AddToPlaylist.dart';
-import 'package:recorder/Utils/MemoryDialogs/MemoryDialog.dart';
 import 'package:recorder/Utils/MemoryDialogs/DialogLoading.dart';
+import 'package:recorder/Utils/MemoryDialogs/MemoryDialog.dart';
 import 'package:recorder/Utils/app_keys.dart';
 import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/models/CollectionModel.dart';
@@ -130,7 +128,6 @@ class CollectionsController {
   }
 
   view(CollectionItem item) async {
-    // print(item.toString());
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // log("$item", name: "view item");
     await prefs.setInt("playlist_s", item.idS);
@@ -139,8 +136,6 @@ class CollectionsController {
     setState();
 
     _currentItem = item;
-    // print("=============================================="
-    //     "\n${_currentItem.toMap().toString()}");
     if (_currentItem.playlist == null)
       _currentItem.playlist =
           await PlaylistProvider.getAudioFromId(idS: item.idS);

@@ -1,26 +1,26 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Controllers/States/PlayerState.dart';
 import 'package:recorder/DB/DB.dart';
+import 'package:recorder/Rest/Audio/AudioProvider.dart';
+import 'package:recorder/Style.dart';
 import 'package:recorder/UI/EditingAudio.dart';
-import 'package:recorder/Utils/MemoryDialogs/MemoryDialog.dart';
-import 'package:recorder/Utils/MemoryDialogs/DialogRecorder.dart';
 import 'package:recorder/Utils/DropMenu/DropMenuItem.dart';
 import 'package:recorder/Utils/DropMenu/FocusedMenuHolder.dart';
-import 'package:recorder/Utils/time/TimeParse.dart';
-import 'package:recorder/models/AudioItem.dart';
-import 'package:recorder/Style.dart';
+import 'package:recorder/Utils/MemoryDialogs/DialogRecorder.dart';
+import 'package:recorder/Utils/MemoryDialogs/MemoryDialog.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
-import 'package:provider/provider.dart';
-import 'ButtonPlay.dart';
-import 'package:recorder/Rest/Audio/AudioProvider.dart';
-import 'package:share/share.dart';
+import 'package:recorder/Utils/time/TimeParse.dart';
 import 'package:recorder/generated/l10n.dart';
+import 'package:recorder/models/AudioItem.dart';
+import 'package:share/share.dart';
+
+import 'ButtonPlay.dart';
 
 class AudioItemWidget extends StatefulWidget {
   final AudioItem item;
@@ -352,7 +352,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
   }
 
   delete(AudioItem item, {bool fromCloud = false}) async {
-    print("delete attempt ${item.toMap()}");
+    // log("${item.toMap()}", name: "delete attempt");
     showDialogRecorder(
       context: context,
       title: Text(

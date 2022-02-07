@@ -4,13 +4,13 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:recorder/DB/DB.dart';
+import 'package:recorder/Rest/API.dart';
+import 'package:recorder/Rest/Rest.dart';
 import 'package:recorder/Utils/checkConnection.dart';
+import 'package:recorder/Utils/tokenDB.dart';
 import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/models/CollectionModel.dart';
 import 'package:recorder/models/Put.dart';
-import 'package:recorder/Rest/API.dart';
-import 'package:recorder/Rest/Rest.dart';
-import 'package:recorder/Utils/tokenDB.dart';
 
 class PlaylistProvider {
   static Future<List<dynamic>> get({int id, int ids}) async {
@@ -528,7 +528,6 @@ class PlaylistProvider {
     }
   }
 
-  ///================================================================================
   static Future<List<CollectionItem>> getAll() async {
     if (!await checkConnection() || await futureAuth()) {
       return await DBProvider.db.getCollections();

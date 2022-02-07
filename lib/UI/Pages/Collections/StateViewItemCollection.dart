@@ -1,17 +1,17 @@
-import 'dart:developer';
 import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Controllers/States/CollectionsState.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/widgets/Appbar.dart';
-import 'package:provider/provider.dart';
 import 'package:recorder/UI/widgets/AudioItem.dart';
 import 'package:recorder/Utils/DropMenu/DropMenuItem.dart';
 import 'package:recorder/Utils/DropMenu/FocusedMenuHolder.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
-import 'package:recorder/models/AudioItem.dart';
 import 'package:recorder/generated/l10n.dart';
+import 'package:recorder/models/AudioItem.dart';
 
 class StateViewItemCollection extends StatefulWidget {
   @override
@@ -435,7 +435,7 @@ class _StateViewItemCollectionState extends State<StateViewItemCollection> {
           .streamCollections,
       builder: (context, snapshot) {
         List<AudioItem> list = snapshot.data?.currentItem?.playlist ?? [];
-        log("length ${list.length} ${list.toList()}", name: "View");
+        // log("${list.toList()}", name: "View ${list.length}");
         if (list.isEmpty)
           return Container(
             width: MediaQuery.of(context).size.width,
