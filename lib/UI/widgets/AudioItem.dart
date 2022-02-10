@@ -285,7 +285,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
             onPressed: () {
               var audioId = widget.item.idS;
               var encodedId = base64.encode(utf8.encode(audioId.toString()));
-              Share.share("${S.current.share_msg}: https://memorybox.ru/audio/$encodedId");
+              Share.share("${S.current.share_msg}: https://memorybox-api.s-vl.site/audio/$encodedId");
             },
             title: Text(
               S.current.share,

@@ -62,7 +62,7 @@
                 <!-- Accepts URIs that begin with https://YOUR_HOST -->
                 <data
                     android:scheme="https"
-                    android:host="memorybox.ru" />
+                    android:host="memorybox-api.s-vl.site" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
@@ -71,7 +71,7 @@
                 <!-- Accepts URIs that begin with https://YOUR_HOST -->
                 <data
                     android:scheme="https"
-                    android:host="m.memorybox.ru" />
+                    android:host="memorybox.ru" />
             </intent-filter>
         </activity>
 <!--        <service android:name="com.ryanheise.audioservice.AudioService"-->

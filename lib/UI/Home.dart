@@ -52,8 +52,16 @@ class _HomeState extends State<Home> {
       log("$err", name: "error handle");
     });
 
-    getUriLinksStream().listen((Uri uri) {
+    getUriLinksStream().listen((Uri uri) async {
       log("Gotcha link ${uri.path}", name: "Gotcha");
+      if (uri != null) {
+        var id = uri.path.toString().split("/").last;
+        // log("Initial link! $id", name: "initial");
+        var decodedId = int.parse(utf8.decode(base64.decode(id)));
+        // log("$decodedId", name: "decoded id");
+        var audio = await AudioProvider.getFromServer(decodedId);
+        controller.playerController.tapButton(audio);
+      }
     }, onError: (err) {
       log("$err", name: "Error");
     });
@@ -61,10 +69,7 @@ class _HomeState extends State<Home> {
     try {
       _initialUri = await getInitialUri();
       if (_initialUri != null) {
-        var id = _initialUri
-            .toString()
-            .split("/")
-            .last;
+        var id = _initialUri.toString().split("/").last;
         // log("Initial link! $id", name: "initial");
         var decodedId = int.parse(utf8.decode(base64.decode(id)));
         // log("$decodedId", name: "decoded id");
