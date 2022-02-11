@@ -1,6 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import 'intl/messages_all.dart';
 
 // **************************************************************************
@@ -1040,6 +1041,26 @@ class S {
     return Intl.message(
       'Support',
       name: 'support',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error processing payment`
+  String get pay_error {
+    return Intl.message(
+      'Error processing payment',
+      name: 'pay_error',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please try later`
+  String get try_later {
+    return Intl.message(
+      'Please try later',
+      name: 'try_later',
       desc: '',
       args: [],
     );

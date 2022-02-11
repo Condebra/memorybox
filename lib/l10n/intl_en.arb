@@ -99,5 +99,7 @@
   "length": "Length",
   "created_at": "Created at",
   "uploaded": "Uploaded to the cloud",
-  "support": "Support"
+  "support": "Support",
+  "pay_error": "Error processing payment",
+  "try_later": "Please try later"
 }

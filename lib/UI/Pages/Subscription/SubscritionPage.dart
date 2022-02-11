@@ -1,8 +1,14 @@
+import 'dart:developer';
+
+import 'package:adapty_flutter/adapty_flutter.dart';
+import 'package:adapty_flutter/models/adapty_error.dart';
 import 'package:adapty_flutter/models/adapty_paywall.dart';
 import 'package:adapty_flutter/models/adapty_product.dart';
 import 'package:adapty_flutter/models/adapty_purchaser_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:recorder/Controllers/GeneralController.dart';
 import 'package:recorder/Style.dart';
 import 'package:recorder/UI/Pages/Subscription/widgets/chooseSubscription.dart';
@@ -11,11 +17,7 @@ import 'package:recorder/UI/widgets/Background.dart';
 import 'package:recorder/UI/widgets/ButtonOrange.dart';
 import 'package:recorder/Utils/Svg/IconSVG.dart';
 import 'package:recorder/generated/l10n.dart';
-import 'package:provider/provider.dart';
-import 'package:adapty_flutter/adapty_flutter.dart';
-import 'package:adapty_flutter/models/adapty_error.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:developer';
 
 class SubscriptionPage extends StatefulWidget {
   @override
@@ -40,17 +42,16 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     } on AdaptyError catch (adaptyErr) {
       log("$adaptyErr", name: "Adapty error");
     } catch (e) {
-      log("$e", name: "Error");
+      log("$e", name: "Error activating");
     }
     try {
       var getPaywallsResult = await Adapty.getPaywalls();
       paywalls = getPaywallsResult.paywalls;
     } catch (e) {
-      log("$e", name: "Error");
+      log("$e", name: "Error getting paywalls");
     }
     try {
       purchaserInfo = await Adapty.getPurchaserInfo();
-      // print("Info $purchaserInfo");
       if (purchaserInfo.accessLevels['premium']?.isActive ?? false) {
         prefs.setString("status", "premium");
         isPremium = true;
@@ -59,14 +60,15 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
         isPremium = false;
       }
     } on AdaptyError catch (e) {
-      log("$e", name: "Adapty error");
+      log("$e", name: "error access level check");
     }
-    // print(paywalls.length);
-    // print(paywalls.first.products.length);
-    this.productMonthly = paywalls.first.products.first;
-    this.productYearly = paywalls.last.products.first;
+    try {
+      this.productMonthly = paywalls.first.products.first;
+      this.productYearly = paywalls.last.products.first;
+    } catch (e) {
+      log("$e", name: "error setting paywalls");
+    }
     setState(() {});
-    // print(prefs.getString("status"));
   }
 
   makePurchase({int id}) async {
@@ -80,6 +82,15 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
       }
     } on AdaptyError catch (adaptyErr) {
       log("$adaptyErr", name: "Adapty error");
+    } catch (e) {
+      log(e.toString(), name: "make purchase");
+      Get.snackbar(
+        S.current.pay_error,
+        S.current.try_later,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.white,
+        colorText: Colors.black,
+      );
     }
   }
 
@@ -185,7 +196,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                   onChange: (index) {
                                     currentIndex = index;
                                     setState(() {});
-                                    print('index $index');
+                                    // print('index $index');
                                   },
                                   items: [
                                     SubscriptionPrice(
@@ -269,7 +280,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                 iconSvg(IconsSvg.heart, height: 50),
                                 SizedBox(height: 6),
                                 Text(
-                                  "У вас уже есть подписка.",
+                                  S.current.already_have_premium,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 18,
